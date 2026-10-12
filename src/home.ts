@@ -35,11 +35,17 @@ function card(c: Channel, onOpen: () => void) {
   b.type = "button";
   b.setAttribute("aria-label", `${c.name}${cur ? `, сейчас: ${cur.t}` : ""}`);
   const logo = el("span", c.tile === "light" ? "logo light" : "logo");
-  const img = el("img");
-  img.src = c.logo;
-  img.alt = "";
-  img.draggable = false;
-  logo.append(img);
+  if (c.logo) {
+    const img = el("img");
+    img.src = c.logo;
+    img.alt = "";
+    img.draggable = false;
+    logo.append(img);
+  } else {
+    logo.textContent = c.name.slice(0, 2).toUpperCase();
+    logo.classList.add("mark");
+    logo.style.background = `hsl(${c.hue ?? 270} 45% 30%)`;
+  }
   const info = el("span", "info");
   info.append(el("span", "c-name", c.name), el("span", "c-title", cur ? cur.t : "Прямой эфир"));
   if (cur) {

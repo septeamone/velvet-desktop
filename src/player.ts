@@ -48,7 +48,7 @@ export function openChannel(i: number) {
   cur = (i + channels.length) % channels.length;
   srcIdx = 0;
   level = -1;
-  try { localStorage.setItem("velvet.last", channels[cur].id); } catch { /* не страшно */ }
+  if (!channels[cur].adult) { try { localStorage.setItem("velvet.last", channels[cur].id); } catch { /* не страшно */ } } // взрослые не попадают в «Продолжить»
   drawRail();
   renderNow();
   renderGuide();
@@ -351,7 +351,7 @@ function updateMedia() {
     title: show?.t ?? c.name,
     artist: c.name,
     album: "Velvet",
-    artwork: c.logo.endsWith(".svg") ? [] : [{ src: new URL(c.logo, location.href).href, sizes: "512x512", type }],
+    artwork: !c.logo || c.logo.endsWith(".svg") ? [] : [{ src: new URL(c.logo, location.href).href, sizes: "512x512", type }],
   });
 }
 if ("mediaSession" in navigator) {
@@ -377,11 +377,17 @@ function drawRail() {
     b.title = c.name;
     b.setAttribute("aria-label", c.name);
     if (i === cur) b.setAttribute("aria-current", "true");
-    const img = document.createElement("img");
-    img.src = c.logo;
-    img.alt = "";
-    img.draggable = false;
-    b.append(img);
+    if (c.logo) {
+      const img = document.createElement("img");
+      img.src = c.logo;
+      img.alt = "";
+      img.draggable = false;
+      b.append(img);
+    } else {
+      b.textContent = c.name.slice(0, 2).toUpperCase();
+      b.classList.add("mark");
+      b.style.background = `hsl(${c.hue ?? 270} 45% 30%)`;
+    }
     b.onclick = () => openChannel(i);
     rail.append(b);
   });

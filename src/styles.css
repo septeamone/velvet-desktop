@@ -291,3 +291,23 @@ h1 {
 #btnFav[aria-pressed="true"] svg { fill: currentColor; }
 #btnPip[hidden] { display: none; }
 #btnPip[aria-pressed="true"] { color: var(--ember); }
+
+/* ---------- свои каналы ---------- */
+.logo.mark, .ch.mark { font-weight: 700; color: #fff; letter-spacing: .02em; }
+.logo.mark { font-size: 21px; }
+.ch.mark { font-size: 15px; }
+.custom-list { list-style: none; padding: 0; margin: 0; }
+.custom-list:empty { display: none; }
+.custom-list li { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--hair); }
+.custom-list li > span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.custom-list em { font-style: normal; font-size: 12px; font-weight: 700; color: var(--accent); }
+.custom-list small { color: var(--fg-muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dlg { margin: auto; padding: 26px; width: min(460px, 92vw); border: 1px solid var(--hair); border-radius: 22px; background: var(--card); color: var(--fg); box-shadow: 0 30px 80px rgba(0, 0, 0, .45); }
+.dlg::backdrop { background: rgba(10, 4, 16, .62); }
+.dlg h3 { font-size: 20px; font-weight: 650; letter-spacing: -0.01em; }
+.dlg label { display: block; margin-top: 16px; font-size: 13.5px; color: var(--fg-muted); }
+.dlg input[type="text"] { display: block; width: 100%; height: 44px; margin-top: 6px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--hair); background: var(--bg); color: var(--fg); font: inherit; font-size: 14.5px; outline: none; }
+.dlg input[type="text"]:focus { border-color: var(--accent); }
+.dlg .check { display: flex; align-items: center; gap: 10px; color: var(--fg); }
+.dlg .err { min-height: 1.3em; margin-top: 12px; color: var(--accent); font-size: 13.5px; }
+.dlg-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; }

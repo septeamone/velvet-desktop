@@ -73,6 +73,18 @@
             </div>
           </div>
           <div class="row">
+            <div><strong>Каналы 18+</strong><p>Показывать каналы для взрослых, которые вы добавили сами. Вам должно быть 18 лет.</p></div>
+            <div class="seg" data-key="adult">
+              <button type="button" data-value="off">Скрыты</button>
+              <button type="button" data-value="on">Показаны</button>
+            </div>
+          </div>
+          <div class="row">
+            <div><strong>Свои каналы</strong><p>Добавьте канал по ссылке на поток (m3u8). Он хранится только на этом компьютере.</p></div>
+            <button class="btn" id="btnAddChannel" type="button">Добавить канал</button>
+          </div>
+          <ul class="custom-list" id="customList"></ul>
+          <div class="row">
             <div><strong>О программе</strong><p id="version">Версия</p><p id="updateStatus" class="status" role="status"></p></div>
             <button class="btn" id="btnCheck" type="button">Проверить обновления</button>
           </div>
@@ -130,6 +142,20 @@
           <ol id="gList"></ol>
         </aside>
       </div>
+
+      <dialog id="addDlg" class="dlg" aria-labelledby="addTitle">
+        <form id="addForm">
+          <h3 id="addTitle">Новый канал</h3>
+          <label>Название<input id="addName" type="text" maxlength="40" autocomplete="off" placeholder="Например, Мой канал" /></label>
+          <label>Ссылка на поток<input id="addUrl" type="text" autocomplete="off" placeholder="https://…/index.m3u8" /></label>
+          <label class="check"><input id="addAdult" type="checkbox" /> Канал для взрослых (18+)</label>
+          <p class="err" id="addErr" role="alert"></p>
+          <div class="dlg-actions">
+            <button class="btn" id="addCancel" type="button">Отмена</button>
+            <button class="btn primary" type="submit">Добавить</button>
+          </div>
+        </form>
+      </dialog>
 
       <div id="banner" class="banner" role="status">
         <span id="bannerText">Доступно обновление</span>

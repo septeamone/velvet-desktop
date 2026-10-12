@@ -5,9 +5,10 @@ export type Settings = {
   quality: "auto" | "high" | "low";
   tz: "local" | "msk";
   start: "home" | "last";
+  adult: "off" | "on";
 };
 
-export const settings: Settings = { theme: "dark", quality: "auto", tz: "local", start: "home" };
+export const settings: Settings = { theme: "dark", quality: "auto", tz: "local", start: "home", adult: "off" };
 
 const KEY = "velvet.settings";
 const listeners: Array<(k: keyof Settings) => void> = [];

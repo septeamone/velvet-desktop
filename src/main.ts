@@ -1,6 +1,7 @@
 import "./styles.css";
 import { initNet } from "./net";
-import { channels } from "./data";
+import { channels, rebuildChannels } from "./data";
+import { addCustom, loadCustom, removeCustom } from "./custom";
 import { loadSettings, setSetting, settings, onSetting, type Settings } from "./settings";
 import { renderHome, setQuery } from "./home";
 import { initUpdater } from "./updater";
@@ -35,7 +36,10 @@ document.getElementById("btnSettings")!.onclick = () => show(shell.dataset.view 
 document.querySelectorAll<HTMLElement>(".seg[data-key]").forEach((seg) => {
   const key = seg.dataset.key as keyof Settings;
   const paint = () => seg.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.value === settings[key])));
-  seg.querySelectorAll("button").forEach((b) => (b.onclick = () => setSetting(key, b.dataset.value as never)));
+  seg.querySelectorAll("button").forEach((b) => (b.onclick = () => {
+    if (key === "adult" && b.dataset.value === "on" && !confirm("Показывать каналы для взрослых?\nВам должно быть 18 лет или больше.")) return;
+    setSetting(key, b.dataset.value as never);
+  }));
   onSetting((k) => { if (k === key) paint(); });
   paint();
 });
@@ -61,6 +65,8 @@ document.addEventListener("keydown", (e) => {
 });
 
 loadSettings();
+rebuildChannels();
+onSetting((k) => { if (k === "adult") rebuildChannels(); });
 document.querySelectorAll(".seg[data-key]").forEach((seg) => {
   const key = (seg as HTMLElement).dataset.key as keyof Settings;
   seg.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.value === settings[key])));
@@ -74,4 +80,59 @@ void initNet().then(() => {
   const li = channels.findIndex((c) => c.id === last);
   if (settings.start === "last" && li >= 0) play(li);
   else show("home");
+});
+
+/* свои каналы: список в настройках и окно добавления */
+const customList = document.getElementById("customList") as HTMLUListElement;
+function drawCustom() {
+  customList.replaceChildren(
+    ...loadCustom().map((c) => {
+      const li = document.createElement("li");
+      const info = document.createElement("span");
+      const name = document.createElement("strong");
+      name.textContent = c.name;
+      info.append(name);
+      if (c.adult) {
+        const tag = document.createElement("em");
+        tag.textContent = "18+";
+        info.append(tag);
+      }
+      const url = document.createElement("small");
+      url.textContent = c.url.length > 60 ? `${c.url.slice(0, 57)}…` : c.url;
+      info.append(url);
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "btn";
+      del.textContent = "Удалить";
+      del.onclick = () => { removeCustom(c.id); rebuildChannels(); };
+      li.append(info, del);
+      return li;
+    }),
+  );
+}
+window.addEventListener("velvet:channels", () => {
+  drawCustom();
+  if (shell.dataset.view === "home") renderHome(play);
+});
+drawCustom();
+
+const dlg = document.getElementById("addDlg") as HTMLDialogElement;
+const addName = document.getElementById("addName") as HTMLInputElement;
+const addUrl = document.getElementById("addUrl") as HTMLInputElement;
+const addAdult = document.getElementById("addAdult") as HTMLInputElement;
+const addErr = document.getElementById("addErr")!;
+document.getElementById("btnAddChannel")!.onclick = () => {
+  addName.value = addUrl.value = "";
+  addAdult.checked = false;
+  addErr.textContent = "";
+  dlg.showModal();
+  addName.focus();
+};
+document.getElementById("addCancel")!.onclick = () => dlg.close();
+document.getElementById("addForm")!.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const error = addCustom(addName.value, addUrl.value, addAdult.checked);
+  if (error) { addErr.textContent = error; return; }
+  dlg.close();
+  rebuildChannels();
 });
