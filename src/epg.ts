@@ -50,7 +50,8 @@ export function restoreEpg() {
 export async function refreshHosted(): Promise<boolean> {
   for (const url of HOSTED) {
     try {
-      const r = await fetch(viaProxy(url), { cache: "no-store" });
+      // метка времени на 5 минут: у GitHub есть свой кеш, и без неё можно получить старую копию
+      const r = await fetch(viaProxy(`${url}?v=${Math.floor(Date.now() / 300000)}`), { cache: "no-store" });
       if (!r.ok) continue;
       const h = (await r.json()) as Hosted;
       if (!h.channels) continue;

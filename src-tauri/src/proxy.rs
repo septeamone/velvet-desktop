@@ -151,6 +151,10 @@ async fn handle(
     if let Some(r) = req_headers.get(header::RANGE) {
         rq = rq.header(header::RANGE, r);
     }
+    // у GitHub в кеше может залежаться сжатая копия файла, а несжатая свежая: просим несжатую
+    if url.host_str() == Some("raw.githubusercontent.com") {
+        rq = rq.header(header::ACCEPT_ENCODING, "identity");
+    }
     // название песни прямо из потока (Icecast/ICY)
     if let Some(r) = req_headers.get("icy-metadata") {
         rq = rq.header("icy-metadata", r);
