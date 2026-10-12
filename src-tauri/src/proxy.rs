@@ -44,6 +44,7 @@ pub async fn start() -> Result<ProxyInfo, String> {
 
     let client = reqwest::Client::builder()
         .user_agent(UA)
+        .no_proxy()
         .dns_resolver(Arc::new(SafeResolver))
         .redirect(reqwest::redirect::Policy::custom(|attempt| {
             if blocked(attempt.url()) {
@@ -75,11 +76,26 @@ fn private_ip(ip: IpAddr) -> bool {
     match ip {
         IpAddr::V4(v) => {
             let o = v.octets();
-            v.is_loopback() || v.is_private() || v.is_link_local() || v.is_unspecified() || v.is_broadcast() || (o[0] == 100 && (64..128).contains(&o[1]))
+            o[0] == 0
+                || v.is_loopback()
+                || v.is_private()
+                || v.is_link_local()
+                || v.is_broadcast()
+                || v.is_multicast()
+                || (o[0] == 100 && (64..128).contains(&o[1]))
         }
         IpAddr::V6(v) => {
+            // адреса IPv4 внутри IPv6 (::ffff:127.0.0.1) проверяем как обычный IPv4
+            if let Some(v4) = v.to_ipv4_mapped().or_else(|| v.to_ipv4()) {
+                return private_ip(IpAddr::V4(v4));
+            }
             let seg = v.segments();
-            v.is_loopback() || v.is_unspecified() || (seg[0] & 0xfe00) == 0xfc00 || (seg[0] & 0xffc0) == 0xfe80
+            v.is_loopback()
+                || v.is_unspecified()
+                || v.is_multicast()
+                || (seg[0] & 0xfe00) == 0xfc00
+                || (seg[0] & 0xffc0) == 0xfe80
+                || (seg[0] == 0x64 && seg[1] == 0xff9b)
         }
     }
 }
@@ -236,7 +252,7 @@ mod tests {
 
     #[test]
     fn blocks_internal_addresses() {
-        for bad in ["http://127.0.0.1/x", "http://10.1.2.3/x", "http://192.168.0.1/x", "http://169.254.1.1/x", "http://100.64.0.5/x", "http://[::1]/x", "http://[fd00::1]/x", "http://[fe80::1]/x", "http://localhost/x", "file:///etc/passwd", "ftp://example.com/x"] {
+        for bad in ["http://127.0.0.1/x", "http://10.1.2.3/x", "http://192.168.0.1/x", "http://169.254.1.1/x", "http://100.64.0.5/x", "http://[::1]/x", "http://[fd00::1]/x", "http://[fe80::1]/x", "http://[::ffff:127.0.0.1]/x", "http://[::ffff:10.0.0.1]/x", "http://[::127.0.0.1]/x", "http://[64:ff9b::7f00:1]/x", "http://0.0.0.0/x", "http://0.1.2.3/x", "http://224.0.0.1/x", "http://[ff02::1]/x", "http://localhost/x", "file:///etc/passwd", "ftp://example.com/x"] {
             assert!(blocked(&u(bad)), "{bad} должен быть заблокирован");
         }
     }
