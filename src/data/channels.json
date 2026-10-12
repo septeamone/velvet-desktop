@@ -45,7 +45,13 @@
    "http://178.134.1.158:8081/5channel/index.m3u8",
    "https://cdn4.skygo.mn/live/disk1/Channel_5/HLSv3-FTA/Channel_5.m3u8"
   ],
-  "epg": null
+  "epg": null,
+  "res": [
+   576,
+   576,
+   576,
+   480
+  ]
  },
  {
   "id": "ren",
@@ -69,7 +75,13 @@
    "https://stream8.cinerama.uz/1025/tracks-v1a1/mono.m3u8",
    "http://31.148.5.241/kanal_10/index.m3u8"
   ],
-  "epg": null
+  "epg": null,
+  "res": [
+   480,
+   1080,
+   576,
+   576
+  ]
  },
  {
   "id": "rossiya24",
@@ -128,7 +140,12 @@
    "http://31.148.5.241/kanal_19/index.m3u8",
    "http://176.118.197.101/THT/index.m3u8"
   ],
-  "epg": "Телеканал ТНТ"
+  "epg": "Телеканал ТНТ",
+  "res": [
+   1080,
+   576,
+   576
+  ]
  },
  {
   "id": "tnt4",
@@ -140,7 +157,13 @@
    "http://flussonic.linkintel.ru/tnt4/index.m3u8",
    "http://176.118.197.101/TNT4/index.m3u8"
   ],
-  "epg": "ТНТ4"
+  "epg": "ТНТ4",
+  "res": [
+   1080,
+   576,
+   576,
+   null
+  ]
  },
  {
   "id": "sts",
@@ -152,7 +175,13 @@
    "http://176.118.197.101/CTC/index.m3u8",
    "https://fs.uplink.kz/sts/mono.m3u8?token=onlinetv"
   ],
-  "epg": "СТС"
+  "epg": "СТС",
+  "res": [
+   1080,
+   576,
+   576,
+   576
+  ]
  },
  {
   "id": "stslove",
@@ -175,7 +204,13 @@
    "http://176.118.197.101/TB3/index.m3u8",
    "http://178.124.179.122:8080/TB-3/index.m3u8"
   ],
-  "epg": "Телеканал ТВ-3"
+  "epg": "Телеканал ТВ-3",
+  "res": [
+   1080,
+   576,
+   576,
+   480
+  ]
  },
  {
   "id": "friday",
@@ -185,7 +220,11 @@
    "http://stream.mcquack.net/181/index.m3u8",
    "https://vod.tuva.ru/friday/index.m3u8"
   ],
-  "epg": "Пятница"
+  "epg": "Пятница",
+  "res": [
+   1080,
+   576
+  ]
  },
  {
   "id": "domashniy",
@@ -196,7 +235,12 @@
    "http://31.148.5.241/kanal_14/index.m3u8",
    "https://fs.uplink.kz/domashniy/mono.m3u8?token=onlinetv"
   ],
-  "epg": null
+  "epg": null,
+  "res": [
+   1080,
+   576,
+   576
+  ]
  },
  {
   "id": "x2x2",
@@ -208,7 +252,13 @@
    "https://bl.rutube.ru/livestream/392b4686b770bae2da6bf5ac4574add5/index.m3u8?e=2068731801&s=tenr-yHXUv1wibfka78s2A&scheme=https",
    "http://185.23.80.23:8080/2x2/index.m3u8"
   ],
-  "epg": null
+  "epg": null,
+  "res": [
+   576,
+   576,
+   360,
+   1080
+  ]
  },
  {
   "id": "subbota",
@@ -222,7 +272,13 @@
    "http://217.114.191.150/Subbota/index.m3u8",
    "https://bl.rutube.ru/livestream/310744c10a5809da38aa445c952976da/index.m3u8?e=2066519758&s=dmUf6BUQzDBTwtQOseAfog&scheme=https"
   ],
-  "epg": null
+  "epg": null,
+  "res": [
+   null,
+   1080,
+   576,
+   360
+  ]
  },
  {
   "id": "u",
@@ -233,7 +289,12 @@
    "https://fs.uplink.kz/u/mono.m3u8?token=onlinetv",
    "https://bl.rutube.ru/livestream/5c9327074e25ca86f3111d4085cbbb65/index.m3u8?e=2066519758&s=9cPc1rCGu6M932eqrifRhQ&scheme=https"
   ],
-  "epg": "Канал Ю"
+  "epg": "Канал Ю",
+  "res": [
+   576,
+   576,
+   360
+  ]
  },
  {
   "id": "muz",
@@ -269,7 +330,12 @@
    "https://fs.uplink.kz/match/mono.m3u8?token=onlinetv"
   ],
   "epg": null,
-  "tile": "light"
+  "tile": "light",
+  "res": [
+   1080,
+   1080,
+   576
+  ]
  },
  {
   "id": "matcharena",
@@ -328,7 +394,12 @@
    "https://fs.uplink.kz/mult/mono.m3u8?token=onlinetv",
    "https://stream8.cinerama.uz/1246/tracks-v1a1/mono.m3u8"
   ],
-  "epg": null
+  "epg": null,
+  "res": [
+   1080,
+   576,
+   1080
+  ]
  },
  {
   "id": "multilandia",

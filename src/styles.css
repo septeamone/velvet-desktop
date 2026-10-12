@@ -311,3 +311,6 @@ h1 {
 .dlg .check { display: flex; align-items: center; gap: 10px; color: var(--fg); }
 .dlg .err { min-height: 1.3em; margin-top: 12px; color: var(--accent); font-size: 13.5px; }
 .dlg-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; }
+
+.pill:disabled { cursor: default; opacity: .78; }
+.pill:disabled:hover { background: rgba(255,236,222,.1); }

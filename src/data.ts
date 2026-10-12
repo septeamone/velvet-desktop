@@ -3,7 +3,7 @@ import { settings } from "./settings";
 import { loadCustom } from "./custom";
 
 export type Source = string | { rutube: string };
-export type Channel = { id: string; name: string; logo: string; sources: Source[]; epg: string | null; tile?: "light"; adult?: boolean; custom?: boolean; hue?: number };
+export type Channel = { id: string; name: string; logo: string; sources: Source[]; epg: string | null; tile?: "light"; adult?: boolean; custom?: boolean; hue?: number; res?: (number | null)[] };
 export type Program = { s: number; e: number; t: string; a: string; d: string };
 
 /* платные каналы лежат в отдельном локальном файле (его нет в публичном репозитории) */

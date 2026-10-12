@@ -19,6 +19,8 @@ let hls: HlsType | null = null;
 let HlsCls: typeof HlsType | null = null;
 let srcIdx = 0;
 let level = -1; // -1 = авто
+let srcPref = 0; // выбранное качество у каналов без своих уровней: 0 = авто, иначе высота картинки
+let sourceMode = false;
 let hideTimer = 0;
 let toastTimer = 0;
 let lastProgress = 0;
@@ -48,6 +50,12 @@ export function openChannel(i: number) {
   cur = (i + channels.length) % channels.length;
   srcIdx = 0;
   level = -1;
+  srcPref = 0;
+  const known = (channels[cur].res ?? []).filter((h): h is number => !!h);
+  if (settings.quality === "low" && new Set(known).size >= 2) { // экономный режим: сразу самый лёгкий источник
+    srcPref = Math.min(...known);
+    srcIdx = Math.max(0, (channels[cur].res ?? []).indexOf(srcPref));
+  }
   if (!channels[cur].adult) { try { localStorage.setItem("velvet.last", channels[cur].id); } catch { /* не страшно */ } } // взрослые не попадают в «Продолжить»
   drawRail();
   renderNow();
@@ -70,6 +78,7 @@ export function leave() {
 function nextSource(reason: string) {
   if (srcIdx + 1 < channels[cur].sources.length) {
     srcIdx++;
+    srcPref = 0;
     say("Подключаюсь…");
     void startSource();
   } else {
@@ -190,13 +199,17 @@ const qName = (l: number) => (hls && hls.levels[l] ? `${hls.levels[l].height}p` 
 
 function buildQuality() {
   if (!hls) return;
-  const order = hls.levels.map((l, i) => ({ h: l.height || 0, i })).sort((a, b) => b.h - a.h);
+  const res = channels[cur].res ?? [];
+  const sourceHeights = [...new Set(res.filter((h): h is number => !!h))].sort((x, y) => y - x);
+  const order = hls.levels.map((l, i) => ({ h: l.height || 0, i })).sort((x, y) => y.h - x.h);
+  const multi = hls.levels.length >= 2;
+  sourceMode = !multi && sourceHeights.length >= 2;
   qMenu.replaceChildren();
-  const add = (label: string, hint: string, l: number) => {
+  const add = (label: string, hint: string, value: number, pick: (v: number) => void) => {
     const b = document.createElement("button");
     b.type = "button";
     b.setAttribute("role", "menuitemradio");
-    b.dataset.level = String(l);
+    b.dataset.level = String(value);
     const name = document.createElement("span");
     name.textContent = label;
     b.append(name);
@@ -205,17 +218,33 @@ function buildQuality() {
       small.textContent = hint;
       b.append(small);
     }
-    b.onclick = () => { setLevel(l); closeMenus(); };
+    b.onclick = () => { pick(value); closeMenus(); };
     qMenu.append(b);
   };
-  add("Авто", "подбирается само", -1);
-  for (const o of order) add(`${o.h}p`, o.h >= 1080 ? "Full HD" : o.h >= 720 ? "HD" : "", o.i);
-  btnQ.hidden = hls.levels.length < 2;
-  // качество по умолчанию из настроек
-  if (order.length > 1 && settings.quality === "high") level = order[0].i;
-  if (order.length > 1 && settings.quality === "low") level = (order.find((o) => o.h <= 480) ?? order[order.length - 1]).i;
-  if (level !== -1) hls.currentLevel = level;
+  const hintOf = (h: number) => (h >= 1080 ? "Full HD" : h >= 720 ? "HD" : "");
+  if (multi) {
+    add("Авто", "подбирается само", -1, setLevel);
+    for (const o of order) add(`${o.h}p`, hintOf(o.h), o.i, setLevel);
+    // качество по умолчанию из настроек
+    if (settings.quality === "high") level = order[0].i;
+    if (settings.quality === "low") level = (order.find((o) => o.h <= 480) ?? order[order.length - 1]).i;
+    if (level !== -1) hls.currentLevel = level;
+  } else if (sourceMode) {
+    add("Авто", "подбирается само", 0, chooseSource);
+    for (const h of sourceHeights) add(`${h}p`, hintOf(h), h, chooseSource);
+  }
+  // один поток и одно качество: выбирать не из чего, но текущее качество показываем
+  btnQ.hidden = false;
+  (btnQ as HTMLButtonElement).disabled = !multi && !sourceMode;
+  btnQ.title = !multi && !sourceMode ? "У этого канала одно качество" : "";
   paintQuality();
+}
+
+function chooseSource(h: number) {
+  const res = channels[cur].res ?? [];
+  srcPref = h;
+  srcIdx = h === 0 ? 0 : Math.max(0, res.indexOf(h));
+  void startSource();
 }
 
 function setLevel(l: number) {
@@ -225,15 +254,24 @@ function setLevel(l: number) {
 }
 
 function paintQuality() {
-  qMenu.querySelectorAll("button").forEach((b) => b.setAttribute("aria-checked", String(Number(b.dataset.level) === level)));
+  const chosen = sourceMode ? srcPref : level;
+  qMenu.querySelectorAll("button").forEach((b) => b.setAttribute("aria-checked", String(Number(b.dataset.level) === chosen)));
   updateQualityLabel();
 }
 
 function updateQualityLabel() {
   if (!hls) return;
-  const now = qName(hls.currentLevel);
-  qLabel.textContent = level === -1 ? (now ? `Авто · ${now}` : "Авто") : qName(level);
+  if (hls.levels.length >= 2) {
+    const now = qName(hls.currentLevel);
+    qLabel.textContent = level === -1 ? (now ? `Авто · ${now}` : "Авто") : qName(level);
+    return;
+  }
+  const h = channels[cur].res?.[srcIdx] || v.videoHeight || hls.levels[0]?.height || 0;
+  const now = h ? `${h}p` : "";
+  qLabel.textContent = sourceMode ? (srcPref ? `${srcPref}p` : now ? `Авто · ${now}` : "Авто") : now || "—";
 }
+v.addEventListener("loadedmetadata", updateQualityLabel);
+v.addEventListener("resize", updateQualityLabel);
 
 /* ---------------- что сейчас идёт ---------------- */
 
