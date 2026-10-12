@@ -124,7 +124,9 @@
   "name": "ТНТ",
   "logo": "/logos/tnt.png",
   "sources": [
-   "http://stream.mcquack.net/135/index.m3u8"
+   "http://stream.mcquack.net/135/index.m3u8",
+   "http://31.148.5.241/kanal_19/index.m3u8",
+   "http://176.118.197.101/THT/index.m3u8"
   ],
   "epg": "Телеканал ТНТ"
  },
@@ -145,7 +147,10 @@
   "name": "СТС",
   "logo": "/logos/sts.png",
   "sources": [
-   "http://stream.mcquack.net/138/index.m3u8"
+   "http://stream.mcquack.net/138/index.m3u8",
+   "http://31.148.5.241/kanal_13/index.m3u8",
+   "http://176.118.197.101/CTC/index.m3u8",
+   "https://fs.uplink.kz/sts/mono.m3u8?token=onlinetv"
   ],
   "epg": "СТС"
  },
@@ -165,7 +170,10 @@
   "name": "ТВ-3",
   "logo": "/logos/tv3.png",
   "sources": [
-   "http://stream.mcquack.net/136/index.m3u8"
+   "http://stream.mcquack.net/136/index.m3u8",
+   "http://31.148.5.241/kanal_15/index.m3u8",
+   "http://176.118.197.101/TB3/index.m3u8",
+   "http://178.124.179.122:8080/TB-3/index.m3u8"
   ],
   "epg": "Телеканал ТВ-3"
  },
@@ -174,7 +182,8 @@
   "name": "Пятница!",
   "logo": "/logos/friday.png",
   "sources": [
-   "http://stream.mcquack.net/181/index.m3u8"
+   "http://stream.mcquack.net/181/index.m3u8",
+   "https://vod.tuva.ru/friday/index.m3u8"
   ],
   "epg": "Пятница"
  },
@@ -183,7 +192,9 @@
   "name": "Домашний",
   "logo": "/logos/domashniy.jpeg",
   "sources": [
-   "http://stream.mcquack.net/227/index.m3u8"
+   "http://stream.mcquack.net/227/index.m3u8",
+   "http://31.148.5.241/kanal_14/index.m3u8",
+   "https://fs.uplink.kz/domashniy/mono.m3u8?token=onlinetv"
   ],
   "epg": null
  },
@@ -192,7 +203,10 @@
   "name": "2x2",
   "logo": "/logos/x2x2.png",
   "sources": [
-   "http://stream.mcquack.net/187/index.m3u8"
+   "http://stream.mcquack.net/187/index.m3u8",
+   "http://176.118.197.101/2x2/index.m3u8",
+   "https://bl.rutube.ru/livestream/392b4686b770bae2da6bf5ac4574add5/index.m3u8?e=2068731801&s=tenr-yHXUv1wibfka78s2A&scheme=https",
+   "http://185.23.80.23:8080/2x2/index.m3u8"
   ],
   "epg": null
  },
@@ -204,7 +218,9 @@
    {
     "rutube": "310744c10a5809da38aa445c952976da"
    },
-   "http://stream.mcquack.net/269/index.m3u8"
+   "http://stream.mcquack.net/269/index.m3u8",
+   "http://217.114.191.150/Subbota/index.m3u8",
+   "https://bl.rutube.ru/livestream/310744c10a5809da38aa445c952976da/index.m3u8?e=2066519758&s=dmUf6BUQzDBTwtQOseAfog&scheme=https"
   ],
   "epg": null
  },
@@ -213,7 +229,9 @@
   "name": "Ю",
   "logo": "/logos/u.png",
   "sources": [
-   "http://stream.mcquack.net/230/index.m3u8"
+   "http://stream.mcquack.net/230/index.m3u8",
+   "https://fs.uplink.kz/u/mono.m3u8?token=onlinetv",
+   "https://bl.rutube.ru/livestream/5c9327074e25ca86f3111d4085cbbb65/index.m3u8?e=2066519758&s=9cPc1rCGu6M932eqrifRhQ&scheme=https"
   ],
   "epg": "Канал Ю"
  },
@@ -222,7 +240,10 @@
   "name": "МУЗ-ТВ",
   "logo": "/logos/muz.png",
   "sources": [
-   "http://stream.mcquack.net/86/index.m3u8"
+   "http://stream.mcquack.net/86/index.m3u8",
+   "http://31.148.5.241/kanal_20/index.m3u8",
+   "https://fs.uplink.kz/muz_tv/mono.m3u8?token=onlinetv",
+   "https://stream8.cinerama.uz/1200/tracks-v1a1/mono.m3u8"
   ],
   "epg": "МУЗ-ТВ"
  },
@@ -243,7 +264,9 @@
   "name": "Матч! Ультра",
   "logo": "/logos/match.png",
   "sources": [
-   "http://stream.mcquack.net/169/index.m3u8"
+   "http://stream.mcquack.net/169/index.m3u8",
+   "http://31.148.5.241/kanal_3/index.m3u8",
+   "https://fs.uplink.kz/match/mono.m3u8?token=onlinetv"
   ],
   "epg": null,
   "tile": "light"
@@ -428,7 +451,9 @@
   "name": "Мир 24",
   "logo": "/logos/mir24.png",
   "sources": [
-   "http://hls.mirtv.cdnvideo.ru/mirtv-parampublish/mir24_2500/playlist.m3u8"
+   "http://hls.mirtv.cdnvideo.ru/mirtv-parampublish/mir24_2500/playlist.m3u8",
+   "http://5.188.159.128:8070/mir_24/index.m3u8",
+   "https://stream8.cinerama.uz/1219/tracks-v1a1/mono.m3u8"
   ],
   "epg": null
  }
