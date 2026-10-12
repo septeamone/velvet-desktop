@@ -2,12 +2,14 @@ import type HlsType from "hls.js";
 import { channels, programsOf, hhmm, minutes, type Source } from "./data";
 import { settings } from "./settings";
 import { viaProxy } from "./net";
+import { isFav, toggleFav } from "./favs";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const shell = $("shell"), app = $("player"), v = $<HTMLVideoElement>("v"), rail = $("rail"), toast = $("toast"), mark = $("pauseMark");
 const elTitle = $("title"), elTime = $("time"), elAge = $("age"), elBar = $("bar"), elProgress = $("progress");
 const elElapsed = $("elapsed"), elNext = $("next"), elName = $("chName");
 const btnVol = $("btnVol"), vol = $<HTMLInputElement>("vol"), volIcon = document.getElementById("volIcon") as unknown as SVGElement;
+const btnFav = $("btnFav"), btnPip = $("btnPip");
 const btnQ = $("btnQ"), qMenu = $("qMenu"), qLabel = $("qLabel"), guide = $("guide"), gList = $("gList"), gName = $("gName");
 
 export const hooks = { back: () => undefined as void };
@@ -25,6 +27,7 @@ let stuckSince = 0;
 let attempt = 0;
 
 const active = () => shell.dataset.view === "player";
+export const inPip = () => document.pictureInPictureElement === v;
 
 function say(text: string, ms = 2400) {
   toast.textContent = text;
@@ -49,6 +52,8 @@ export function openChannel(i: number) {
   drawRail();
   renderNow();
   renderGuide();
+  paintFav();
+  updateMedia();
   void startSource();
 }
 
@@ -121,7 +126,7 @@ async function startSource() {
 
 /* если картинка стоит на месте — сначала пробуем снова, потом следующий источник */
 setInterval(() => {
-  if (!active() || !hls || v.paused) { stuckSince = performance.now(); return; }
+  if (!(active() || inPip()) || !hls || v.paused) { stuckSince = performance.now(); return; }
   if (v.currentTime !== lastTime) { lastTime = v.currentTime; stuckSince = performance.now(); return; }
   const stuck = performance.now() - stuckSince;
   if (stuck > 12000) nextSource("Канал сейчас недоступен");
@@ -251,6 +256,7 @@ function renderNow() {
     return;
   }
   elTitle.textContent = p.t;
+  if (p.t !== lastMedia) updateMedia();
   elTime.textContent = `${hhmm(p.s)} – ${hhmm(p.e)}`;
   elAge.textContent = p.a;
   elProgress.style.visibility = "visible";
@@ -259,7 +265,7 @@ function renderNow() {
   elNext.textContent = next ? `Далее в ${hhmm(next.s)} — ${next.t}` : "";
   if (now - lastProgress > 30000) { lastProgress = now; renderGuide(); }
 }
-setInterval(() => { if (active()) renderNow(); }, 1000);
+setInterval(() => { if (active() || inPip()) renderNow(); }, 1000);
 window.addEventListener("velvet:epg", () => { if (active()) { renderNow(); renderGuide(); } });
 
 function renderGuide() {
@@ -305,6 +311,59 @@ function renderGuide() {
     gList.append(li);
   }
   gList.querySelector(".now")?.scrollIntoView({ block: "center" });
+}
+
+/* ---------------- избранное, картинка в картинке, медиаклавиши ---------------- */
+
+function paintFav() {
+  const f = isFav(channels[cur].id);
+  btnFav.setAttribute("aria-pressed", String(f));
+  btnFav.setAttribute("aria-label", f ? "Убрать из избранного" : "В избранное");
+}
+btnFav.onclick = () => toggleFav(channels[cur].id);
+window.addEventListener("velvet:fav", paintFav);
+
+btnPip.hidden = !document.pictureInPictureEnabled;
+btnPip.onclick = async () => {
+  try {
+    if (inPip()) await document.exitPictureInPicture();
+    else await v.requestPictureInPicture();
+  } catch { say("Картинка в картинке сейчас недоступна"); }
+};
+v.addEventListener("enterpictureinpicture", () => {
+  btnPip.setAttribute("aria-pressed", "true");
+  if (active()) hooks.back(); // эфир остаётся в маленьком окне, а главное окно возвращается к списку
+});
+v.addEventListener("leavepictureinpicture", () => {
+  btnPip.setAttribute("aria-pressed", "false");
+  if (!active()) leave();
+});
+
+let lastMedia = "";
+function updateMedia() {
+  if (!("mediaSession" in navigator)) return;
+  const c = channels[cur];
+  const now = Date.now();
+  const show = programs().find((x) => x.s <= now && now < x.e);
+  lastMedia = show?.t ?? "";
+  const type = c.logo.endsWith(".jpeg") ? "image/jpeg" : "image/png";
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: show?.t ?? c.name,
+    artist: c.name,
+    album: "Velvet",
+    artwork: c.logo.endsWith(".svg") ? [] : [{ src: new URL(c.logo, location.href).href, sizes: "512x512", type }],
+  });
+}
+if ("mediaSession" in navigator) {
+  const ms = navigator.mediaSession;
+  const on = (action: MediaSessionAction, handler: () => void) => { try { ms.setActionHandler(action, handler); } catch { /* не поддерживается */ } };
+  on("play", () => { if (v.paused) togglePause(); });
+  on("pause", () => { if (!v.paused) v.pause(); });
+  on("previoustrack", () => { if (active() || inPip()) openChannel(cur - 1); });
+  on("nexttrack", () => { if (active() || inPip()) openChannel(cur + 1); });
+  const state = () => { ms.playbackState = v.paused ? "paused" : "playing"; };
+  v.addEventListener("play", state);
+  v.addEventListener("pause", state);
 }
 
 /* ---------------- интерфейс ---------------- */

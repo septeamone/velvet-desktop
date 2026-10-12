@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Velvet</title>
-    <link rel="icon" href="data:," />
+    <link rel="icon" type="image/png" href="/brand.png" />
     <script type="module" src="/src/main.ts" defer></script>
   </head>
   <body>
@@ -15,6 +15,10 @@
           <button type="button" data-tab="tv" aria-selected="true">ТВ</button>
           <button type="button" data-tab="radio" aria-selected="false">Радио</button>
         </nav>
+        <label class="search-box" id="searchBox">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 0 1 5.9 12.1l4.3 4.3-1.4 1.4-4.3-4.3A7.5 7.5 0 1 1 10.5 3zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"/></svg>
+          <input id="search" type="search" placeholder="Поиск каналов и передач" aria-label="Поиск каналов и передач" autocomplete="off" />
+        </label>
         <span class="grow"></span>
         <button class="chip" id="updateChip" type="button" hidden>Доступно обновление</button>
         <button class="top-icon" id="btnSettings" type="button" aria-label="Настройки" aria-pressed="false">
@@ -24,8 +28,9 @@
 
       <main id="home" class="view home">
         <section id="resume" class="resume"></section>
+        <section id="favs" class="favs"></section>
         <section>
-          <h2>Сейчас в эфире</h2>
+          <h2 id="gridTitle">Сейчас в эфире</h2>
           <div class="grid" id="grid"></div>
         </section>
       </main>
@@ -99,11 +104,13 @@
               <button class="icon" id="btnVol" type="button" aria-label="Звук"><svg viewBox="0 0 24 24" id="volIcon"></svg></button>
               <input id="vol" type="range" min="0" max="1" step="0.01" value="1" aria-label="Громкость" />
             </div>
+            <button class="icon" id="btnFav" type="button" aria-label="В избранное" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 17l-5.4 3 1.2-6L3.3 9.8l6.1-.7z"/></svg></button>
             <button class="pill" id="btnGuide" type="button">Программа</button>
             <div class="qwrap">
               <button class="pill" id="btnQ" type="button" aria-haspopup="true"><span id="qLabel">Авто</span></button>
               <div class="menu" id="qMenu" role="menu"></div>
             </div>
+            <button class="icon" id="btnPip" type="button" aria-label="Картинка в картинке"><svg viewBox="0 0 24 24"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 1.98 2 1.98h18c1.1 0 2-.88 2-1.98V5c0-1.1-.9-2-2-2zm0 16.01H3V4.98h18v14.03z"/></svg></button>
             <button class="icon" id="btnFs" type="button" aria-label="На весь экран">
               <svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4z"/></svg>
             </button>

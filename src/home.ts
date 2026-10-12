@@ -1,12 +1,32 @@
 import { channels, nowOf, hhmm, type Channel } from "./data";
+import { isFav, toggleFav } from "./favs";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+const SVG = "http://www.w3.org/2000/svg";
+
+let query = "";
+let openCb: (i: number) => void = () => undefined;
+
+const norm = (s: string) => s.toLowerCase().replace(/ё/g, "е");
+export function setQuery(q: string) {
+  query = norm(q.trim());
+}
+export const hasQuery = () => query !== "";
 
 function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string) {
   const e = document.createElement(tag);
   if (cls) e.className = cls;
   if (text !== undefined) e.textContent = text;
   return e;
+}
+
+function starIcon() {
+  const svg = document.createElementNS(SVG, "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  const path = document.createElementNS(SVG, "path");
+  path.setAttribute("d", "M12 3.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 17l-5.4 3 1.2-6L3.3 9.8l6.1-.7z");
+  svg.append(path);
+  return svg;
 }
 
 function card(c: Channel, onOpen: () => void) {
@@ -37,15 +57,55 @@ function card(c: Channel, onOpen: () => void) {
   return b;
 }
 
+/* карточка + звёздочка «в избранное» (кнопка в кнопке нельзя, поэтому они рядом) */
+function tile(c: Channel, onOpen: () => void) {
+  const wrap = el("div", "tile");
+  const star = el("button", "star");
+  star.type = "button";
+  const fav = isFav(c.id);
+  star.setAttribute("aria-pressed", String(fav));
+  star.setAttribute("aria-label", fav ? `Убрать «${c.name}» из избранного` : `Добавить «${c.name}» в избранное`);
+  star.append(starIcon());
+  star.onclick = () => toggleFav(c.id);
+  wrap.append(card(c, onOpen), star);
+  return wrap;
+}
+
 export function renderHome(onOpen: (i: number) => void) {
-  const grid = $("grid"), resume = $("resume");
-  grid.replaceChildren(...channels.map((c, i) => card(c, () => onOpen(i))));
+  openCb = onOpen;
+  const grid = $("grid"), resume = $("resume"), favs = $("favs");
+  const idx = (c: Channel) => channels.indexOf(c);
+  const searching = hasQuery();
+
+  const list = channels.filter((c) => !searching || norm(`${c.name} ${nowOf(c).cur?.t ?? ""}`).includes(query));
+  grid.replaceChildren(...list.map((c) => tile(c, () => openCb(idx(c)))));
+  $("gridTitle").textContent = searching ? "Найдено" : "Сейчас в эфире";
+  if (!list.length) {
+    const empty = el("p", "nothing");
+    empty.append(el("strong", undefined, "Ничего не найдено"), el("span", undefined, "Попробуйте другое название канала или передачи."));
+    grid.append(empty);
+  }
+
+  resume.replaceChildren();
+  favs.replaceChildren();
+  resume.classList.remove("has");
+  favs.classList.remove("has");
+  if (searching) return;
+
+  const favList = channels.filter((c) => isFav(c.id));
+  if (favList.length) {
+    favs.append(el("h2", undefined, "Избранное"));
+    const g = el("div", "grid");
+    g.append(...favList.map((c) => tile(c, () => openCb(idx(c)))));
+    favs.append(g);
+    favs.classList.add("has");
+  }
+
   let last: string | null = null;
   try { last = localStorage.getItem("velvet.last"); } catch { /* ничего */ }
-  const li = channels.findIndex((c) => c.id === last);
-  resume.replaceChildren();
-  if (li >= 0) {
-    resume.append(el("h2", undefined, "Продолжить"), card(channels[li], () => onOpen(li)));
+  const lc = channels.find((c) => c.id === last);
+  if (lc) {
+    resume.append(el("h2", undefined, "Продолжить"), tile(lc, () => openCb(idx(lc))));
     resume.classList.add("has");
-  } else resume.classList.remove("has");
+  }
 }

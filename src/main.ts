@@ -2,10 +2,10 @@ import "./styles.css";
 import { initNet } from "./net";
 import { channels } from "./data";
 import { loadSettings, setSetting, settings, onSetting, type Settings } from "./settings";
-import { renderHome } from "./home";
+import { renderHome, setQuery } from "./home";
 import { initUpdater } from "./updater";
 import { startEpg } from "./epg";
-import { openChannel, leave, hooks, pokeUi } from "./player";
+import { openChannel, leave, hooks, pokeUi, inPip } from "./player";
 
 type View = "home" | "radio" | "settings" | "player";
 const shell = document.getElementById("shell")!;
@@ -24,7 +24,7 @@ function play(i: number) {
   pokeUi();
 }
 
-hooks.back = () => { leave(); show(tab === "tv" ? "home" : "radio"); };
+hooks.back = () => { if (!inPip()) leave(); show(tab === "tv" ? "home" : "radio"); };
 
 document.querySelectorAll<HTMLElement>("#tabs button").forEach((b) => {
   b.onclick = () => { tab = b.dataset.tab as "tv" | "radio"; show(tab === "tv" ? "home" : "radio"); };
@@ -42,6 +42,23 @@ document.querySelectorAll<HTMLElement>(".seg[data-key]").forEach((seg) => {
 
 setInterval(() => { if (shell.dataset.view === "home") renderHome(play); }, 30000);
 window.addEventListener("velvet:epg", () => { if (shell.dataset.view === "home") renderHome(play); });
+window.addEventListener("velvet:fav", () => { if (shell.dataset.view === "home") renderHome(play); });
+
+/* поиск: набираешь — список сразу сужается; Ctrl+K или «/» — перейти в поиск, Esc — очистить */
+const search = document.getElementById("search") as HTMLInputElement;
+search.addEventListener("input", () => { setQuery(search.value); renderHome(play); });
+search.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { search.value = ""; setQuery(""); renderHome(play); search.blur(); }
+});
+document.addEventListener("keydown", (e) => {
+  if (shell.dataset.view !== "home") return;
+  const typing = document.activeElement instanceof HTMLInputElement;
+  if ((e.ctrlKey && e.key.toLowerCase() === "k") || (e.key === "/" && !typing)) {
+    e.preventDefault();
+    search.focus();
+    search.select();
+  }
+});
 
 loadSettings();
 document.querySelectorAll(".seg[data-key]").forEach((seg) => {
