@@ -5,7 +5,9 @@ export type Source = string | { rutube: string };
 export type Channel = { id: string; name: string; logo: string; sources: Source[]; epg: string | null; tile?: "light" };
 export type Program = { s: number; e: number; t: string; a: string; d: string };
 
-export const channels = channelsData as Channel[];
+/* платные каналы лежат в отдельном локальном файле (его нет в публичном репозитории) */
+const extra = import.meta.glob("./data/paid.json", { eager: true, import: "default" }) as Record<string, Channel[]>;
+export const channels: Channel[] = [...(channelsData as Channel[]), ...Object.values(extra).flat()];
 
 let epg: Record<string, Program[]> = {};
 export const setEpg = (next: Record<string, Program[]>) => { epg = next; };
