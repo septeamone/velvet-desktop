@@ -270,7 +270,11 @@ function renderGuide() {
   if (!list.length) {
     const li = document.createElement("li");
     li.className = "empty";
-    li.textContent = "Для этого канала программы передач пока нет.";
+    const title = document.createElement("strong");
+    title.textContent = "Программы пока нет";
+    const note = document.createElement("span");
+    note.textContent = "Для этого канала расписание недоступно. Эфир идёт в прямом времени.";
+    li.append(title, note);
     gList.append(li);
     return;
   }

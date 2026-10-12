@@ -12,7 +12,12 @@ use axum::{
 };
 use base64::{engine::general_purpose::URL_SAFE_NO_PAD as B64, Engine};
 use serde::Serialize;
-use std::{sync::Arc, time::Duration};
+use reqwest::dns::{Addrs, Name, Resolve, Resolving};
+use std::{
+    net::{IpAddr, SocketAddr},
+    sync::Arc,
+    time::Duration,
+};
 use tower_http::cors::CorsLayer;
 use url::{Host, Url};
 
@@ -39,7 +44,16 @@ pub async fn start() -> Result<ProxyInfo, String> {
 
     let client = reqwest::Client::builder()
         .user_agent(UA)
-        .redirect(reqwest::redirect::Policy::limited(5))
+        .dns_resolver(Arc::new(SafeResolver))
+        .redirect(reqwest::redirect::Policy::custom(|attempt| {
+            if blocked(attempt.url()) {
+                attempt.error("blocked redirect")
+            } else if attempt.previous().len() >= 5 {
+                attempt.stop()
+            } else {
+                attempt.follow()
+            }
+        }))
         .connect_timeout(Duration::from_secs(8))
         .read_timeout(Duration::from_secs(20))
         .build()
@@ -57,13 +71,42 @@ pub async fn start() -> Result<ProxyInfo, String> {
     Ok(ProxyInfo { port, token })
 }
 
+fn private_ip(ip: IpAddr) -> bool {
+    match ip {
+        IpAddr::V4(v) => {
+            let o = v.octets();
+            v.is_loopback() || v.is_private() || v.is_link_local() || v.is_unspecified() || v.is_broadcast() || (o[0] == 100 && (64..128).contains(&o[1]))
+        }
+        IpAddr::V6(v) => {
+            let seg = v.segments();
+            v.is_loopback() || v.is_unspecified() || (seg[0] & 0xfe00) == 0xfc00 || (seg[0] & 0xffc0) == 0xfe80
+        }
+    }
+}
+
+/// Имена сайтов, которые ведут на внутренние адреса (в том числе через подмену DNS), не разрешаем.
+struct SafeResolver;
+
+impl Resolve for SafeResolver {
+    fn resolve(&self, name: Name) -> Resolving {
+        Box::pin(async move {
+            let host = name.as_str().to_string();
+            let addrs: Vec<SocketAddr> = tokio::net::lookup_host((host.as_str(), 0)).await?.filter(|a| !private_ip(a.ip())).collect();
+            if addrs.is_empty() {
+                return Err("address is not allowed".into());
+            }
+            Ok(Box::new(addrs.into_iter()) as Addrs)
+        })
+    }
+}
+
 fn blocked(u: &Url) -> bool {
     if !matches!(u.scheme(), "http" | "https") {
         return true;
     }
     match u.host() {
-        Some(Host::Ipv4(ip)) => ip.is_loopback() || ip.is_private() || ip.is_link_local() || ip.is_unspecified(),
-        Some(Host::Ipv6(ip)) => ip.is_loopback() || ip.is_unspecified(),
+        Some(Host::Ipv4(ip)) => private_ip(IpAddr::V4(ip)),
+        Some(Host::Ipv6(ip)) => private_ip(IpAddr::V6(ip)),
         Some(Host::Domain(d)) => d == "localhost" || d.ends_with(".localhost"),
         None => true,
     }
@@ -106,10 +149,15 @@ async fn handle(
     let is_playlist = url.path().ends_with(".m3u8") || ctype.contains("mpegurl");
 
     if is_playlist && code.is_success() {
-        let bytes = match resp.bytes().await {
-            Ok(b) if b.len() <= MAX_PLAYLIST => b,
-            _ => return status(StatusCode::BAD_GATEWAY, "playlist"),
-        };
+        let mut resp = resp;
+        let mut bytes: Vec<u8> = Vec::new();
+        loop {
+            match resp.chunk().await {
+                Ok(Some(chunk)) if bytes.len() + chunk.len() <= MAX_PLAYLIST => bytes.extend_from_slice(&chunk),
+                Ok(None) => break,
+                _ => return status(StatusCode::BAD_GATEWAY, "playlist"),
+            }
+        }
         let text = String::from_utf8_lossy(&bytes);
         let body = rewrite(&text, &url, st.port, &st.token);
         return Response::builder()
@@ -176,4 +224,36 @@ fn rewrite(body: &str, base: &Url, port: u16, token: &str) -> String {
         }
     }
     out
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn u(s: &str) -> Url {
+        Url::parse(s).unwrap()
+    }
+
+    #[test]
+    fn blocks_internal_addresses() {
+        for bad in ["http://127.0.0.1/x", "http://10.1.2.3/x", "http://192.168.0.1/x", "http://169.254.1.1/x", "http://100.64.0.5/x", "http://[::1]/x", "http://[fd00::1]/x", "http://[fe80::1]/x", "http://localhost/x", "file:///etc/passwd", "ftp://example.com/x"] {
+            assert!(blocked(&u(bad)), "{bad} должен быть заблокирован");
+        }
+    }
+
+    #[test]
+    fn allows_public_addresses() {
+        for ok in ["https://example.com/a.m3u8", "http://45.153.24.78/TNT/index.m3u8", "https://[2606:4700::1111]/x"] {
+            assert!(!blocked(&u(ok)), "{ok} должен быть разрешён");
+        }
+    }
+
+    #[test]
+    fn rewrites_playlist_urls_through_proxy() {
+        let base = u("http://example.com/live/index.m3u8");
+        let out = rewrite("#EXTM3U\n#EXT-X-KEY:METHOD=AES-128,URI=\"key.bin\"\nseg1.ts\n", &base, 1234, "tok");
+        assert!(out.contains("http://127.0.0.1:1234/tok/"));
+        assert!(!out.contains("seg1.ts\n"));
+        assert!(out.lines().count() == 3);
+    }
 }
