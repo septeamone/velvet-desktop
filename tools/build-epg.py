@@ -21,7 +21,7 @@ for ours, names in aliases.items():
         alias_to_ours.setdefault(n.lower(), []).append(ours)
 
 now = datetime.now(timezone.utc)
-lo, hi = now - timedelta(hours=3), now + timedelta(hours=48)
+lo, hi = now - timedelta(hours=3), now + timedelta(hours=30)
 
 
 def ts(s):
@@ -38,6 +38,7 @@ def ts(s):
 def read_source(url):
     """Возвращает {наш_id: {id_в_xmltv: [программы]}}; при обрыве скачивания отдаёт то, что успели прочитать."""
     cand = {}      # id в xmltv -> наши id
+    names_seen = {}  # все названия каналов источника (для подсказок)
     found = {}     # наш id -> id в xmltv -> список
     t0 = time.time()
     try:
@@ -49,6 +50,7 @@ def read_source(url):
                     cid = el.get("id")
                     for dn in el.findall("display-name"):
                         name = (dn.text or "").strip().lower()
+                        names_seen[name] = cid
                         if name in alias_to_ours:
                             cand.setdefault(cid, set()).update(alias_to_ours[name])
                     el.clear()
@@ -59,7 +61,7 @@ def read_source(url):
                         if s and e and e > lo.timestamp() and s < hi.timestamp():
                             title = (el.findtext("title") or "").strip()
                             if title:
-                                desc = (el.findtext("desc") or "").strip()[:160]
+                                desc = (el.findtext("desc") or "").strip()[:110]
                                 age = (el.findtext("rating/value") or "").strip()
                                 for ours in cand[cid]:
                                     found.setdefault(ours, {}).setdefault(cid, []).append([s, e, title, age, desc])
@@ -67,9 +69,11 @@ def read_source(url):
     except Exception as exc:  # обрыв связи: берём частичные данные
         print(f"  ! {url}: {type(exc).__name__}: {exc}", file=sys.stderr)
     print(f"  {url}: {sum(len(v) for d in found.values() for v in d.values())} программ за {time.time()-t0:.0f} с")
+    ALL_NAMES.update(names_seen)
     return found
 
 
+ALL_NAMES = {}
 best = {}
 for url in SOURCES:
     print("Источник", url)
@@ -89,3 +93,7 @@ payload = {"generated": int(now.timestamp()), "channels": out}
 missing = sorted(set(aliases) - set(out))
 print(f"Готово: {len(out)} каналов, {sum(len(v) for v in out.values())} программ, {(ROOT/'data'/'epg.json').stat().st_size//1024} КБ")
 print("Нет программы:", ", ".join(missing) if missing else "нет таких")
+for ours in missing:  # подсказка: похожие названия в источниках
+    key = aliases[ours][0].split()[0]
+    near = sorted(n for n in ALL_NAMES if key in n)[:10]
+    print(f"  {ours}: похожие названия -> {near}")
