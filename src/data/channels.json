@@ -1,0 +1,435 @@
+[
+ {
+  "id": "pervy",
+  "name": "Первый канал",
+  "logo": "/logos/pervy.png",
+  "sources": [
+   {
+    "rutube": "c58f502c7bb34a8fcdd976b221fca292"
+   }
+  ],
+  "epg": "Первый канал"
+ },
+ {
+  "id": "rossiya1",
+  "name": "Россия 1",
+  "logo": "/logos/rossiya1.png",
+  "sources": [
+   "https://stream.smotrim.ru/hls2/russia_hd/playlist_6.m3u8",
+   {
+    "rutube": "2742a3c42be661ea732705f80adb7bdd"
+   }
+  ],
+  "epg": null,
+  "tile": "light"
+ },
+ {
+  "id": "ntv",
+  "name": "НТВ",
+  "logo": "/logos/ntv.png",
+  "sources": [
+   {
+    "rutube": "c37cd74192c6bc3d6cd6077c0c4fd686"
+   },
+   "https://bl.rutube.ru/livestream/c37cd74192c6bc3d6cd6077c0c4fd686/index.m3u8?e=2077050299&s=HSWg81JrQ3OqmwuWkEIDAQ&scheme=https"
+  ],
+  "epg": "НТВ"
+ },
+ {
+  "id": "five",
+  "name": "Пятый канал",
+  "logo": "/logos/five.png",
+  "sources": [
+   "https://fs.uplink.kz/5_kanal/mono.m3u8?token=onlinetv",
+   "http://31.148.5.241/kanal_5/index.m3u8",
+   "http://178.134.1.158:8081/5channel/index.m3u8",
+   "https://cdn4.skygo.mn/live/disk1/Channel_5/HLSv3-FTA/Channel_5.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "ren",
+  "name": "РЕН ТВ",
+  "logo": "/logos/ren.png",
+  "sources": [
+   "https://fs.uplink.kz/ren/mono.m3u8?token=onlinetv",
+   "http://185.23.80.23:8080/REN/index.m3u8",
+   "http://31.148.5.241/kanal_11/index.m3u8",
+   "http://178.134.1.158:8081/RENTV/index.m3u8"
+  ],
+  "epg": "РЕН ТВ. Новости"
+ },
+ {
+  "id": "tvc",
+  "name": "ТВЦ",
+  "logo": "/logos/tvc.svg",
+  "sources": [
+   "https://tvc-hls.cdnvideo.ru/tvc-res/smil:vd9221.smil/playlist.m3u8",
+   "https://fs.uplink.kz/tvc/mono.m3u8?token=onlinetv",
+   "https://stream8.cinerama.uz/1025/tracks-v1a1/mono.m3u8",
+   "http://31.148.5.241/kanal_10/index.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "rossiya24",
+  "name": "Россия 24",
+  "logo": "/logos/rossiya24.png",
+  "sources": [
+   {
+    "rutube": "ad6ba2e9e587406b29978b861b7b7dd1"
+   }
+  ],
+  "epg": null
+ },
+ {
+  "id": "kultura",
+  "name": "Россия К",
+  "logo": "/logos/kultura.png",
+  "sources": [
+   "https://stream.smotrim.ru/hls2/russia_k/playlist_5.m3u8",
+   {
+    "rutube": "d0c0d69362edfbe706cb82d973439bb5"
+   }
+  ],
+  "epg": null
+ },
+ {
+  "id": "otr",
+  "name": "ОТР",
+  "logo": "/logos/otr.svg",
+  "sources": [
+   {
+    "rutube": "faa934385b83f9e8a92f5484defae5fa"
+   },
+   "http://flussonic.linkintel.ru/otr/index.m3u8"
+  ],
+  "epg": "Общественное Телевидение России - ОТР",
+  "tile": "light"
+ },
+ {
+  "id": "zvezda",
+  "name": "Звезда",
+  "logo": "/logos/zvezda.png",
+  "sources": [
+   "https://tvzvezda.bonus-tv.ru/cdn/tvzvezda/playlist.m3u8",
+   {
+    "rutube": "5ab908fccfac5bb43ef2b1e4182256b0"
+   }
+  ],
+  "epg": "ТЕЛЕКАНАЛ ЗВЕЗДА"
+ },
+ {
+  "id": "tnt",
+  "name": "ТНТ",
+  "logo": "/logos/tnt.png",
+  "sources": [
+   "http://stream.mcquack.net/135/index.m3u8"
+  ],
+  "epg": "Телеканал ТНТ"
+ },
+ {
+  "id": "tnt4",
+  "name": "ТНТ4",
+  "logo": "/logos/tnt4.png",
+  "sources": [
+   "http://stream.mcquack.net/106/index.m3u8",
+   "https://fs.uplink.kz/tnt4/mono.m3u8?token=onlinetv",
+   "http://flussonic.linkintel.ru/tnt4/index.m3u8",
+   "http://176.118.197.101/TNT4/index.m3u8"
+  ],
+  "epg": "ТНТ4"
+ },
+ {
+  "id": "sts",
+  "name": "СТС",
+  "logo": "/logos/sts.png",
+  "sources": [
+   "http://stream.mcquack.net/138/index.m3u8"
+  ],
+  "epg": "СТС"
+ },
+ {
+  "id": "stslove",
+  "name": "СТС Love",
+  "logo": "/logos/stslove.png",
+  "sources": [
+   {
+    "rutube": "32dc45cf878497abe1c9695e228f039b"
+   }
+  ],
+  "epg": null
+ },
+ {
+  "id": "tv3",
+  "name": "ТВ-3",
+  "logo": "/logos/tv3.png",
+  "sources": [
+   "http://stream.mcquack.net/136/index.m3u8"
+  ],
+  "epg": "Телеканал ТВ-3"
+ },
+ {
+  "id": "friday",
+  "name": "Пятница!",
+  "logo": "/logos/friday.png",
+  "sources": [
+   "http://stream.mcquack.net/181/index.m3u8"
+  ],
+  "epg": "Пятница"
+ },
+ {
+  "id": "domashniy",
+  "name": "Домашний",
+  "logo": "/logos/domashniy.jpeg",
+  "sources": [
+   "http://stream.mcquack.net/227/index.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "x2x2",
+  "name": "2x2",
+  "logo": "/logos/x2x2.png",
+  "sources": [
+   "http://stream.mcquack.net/187/index.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "subbota",
+  "name": "Суббота!",
+  "logo": "/logos/subbota.png",
+  "sources": [
+   {
+    "rutube": "310744c10a5809da38aa445c952976da"
+   },
+   "http://stream.mcquack.net/269/index.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "u",
+  "name": "Ю",
+  "logo": "/logos/u.png",
+  "sources": [
+   "http://stream.mcquack.net/230/index.m3u8"
+  ],
+  "epg": "Канал Ю"
+ },
+ {
+  "id": "muz",
+  "name": "МУЗ-ТВ",
+  "logo": "/logos/muz.png",
+  "sources": [
+   "http://stream.mcquack.net/86/index.m3u8"
+  ],
+  "epg": "МУЗ-ТВ"
+ },
+ {
+  "id": "che",
+  "name": "Че!",
+  "logo": "/logos/che.png",
+  "sources": [
+   {
+    "rutube": "5bbff90167d1b1d88fda92376ec7a651"
+   },
+   "http://flussonic.linkintel.ru/che/index.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "match",
+  "name": "Матч! Ультра",
+  "logo": "/logos/match.png",
+  "sources": [
+   "http://stream.mcquack.net/169/index.m3u8"
+  ],
+  "epg": null,
+  "tile": "light"
+ },
+ {
+  "id": "matcharena",
+  "name": "Матч! Арена",
+  "logo": "/logos/matcharena.png",
+  "sources": [
+   "http://stream.mcquack.net/163/index.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "matchigra",
+  "name": "Матч! Игра",
+  "logo": "/logos/matchigra.png",
+  "sources": [
+   "http://stream.mcquack.net/188/index.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "matchboets",
+  "name": "Матч! Боец",
+  "logo": "/logos/matchboets.png",
+  "sources": [
+   "http://stream.mcquack.net/112/index.m3u8"
+  ],
+  "epg": null,
+  "tile": "light"
+ },
+ {
+  "id": "matchstrana",
+  "name": "Матч! Страна",
+  "logo": "/logos/matchstrana.png",
+  "sources": [
+   "http://stream.mcquack.net/143/index.m3u8"
+  ],
+  "epg": null,
+  "tile": "light"
+ },
+ {
+  "id": "carousel",
+  "name": "Карусель",
+  "logo": "/logos/carousel.png",
+  "sources": [
+   "https://stream.smotrim.ru/hls2/karusel/playlist_3.m3u8",
+   "http://stream.mcquack.net/120/index.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "mult",
+  "name": "Мульт",
+  "logo": "/logos/mult.png",
+  "sources": [
+   "http://stream.mcquack.net/232/index.m3u8",
+   "https://fs.uplink.kz/mult/mono.m3u8?token=onlinetv",
+   "https://stream8.cinerama.uz/1246/tracks-v1a1/mono.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "multilandia",
+  "name": "Мультилэндия",
+  "logo": "/logos/multilandia.png",
+  "sources": [
+   "https://fs.uplink.kz/multilandia/mono.m3u8?token=onlinetv",
+   "https://stream8.cinerama.uz/1440/tracks-v1a1/mono.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "multmuz",
+  "name": "Мульт и музыка",
+  "logo": "/logos/multmuz.png",
+  "sources": [
+   "http://stream.mcquack.net/82/index.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "izvestia",
+  "name": "Известия",
+  "logo": "/logos/izvestia.png",
+  "sources": [
+   {
+    "rutube": "3c47861a8b4b51639e41be092053b966"
+   }
+  ],
+  "epg": null,
+  "tile": "light"
+ },
+ {
+  "id": "moscow24",
+  "name": "Москва 24",
+  "logo": "/logos/moscow24.png",
+  "sources": [
+   {
+    "rutube": "ca70d39eba2e8771358bbcb4bfbad860"
+   }
+  ],
+  "epg": null,
+  "tile": "light"
+ },
+ {
+  "id": "ch360",
+  "name": "360",
+  "logo": "/logos/ch360.png",
+  "sources": [
+   {
+    "rutube": "07beff61e617797db550cc3a5f6ad92b"
+   }
+  ],
+  "epg": null
+ },
+ {
+  "id": "spas",
+  "name": "СПАС",
+  "logo": "/logos/spas.png",
+  "sources": [
+   {
+    "rutube": "2bbfa9ebf9d79ade480d7281fcef1008"
+   }
+  ],
+  "epg": "Телеканал СПАС"
+ },
+ {
+  "id": "moymir",
+  "name": "Мой мир",
+  "logo": "/logos/moymir.png",
+  "sources": [
+   {
+    "rutube": "0064bd09060c8b8469fef19f269e8a8a"
+   },
+   "https://moymir.ru/hls/onair.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "prosv",
+  "name": "Просвещение",
+  "logo": "/logos/prosv.png",
+  "sources": [
+   "http://cdn-01.bonus-tv.ru/prosveschenie_edge/index.m3u8"
+  ],
+  "epg": null
+ },
+ {
+  "id": "brics",
+  "name": "ТВ БРИКС",
+  "logo": "/logos/brics.png",
+  "sources": [
+   "http://185.23.80.23:8080/TVBRICS/index.m3u8"
+  ],
+  "epg": null,
+  "tile": "light"
+ },
+ {
+  "id": "euronews",
+  "name": "Euronews",
+  "logo": "/logos/euronews.png",
+  "sources": [
+   "https://cdn-euronews.akamaized.net/live/eds/euronews-ru/25071/index.m3u8"
+  ],
+  "epg": null,
+  "tile": "light"
+ },
+ {
+  "id": "curtime",
+  "name": "Настоящее время",
+  "logo": "/logos/curtime.png",
+  "sources": [
+   "https://rfe-ingest.akamaized.net/hls/live/2033043/tvmc05/master.m3u8"
+  ],
+  "epg": null,
+  "tile": "light"
+ },
+ {
+  "id": "mir24",
+  "name": "Мир 24",
+  "logo": "/logos/mir24.png",
+  "sources": [
+   "http://hls.mirtv.cdnvideo.ru/mirtv-parampublish/mir24_2500/playlist.m3u8"
+  ],
+  "epg": null
+ }
+]

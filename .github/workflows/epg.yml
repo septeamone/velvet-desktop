@@ -1,0 +1,30 @@
+name: Программа передач
+
+on:
+  schedule:
+    - cron: "17 */4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Собрать программу
+        run: python tools/build-epg.py
+      - name: Сохранить, если изменилась
+        run: |
+          git config user.name "septeamone"
+          git config user.email "262090161+septeamone@users.noreply.github.com"
+          git add data/epg.json
+          if ! git diff --staged --quiet; then
+            git commit -m "Обновить программу передач"
+            git push
+          fi

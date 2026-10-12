@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Velvet</title>
+    <link rel="icon" href="data:," />
+    <script type="module" src="/src/main.ts" defer></script>
+  </head>
+  <body>
+    <div id="shell" data-view="home">
+      <header class="top">
+        <div class="brand"><i class="mark"></i>Velvet</div>
+        <nav class="tabs" id="tabs" aria-label="Разделы">
+          <button type="button" data-tab="tv" aria-selected="true">ТВ</button>
+          <button type="button" data-tab="radio" aria-selected="false">Радио</button>
+        </nav>
+        <span class="grow"></span>
+        <button class="chip" id="updateChip" type="button" hidden>Доступно обновление</button>
+        <button class="top-icon" id="btnSettings" type="button" aria-label="Настройки" aria-pressed="false">
+          <svg viewBox="0 0 24 24"><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.6 7.6 0 0 0-1.7-1L15 3h-4l-.4 3a7.6 7.6 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.5 7.5 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.6 7.6 0 0 0 1.7 1l.4 3h4l.4-3a7.6 7.6 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6zM13 15.5A3.5 3.5 0 1 1 13 8.5a3.5 3.5 0 0 1 0 7z"/></svg>
+        </button>
+      </header>
+
+      <main id="home" class="view home">
+        <section id="resume" class="resume"></section>
+        <section>
+          <h2>Сейчас в эфире</h2>
+          <div class="grid" id="grid"></div>
+        </section>
+      </main>
+
+      <main id="radio" class="view radio">
+        <p class="soon">Velvet Radio скоро появится здесь.</p>
+      </main>
+
+      <main id="settings" class="view settings-view">
+        <div class="settings">
+          <h1 class="page-title">Настройки</h1>
+          <div class="row">
+            <div><strong>Тема</strong><p>Как выглядит приложение</p></div>
+            <div class="seg" data-key="theme">
+              <button type="button" data-value="system">Системная</button>
+              <button type="button" data-value="dark">Тёмная</button>
+              <button type="button" data-value="light">Светлая</button>
+            </div>
+          </div>
+          <div class="row">
+            <div><strong>Качество видео</strong><p>«Экономное» подходит для слабого интернета</p></div>
+            <div class="seg" data-key="quality">
+              <button type="button" data-value="auto">Авто</button>
+              <button type="button" data-value="high">Высокое</button>
+              <button type="button" data-value="low">Экономное</button>
+            </div>
+          </div>
+          <div class="row">
+            <div><strong>Время передач</strong><p>По какому времени показывать программу</p></div>
+            <div class="seg" data-key="tz">
+              <button type="button" data-value="local">Местное</button>
+              <button type="button" data-value="msk">Московское</button>
+            </div>
+          </div>
+          <div class="row">
+            <div><strong>При запуске</strong><p>Что открывать, когда вы включаете программу</p></div>
+            <div class="seg" data-key="start">
+              <button type="button" data-value="home">Главный экран</button>
+              <button type="button" data-value="last">Последний канал</button>
+            </div>
+          </div>
+          <div class="row">
+            <div><strong>О программе</strong><p id="version">Версия</p><p id="updateStatus" class="status" role="status"></p></div>
+            <button class="btn" id="btnCheck" type="button">Проверить обновления</button>
+          </div>
+        </div>
+      </main>
+
+      <div id="player" class="player show">
+        <video id="v" playsinline></video>
+
+        <button class="back" id="btnBack" type="button" aria-label="На главную">
+          <svg viewBox="0 0 24 24"><path d="M15.5 4.5L8 12l7.5 7.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </button>
+        <nav id="rail" class="rail" aria-label="Каналы"></nav>
+
+        <div id="toast" class="toast" role="status"></div>
+        <div id="pauseMark" class="pause-mark" aria-hidden="true"></div>
+
+        <section class="hud" id="hud">
+          <div class="now">
+            <div class="live"><i></i><span id="chName">Прямой эфир</span></div>
+            <h1 id="title">&nbsp;</h1>
+            <div class="meta"><span id="time"></span><span id="age" class="age"></span></div>
+            <div class="progress" id="progress" aria-hidden="true"><b id="bar"></b></div>
+            <div class="sub"><span id="elapsed"></span><span id="next"></span></div>
+          </div>
+
+          <div class="tools">
+            <div class="vol">
+              <button class="icon" id="btnVol" type="button" aria-label="Звук"><svg viewBox="0 0 24 24" id="volIcon"></svg></button>
+              <input id="vol" type="range" min="0" max="1" step="0.01" value="1" aria-label="Громкость" />
+            </div>
+            <button class="pill" id="btnGuide" type="button">Программа</button>
+            <div class="qwrap">
+              <button class="pill" id="btnQ" type="button" aria-haspopup="true"><span id="qLabel">Авто</span></button>
+              <div class="menu" id="qMenu" role="menu"></div>
+            </div>
+            <button class="icon" id="btnFs" type="button" aria-label="На весь экран">
+              <svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4z"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <aside class="guide" id="guide" aria-label="Программа передач">
+          <header>
+            <div>
+              <h2 id="gName"></h2>
+              <p>Эфир на сутки вперёд</p>
+            </div>
+            <button class="icon" id="gClose" type="button" aria-label="Закрыть">
+              <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+            </button>
+          </header>
+          <ol id="gList"></ol>
+        </aside>
+      </div>
+
+      <div id="banner" class="banner" role="status">
+        <span id="bannerText">Доступно обновление</span>
+        <span class="banner-bar"><b id="bannerBar"></b></span>
+        <button class="btn primary" id="bannerInstall" type="button">Обновить</button>
+        <button class="btn" id="bannerLater" type="button">Позже</button>
+      </div>
+    </div>
+  </body>
+</html>
