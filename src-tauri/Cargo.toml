@@ -1,6 +1,6 @@
 [package]
 name = "velvet-radio-desktop"
-version = "1.0.1"
+version = "1.0.2"
 description = "Velvet TV и радио"
 authors = ["septeamone"]
 edition = "2024"

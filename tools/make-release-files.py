@@ -14,7 +14,7 @@ if not setup.exists() or not sig.exists():
 
 latest = {
     "version": version,
-    "notes": "Усилена защита самообновления портативной версии: нельзя подсунуть старую версию.",
+    "notes": "Радио: после паузы подключается к живому эфиру, быстрее старт, меньше заиканий. Усилена защита самообновления.",
     "pub_date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     "platforms": {
         "windows-x86_64": {
