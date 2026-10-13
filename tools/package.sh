@@ -25,7 +25,7 @@ trap restore EXIT
 collect() { # $1 — суффикс имени
   local nsis="src-tauri/target/release/bundle/nsis"
   local setup
-  setup="$(ls "$nsis"/*_x64-setup.exe | head -1)"
+  setup="$nsis/Velvet TV_${VERSION}_x64-setup.exe"; [ -f "$setup" ] || { echo "Нет установщика $setup"; return 1; }
   cp "$setup" "$OUT/VelvetTV_${VERSION}_Setup$1.exe"
   [ -f "$setup.sig" ] && cp "$setup.sig" "$OUT/VelvetTV_${VERSION}_Setup$1.exe.sig"
   cp src-tauri/target/release/velvet-tv.exe "$OUT/VelvetTV_${VERSION}_portable$1.exe"

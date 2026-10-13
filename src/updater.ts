@@ -72,7 +72,7 @@ async function install() {
     text.textContent = "Загружаю обновление…";
     bar.style.width = "100%";
     try {
-      await t!.core.invoke("portable_update", { url: pendingPortable.url, signature: pendingPortable.signature });
+      await t!.core.invoke("portable_update", { url: pendingPortable.url, signature: pendingPortable.signature, version: pendingPortable.version });
     } catch {
       busy = false;
       banner().classList.remove("busy");

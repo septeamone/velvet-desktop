@@ -14,7 +14,7 @@ if not setup.exists() or not sig.exists():
 
 latest = {
     "version": version,
-    "notes": "Первый выпуск: ТВ с программой и выбором качества, радио на 400+ станций, картинка в картинке, избранное, свой порядок.",
+    "notes": "Усилена защита самообновления портативной версии: нельзя подсунуть старую версию.",
     "pub_date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     "platforms": {
         "windows-x86_64": {

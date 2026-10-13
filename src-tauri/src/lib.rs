@@ -16,7 +16,7 @@ fn is_portable() -> bool {
 
 /// Обновление портативной версии: скачать, проверить подпись, подменить файл, запустить новую копию и закрыться.
 #[tauri::command]
-async fn portable_update(app: tauri::AppHandle, url: String, signature: String) -> Result<(), String> {
+async fn portable_update(app: tauri::AppHandle, url: String, signature: String, version: String) -> Result<(), String> {
     if !portable::is_portable() {
         return Err("not portable".into());
     }
@@ -30,7 +30,8 @@ async fn portable_update(app: tauri::AppHandle, url: String, signature: String) 
         .ok_or("no public key")?
         .to_string();
     let bytes = portable::download(&url).await?;
-    portable::verify(&bytes, &signature, &pubkey)?;
+    let signed = portable::verify(&bytes, &signature, &pubkey)?;
+    portable::check_binding(&signed, &version, &url, &app.package_info().version.to_string())?;
     let exe = std::env::current_exe().map_err(|e| e.to_string())?;
     portable::swap(&exe, &bytes)?;
     std::process::Command::new(&exe).spawn().map_err(|e| e.to_string())?;
