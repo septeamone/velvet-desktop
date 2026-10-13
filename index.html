@@ -81,6 +81,8 @@
       <main id="settings" class="view settings-view">
         <div class="settings">
           <h1 class="page-title">Настройки</h1>
+
+          <h2>Общие</h2>
           <div class="row">
             <div><strong>Тема</strong><p>Как выглядит приложение</p></div>
             <div class="seg" data-key="theme">
@@ -89,6 +91,19 @@
               <button type="button" data-value="light">Светлая</button>
             </div>
           </div>
+          <div class="row">
+            <div><strong>При запуске</strong><p>Что открывать, когда вы включаете программу</p></div>
+            <div class="seg" data-key="start">
+              <button type="button" data-value="home">Главный экран</button>
+              <button type="button" data-value="last">Последний канал</button>
+            </div>
+          </div>
+          <div class="row">
+            <div><strong>Порядок</strong><p>Каналы и станции можно перетаскивать мышью. Здесь порядок можно вернуть как был.</p></div>
+            <button class="btn" id="btnResetOrder" type="button">Сбросить порядок</button>
+          </div>
+
+          <h2>ТВ</h2>
           <div class="row">
             <div><strong>Качество видео</strong><p>«Экономное» подходит для слабого интернета</p></div>
             <div class="seg" data-key="quality">
@@ -105,17 +120,6 @@
             </div>
           </div>
           <div class="row">
-            <div><strong>При запуске</strong><p>Что открывать, когда вы включаете программу</p></div>
-            <div class="seg" data-key="start">
-              <button type="button" data-value="home">Главный экран</button>
-              <button type="button" data-value="last">Последний канал</button>
-            </div>
-          </div>
-          <div class="row">
-            <div><strong>Порядок</strong><p>Каналы и станции можно перетаскивать мышью. Здесь порядок можно вернуть как был.</p></div>
-            <button class="btn" id="btnResetOrder" type="button">Сбросить порядок</button>
-          </div>
-          <div class="row">
             <div><strong>Каналы 18+</strong><p>Показывать каналы для взрослых, которые вы добавили сами. Вам должно быть 18 лет.</p></div>
             <div class="seg" data-key="adult">
               <button type="button" data-value="off">Скрыты</button>
@@ -127,9 +131,38 @@
             <button class="btn" id="btnAddChannel" type="button">Добавить канал</button>
           </div>
           <ul class="custom-list" id="customList"></ul>
+
+          <h2>Радио</h2>
           <div class="row">
-            <div><strong>О программе</strong><p id="version">Версия</p><p id="updateStatus" class="status" role="status"></p></div>
-            <button class="btn" id="btnCheck" type="button">Проверить обновления</button>
+            <div><strong>Плавное переключение станций</strong><p>Старая станция играет, пока подключается новая, потом звук плавно переходит. Если выключить, старая замолкает сразу.</p></div>
+            <div class="seg" data-key="rsmooth">
+              <button type="button" data-value="on">Включено</button>
+              <button type="button" data-value="off">Выключено</button>
+            </div>
+          </div>
+          <div class="row">
+            <div><strong>Старт радио</strong><p>«Надёжнее»: старт около 7 секунд, зато запас на 6 секунд, если интернет просядет. «Быстрее»: старт за 1–3 секунды, запас небольшой.</p></div>
+            <div class="seg" data-key="rstart">
+              <button type="button" data-value="safe">Надёжнее</button>
+              <button type="button" data-value="fast">Быстрее</button>
+            </div>
+          </div>
+          <div class="row">
+            <div><strong>Качество радио</strong><p>Отдельно от видео. «Экономное» подходит для слабого интернета.</p></div>
+            <div class="seg" data-key="rquality">
+              <button type="button" data-value="auto">Авто</button>
+              <button type="button" data-value="high">Высокое</button>
+              <button type="button" data-value="low">Экономное</button>
+            </div>
+          </div>
+
+          <h2>О программе</h2>
+          <div class="row">
+            <div><strong>Velvet TV</strong><p id="version">Версия</p><p id="updateStatus" class="status" role="status"></p></div>
+            <div class="row-actions">
+              <button class="btn" id="btnNews" type="button">Что нового</button>
+              <button class="btn" id="btnCheck" type="button">Проверить обновления</button>
+            </div>
           </div>
         </div>
       </main>
@@ -214,6 +247,14 @@
         <p class="eq-note">Один для всех станций. Двойной щелчок по полосе — сбросить её.</p>
       </div>
 
+      <dialog id="newsDlg" class="dlg news" aria-labelledby="newsTitle">
+        <h3 id="newsTitle">Что нового</h3>
+        <div id="newsBody" class="news-body"></div>
+        <div class="dlg-actions">
+          <button class="btn primary" id="newsClose" type="button">Понятно</button>
+        </div>
+      </dialog>
+
       <dialog id="addDlg" class="dlg" aria-labelledby="addTitle">
         <form id="addForm">
           <h3 id="addTitle">Новый канал</h3>
@@ -231,6 +272,7 @@
       <div id="banner" class="banner" role="status">
         <span id="bannerText">Доступно обновление</span>
         <span class="banner-bar"><b id="bannerBar"></b></span>
+        <button class="btn" id="bannerNews" type="button" hidden>Что нового</button>
         <button class="btn primary" id="bannerInstall" type="button">Обновить</button>
         <button class="btn" id="bannerLater" type="button">Позже</button>
       </div>

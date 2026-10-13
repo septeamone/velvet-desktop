@@ -221,7 +221,7 @@ function attempt(s: Slot, url: string, isHls: boolean, ctl: { cancel: () => void
           h.loadSource(viaProxy(url));
           h.attachMedia(s.el);
         } else {
-          s.el.src = viaLive(url);
+          s.el.src = viaLive(url, settings.rstart === "fast" ? 0 : 6);
         }
         await s.el.play();
       } catch (e) {
@@ -247,7 +247,7 @@ function pickQuality(s: Station): RQ {
   const vis = shown(s);
   const exact = wanted ? vis.find((x) => x.k === wanted) : undefined;
   if (exact) return exact;
-  return settings.quality === "low" ? vis[0] : vis[vis.length - 1];
+  return settings.rquality === "low" ? vis[0] : vis[vis.length - 1];
 }
 
 /* ---------- память об адресах: что последним играло хорошо, что только что падало ---------- */
@@ -395,6 +395,11 @@ export function play(s: Station) {
   }
   state.track = "";
   fetchNow(s);
+  if (settings.rsmooth === "off") { // без плавного перехода прежняя станция замолкает сразу
+    for (const sl of slots) wipe(sl);
+    state.status = "connecting";
+    emit();
+  }
   void connect(s);
   installMedia();
 }

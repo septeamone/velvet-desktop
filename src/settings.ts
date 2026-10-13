@@ -6,9 +6,12 @@ export type Settings = {
   tz: "local" | "msk";
   start: "home" | "last";
   adult: "off" | "on";
+  rsmooth: "on" | "off"; // радио: плавное переключение станций
+  rstart: "safe" | "fast"; // радио: надёжный старт с запасом или быстрый
+  rquality: "auto" | "high" | "low"; // радио: качество по умолчанию
 };
 
-export const settings: Settings = { theme: "dark", quality: "auto", tz: "local", start: "home", adult: "off" };
+export const settings: Settings = { theme: "dark", quality: "auto", tz: "local", start: "home", adult: "off", rsmooth: "on", rstart: "safe", rquality: "auto" };
 
 const KEY = "velvet.settings";
 const listeners: Array<(k: keyof Settings) => void> = [];

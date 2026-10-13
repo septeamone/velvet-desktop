@@ -4,7 +4,7 @@
 
 use axum::{
     body::{Body, Bytes},
-    extract::{Path, State},
+    extract::{Path, Query, State},
     http::{header, HeaderMap, HeaderName, HeaderValue, StatusCode},
     response::Response,
     routing::get,
@@ -14,6 +14,7 @@ use base64::{engine::general_purpose::URL_SAFE_NO_PAD as B64, Engine};
 use serde::Serialize;
 use reqwest::dns::{Addrs, Name, Resolve, Resolving};
 use std::{
+    collections::HashMap,
     net::{IpAddr, SocketAddr},
     sync::{
         atomic::{AtomicUsize, Ordering},
@@ -146,15 +147,28 @@ fn status(code: StatusCode, text: &str) -> Response {
 }
 
 async fn handle(State(st): State<AppState>, Path((token, target)): Path<(String, String)>, req_headers: HeaderMap) -> Response {
-    serve(st, token, target, req_headers, false).await
+    serve(st, token, target, req_headers, None).await
 }
 
 /// Прямой эфир (Icecast/Shoutcast): если станция оборвала соединение, прокси сам тихо переподключается.
-async fn handle_live(State(st): State<AppState>, Path((token, target)): Path<(String, String)>, req_headers: HeaderMap) -> Response {
-    serve(st, token, target, req_headers, true).await
+async fn handle_live(
+    State(st): State<AppState>,
+    Path((token, target)): Path<(String, String)>,
+    Query(q): Query<HashMap<String, String>>,
+    req_headers: HeaderMap,
+) -> Response {
+    serve(st, token, target, req_headers, Some(prefill_from(&q))).await
 }
 
-async fn serve(st: AppState, token: String, target: String, req_headers: HeaderMap, live: bool) -> Response {
+/// Сколько секунд эфира копить перед стартом: приложение просит через ?p=…; по умолчанию 6, не больше 15.
+fn prefill_from(q: &HashMap<String, String>) -> Duration {
+    Duration::from_secs(q.get("p").and_then(|v| v.parse::<u64>().ok()).unwrap_or(6).min(15))
+}
+
+/// `live`: Some(запас) — прямой эфир станции (с переподключением), None — обычный запрос.
+async fn serve(st: AppState, token: String, target: String, req_headers: HeaderMap, live: Option<Duration>) -> Response {
+    let prefill = live.unwrap_or_default();
+    let live = live.is_some();
     if token != *st.token {
         return status(StatusCode::NOT_FOUND, "not found");
     }
@@ -252,7 +266,7 @@ async fn serve(st: AppState, token: String, target: String, req_headers: HeaderM
     if pump {
         let (tx, rx) = live_channel();
         let client = st.client.clone();
-        tauri::async_runtime::spawn(pump_live(client, url, resp, tx, LiveCfg::default()));
+        tauri::async_runtime::spawn(pump_live(client, url, resp, tx, LiveCfg { prefill, ..LiveCfg::default() }));
         return out.body(Body::from_stream(rx)).unwrap();
     }
     out.body(Body::from_stream(resp.bytes_stream())).unwrap()
@@ -574,6 +588,16 @@ mod tests {
             tokio::time::sleep(Duration::from_millis(100 * (chunk.len() / 10) as u64)).await; // играем то, что взяли
         }
         assert!(worst < Duration::from_millis(400), "плеер увидел паузу {worst:?}, а запас должен был её спрятать");
+    }
+
+    #[test]
+    fn prefill_comes_from_query_with_limits() {
+        let q = |v: &str| HashMap::from([("p".to_string(), v.to_string())]);
+        assert_eq!(prefill_from(&HashMap::new()), Duration::from_secs(6));
+        assert_eq!(prefill_from(&q("0")), Duration::ZERO);
+        assert_eq!(prefill_from(&q("9")), Duration::from_secs(9));
+        assert_eq!(prefill_from(&q("999")), Duration::from_secs(15));
+        assert_eq!(prefill_from(&q("abc")), Duration::from_secs(6));
     }
 
     #[test]

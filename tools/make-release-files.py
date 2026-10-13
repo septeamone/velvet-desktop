@@ -12,9 +12,17 @@ sig = out / f"VelvetTV_{version}_Setup.exe.sig"
 if not setup.exists() or not sig.exists():
     sys.exit("Нет установщика или подписи в " + str(out))
 
+# что нового берём из src/data/changelog.json (то же видит человек в окне «Что нового»)
+changelog = json.loads((Path(__file__).resolve().parent.parent / "src" / "data" / "changelog.json").read_text(encoding="utf-8"))
+items = next((e["items"] for e in changelog if e["version"] == version), None)
+if not items:
+    sys.exit(f"В src/data/changelog.json нет записи про версию {version}: добавьте, что нового")
+notes = chr(10).join("• " + t for t in items)
+(out / "notes.md").write_text(chr(10).join("- " + t for t in items) + chr(10), encoding="utf-8")
+
 latest = {
     "version": version,
-    "notes": "Радио: после паузы подключается к живому эфиру, быстрее старт, меньше заиканий. Усилена защита самообновления.",
+    "notes": notes,
     "pub_date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     "platforms": {
         "windows-x86_64": {
@@ -74,7 +82,7 @@ gh release view v{version} >nul 2>&1
 if %errorlevel%==0 (
   gh release upload v{version} {quoted} --clobber
 ) else (
-  gh release create v{version} {quoted} --title "Velvet TV {version}" --notes "{latest['notes']}"
+  gh release create v{version} {quoted} --title "Velvet TV {version}" --notes-file "notes.md"
 )
 echo.
 if %errorlevel%==0 (echo ГОТОВО. Теперь у всех, у кого стоит программа, появится кнопка «Обновить».) else (echo НЕ ПОЛУЧИЛОСЬ. Покажи этот текст Клоду.)

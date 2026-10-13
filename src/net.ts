@@ -15,4 +15,4 @@ const b64url = (s: string) => btoa(s).replace(/\+/g, "-").replace(/\//g, "_").re
 export const viaProxy = (url: string) => (base ? base + b64url(url) : url);
 
 /* прямой эфир Icecast/Shoutcast: прокси сам переподключается к станции, если она оборвала поток */
-export const viaLive = (url: string) => (base ? `${base}live/${b64url(url)}` : url);
+export const viaLive = (url: string, prefill = 6) => (base ? `${base}live/${b64url(url)}?p=${prefill}` : url); // prefill — сколько секунд эфира прокси копит перед стартом

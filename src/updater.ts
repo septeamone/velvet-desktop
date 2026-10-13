@@ -1,11 +1,12 @@
 import { tauri, type UpdateInfo } from "./tauri";
 import { viaProxy } from "./net";
+import { bindNews, hasNews, initNews, showNews } from "./news";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
 /* Установленная версия обновляется встроенным механизмом Tauri (установщик). Портативная заменяет сама себя новым файлом. */
 const PORTABLE_JSON = "https://github.com/septeamone/velvet-desktop/releases/latest/download/latest-portable.json";
-type PortableInfo = { version: string; url: string; signature: string };
+type PortableInfo = { version: string; url: string; signature: string; notes?: string };
 
 let pending: UpdateInfo | null = null;
 let pendingPortable: PortableInfo | null = null;
@@ -27,7 +28,11 @@ function newer(a: string, b: string): boolean {
   return false;
 }
 
-function announce(version: string) {
+let found: { version: string; notes?: string } | null = null; // найденное обновление: для окна «Что нового»
+
+function announce(version: string, notes?: string) {
+  found = { version, notes };
+  $("bannerNews").hidden = !hasNews(version, notes);
   setStatus(`Доступна версия ${version}.`);
   chip().hidden = false;
   $("bannerText").textContent = `Доступна версия ${version}`;
@@ -47,13 +52,13 @@ export async function checkForUpdate(): Promise<CheckResult> {
       const info = (await r.json()) as PortableInfo;
       if (!newer(info.version, await t.app.getVersion())) { setStatus("У вас последняя версия."); return "none"; }
       pendingPortable = info;
-      announce(info.version);
+      announce(info.version, info.notes);
       return "found";
     }
     const u = await t.updater.check();
     if (!u) { setStatus("У вас последняя версия."); return "none"; }
     pending = u;
-    announce(u.version);
+    announce(u.version, u.body);
     return "found";
   } catch {
     setStatus("Не удалось проверить обновления. Проверьте подключение к интернету.");
@@ -102,12 +107,18 @@ async function install() {
 
 export async function initUpdater() {
   const t = tauri();
+  bindNews();
   if (t) {
     try { portable = await t.core.invoke<boolean>("is_portable"); } catch { portable = false; }
-    try { $("version").textContent = `Velvet TV · версия ${await t.app.getVersion()}${portable ? " · портативная" : ""}`; } catch { /* ничего */ }
+    try {
+      const v = await t.app.getVersion();
+      $("version").textContent = `Velvet TV · версия ${v}${portable ? " · портативная" : ""}`;
+      initNews(v);
+    } catch { /* ничего */ }
   } else $("version").textContent = "Версия для разработки";
   $("btnCheck").onclick = () => void checkForUpdate();
   $("bannerInstall").onclick = () => void install();
+  $("bannerNews").onclick = () => { if (found) showNews(found); };
   $("bannerLater").onclick = () => banner().classList.remove("open");
   chip().onclick = () => banner().classList.add("open");
   // тихая проверка после запуска
