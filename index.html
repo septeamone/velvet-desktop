@@ -39,21 +39,30 @@
         <div class="r-layout">
           <section class="r-left">
             <div class="r-tools">
-              <input id="rSearch" class="search" type="search" placeholder="Найти станцию, страну или жанр" aria-label="Поиск станции" autocomplete="off" />
-              <div id="rCountries" class="chips" aria-label="Страны"></div>
-              <div id="rGenres" class="chips" aria-label="Жанры"></div>
+              <div class="r-bar">
+                <input id="rSearch" class="search" type="search" placeholder="Найти станцию, страну или жанр" aria-label="Поиск станции" autocomplete="off" />
+                <button id="fFav" class="f-btn" type="button" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8 3.4 5 6.6 5c2 0 3.5 1.1 4.4 2.6h2C13.9 6.1 15.4 5 17.4 5c3.2 0 5.1 3 3.9 6.3-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg><span>Избранное</span></button>
+                <div class="f-wrap">
+                  <button id="fCountry" class="f-btn" type="button" aria-haspopup="listbox" aria-expanded="false"></button>
+                  <div id="pCountry" class="pop" role="listbox" aria-label="Страна"></div>
+                </div>
+                <div class="f-wrap">
+                  <button id="fGenre" class="f-btn" type="button" aria-haspopup="listbox" aria-expanded="false"></button>
+                  <div id="pGenre" class="pop" role="listbox" aria-label="Жанр"></div>
+                </div>
+              </div>
             </div>
             <div id="rGrid" class="rgrid"></div>
           </section>
           <aside id="rPanel" class="r-panel empty" aria-label="Сейчас играет">
             <div class="art">
               <span class="p-logo" id="pLogo"></span>
-              <canvas id="pViz" class="viz" aria-hidden="true"></canvas>
             </div>
             <div class="p-status"><i></i><span id="pStatus">Выберите станцию</span></div>
             <h2 id="pName">Velvet Radio</h2>
             <p class="p-meta" id="pMeta"></p>
             <p class="p-track" id="pTrack"></p>
+            <canvas id="pViz" class="viz-line" aria-hidden="true"></canvas>
             <div class="p-q" id="pQ" role="radiogroup" aria-label="Качество звука"></div>
             <div class="p-ctrl">
               <button id="pPrev" class="m-btn" type="button" aria-label="Предыдущая станция"><svg viewBox="0 0 24 24"><path d="M6 5h2.2v14H6zM9.5 12l9.5-7v14z"/></svg></button>
@@ -100,6 +109,10 @@
               <button type="button" data-value="home">Главный экран</button>
               <button type="button" data-value="last">Последний канал</button>
             </div>
+          </div>
+          <div class="row">
+            <div><strong>Порядок</strong><p>Каналы и станции можно перетаскивать мышью. Здесь порядок можно вернуть как был.</p></div>
+            <button class="btn" id="btnResetOrder" type="button">Сбросить порядок</button>
           </div>
           <div class="row">
             <div><strong>Каналы 18+</strong><p>Показывать каналы для взрослых, которые вы добавили сами. Вам должно быть 18 лет.</p></div>

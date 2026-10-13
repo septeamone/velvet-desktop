@@ -11,13 +11,30 @@ const extra = import.meta.glob("./data/paid.json", { eager: true, import: "defau
 const baseChannels: Channel[] = [...(channelsData as Channel[]), ...Object.values(extra).flat()];
 
 /* общий список: встроенные каналы + свои; взрослые видны только когда это включено в настройках */
+const ORDER_KEY = "velvet.order.tv";
+function loadOrder(): string[] {
+  try { return JSON.parse(localStorage.getItem(ORDER_KEY) ?? "[]") as string[]; } catch { return []; }
+}
+export function saveOrder(ids: string[]) {
+  try { localStorage.setItem(ORDER_KEY, JSON.stringify(ids)); } catch { /* не страшно */ }
+}
+export function resetOrder() {
+  try { localStorage.removeItem(ORDER_KEY); localStorage.removeItem("velvet.rorder"); } catch { /* не страшно */ }
+  window.dispatchEvent(new Event("velvet:order-reset"));
+}
+
 export const channels: Channel[] = [];
 export function rebuildChannels() {
   const mine: Channel[] = loadCustom()
     .filter((c) => !c.adult || settings.adult === "on")
     .map((c) => ({ id: c.id, name: c.name, logo: "", sources: [c.url], epg: null, custom: true, adult: c.adult, hue: [...c.name].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) % 360, 7) }));
+  const all = [...baseChannels, ...mine];
+  const saved = loadOrder();
+  const rank = new Map(saved.map((id, i) => [id, i]));
+  const base = new Map(all.map((c, i) => [c.id, i]));
+  all.sort((a, b) => (rank.get(a.id) ?? 10000 + base.get(a.id)!) - (rank.get(b.id) ?? 10000 + base.get(b.id)!)); // свой порядок, новые каналы в конце
   channels.length = 0;
-  channels.push(...baseChannels, ...mine);
+  channels.push(...all);
   window.dispatchEvent(new Event("velvet:channels"));
 }
 rebuildChannels();

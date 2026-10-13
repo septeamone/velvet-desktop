@@ -1,6 +1,7 @@
 import "./styles.css";
 import { initNet } from "./net";
-import { channels, rebuildChannels } from "./data";
+import { channels, rebuildChannels, saveOrder, resetOrder } from "./data";
+import { enableSort, isSorting } from "./sortable";
 import { addCustom, loadCustom, removeCustom } from "./custom";
 import { loadSettings, setSetting, settings, onSetting, type Settings } from "./settings";
 import { renderHome, setQuery } from "./home";
@@ -58,9 +59,9 @@ document.querySelectorAll<HTMLElement>(".seg[data-key]").forEach((seg) => {
   paint();
 });
 
-setInterval(() => { if (shell.dataset.view === "home") renderHome(play); }, 30000);
-window.addEventListener("velvet:epg", () => { if (shell.dataset.view === "home") renderHome(play); });
-window.addEventListener("velvet:fav", () => { if (shell.dataset.view === "home") renderHome(play); });
+setInterval(() => { if (shell.dataset.view === "home" && !isSorting()) renderHome(play); }, 30000);
+window.addEventListener("velvet:epg", () => { if (shell.dataset.view === "home" && !isSorting()) renderHome(play); });
+window.addEventListener("velvet:fav", () => { if (shell.dataset.view === "home" && !isSorting()) renderHome(play); });
 
 /* поиск: набираешь — список сразу сужается; Ctrl+K или «/» — перейти в поиск, Esc — очистить */
 const search = document.getElementById("search") as HTMLInputElement;
@@ -150,3 +151,7 @@ document.getElementById("addForm")!.addEventListener("submit", (e) => {
   dlg.close();
   rebuildChannels();
 });
+
+/* перетаскивание каналов на главном экране; порядок запоминается */
+enableSort(document.getElementById("grid")!, ".tile", (ids) => { saveOrder(ids); rebuildChannels(); });
+document.getElementById("btnResetOrder")!.onclick = () => { resetOrder(); rebuildChannels(); };

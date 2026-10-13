@@ -64,8 +64,10 @@ function card(c: Channel, onOpen: () => void) {
 }
 
 /* карточка + звёздочка «в избранное» (кнопка в кнопке нельзя, поэтому они рядом) */
-function tile(c: Channel, onOpen: () => void) {
+function tile(c: Channel, onOpen: () => void, draggable = false) {
   const wrap = el("div", "tile");
+  wrap.dataset.id = c.id;
+  if (draggable) wrap.dataset.sort = "1";
   const star = el("button", "star");
   star.type = "button";
   const fav = isFav(c.id);
@@ -84,7 +86,7 @@ export function renderHome(onOpen: (i: number) => void) {
   const searching = hasQuery();
 
   const list = channels.filter((c) => !searching || norm(`${c.name} ${nowOf(c).cur?.t ?? ""}`).includes(query));
-  grid.replaceChildren(...list.map((c) => tile(c, () => openCb(idx(c)))));
+  grid.replaceChildren(...list.map((c) => tile(c, () => openCb(idx(c)), !searching)));
   $("gridTitle").textContent = searching ? "Найдено" : "Сейчас в эфире";
   if (!list.length) {
     const empty = el("p", "nothing");

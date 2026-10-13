@@ -1,20 +1,47 @@
 /* Вкладка «Радио»: список станций, панель «Сейчас играет» с визуализатором и мини-плеер. */
 import {
-  stations, countries, shown, state, play, toggle, setQuality, setVolume, onRadio, spectrum, spectrumSize, setStepper, lastNotice, LIVE,
+  stations, countries, shown, state, play, toggle, setQuality, setVolume, onRadio, levels, setStepper, lastNotice, LIVE,
   type Station,
 } from "./radio-engine";
 import { fetchTrack } from "./nowplaying";
+import { enableSort, isSorting } from "./sortable";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const shell = $("shell");
 const regionNames = new Intl.DisplayNames(["ru"], { type: "region" });
-const countryName = (cc: string) => { try { return regionNames.of(cc) ?? cc; } catch { return cc; } };
+const SHORT: Record<string, string> = { US: "США", GB: "Великобритания", KR: "Южная Корея", AE: "ОАЭ" };
+const countryName = (cc: string) => { try { return SHORT[cc] ?? regionNames.of(cc) ?? cc; } catch { return cc; } };
 const norm = (s: string) => s.toLowerCase().replace(/ё/g, "е");
 
-/* ---------- избранное ---------- */
+/* ---------- избранное и свой порядок ---------- */
 let fav = new Set<string>();
 try { fav = new Set(JSON.parse(localStorage.getItem("velvet.rfav") ?? "[]") as string[]); } catch { /* пока пусто */ }
 const saveFav = () => { try { localStorage.setItem("velvet.rfav", JSON.stringify([...fav])); } catch { /* не страшно */ } };
+
+const ORDER_KEY = "velvet.rorder";
+let ord: string[] = [];
+const loadOrder = () => { try { ord = JSON.parse(localStorage.getItem(ORDER_KEY) ?? "[]") as string[]; } catch { ord = []; } };
+loadOrder();
+const rank = new Map<string, number>();
+function sortedAll(): Station[] {
+  rank.clear();
+  ord.forEach((id, i) => rank.set(id, i));
+  const base = new Map(stations.map((s, i) => [s.id, i]));
+  return [...stations].sort((a, b) => (rank.get(a.id) ?? 10000 + base.get(a.id)!) - (rank.get(b.id) ?? 10000 + base.get(b.id)!));
+}
+
+/* новый порядок видимых станций занимает те же места в общем списке */
+function applyOrder(ids: string[]) {
+  const all = sortedAll().map((s) => s.id);
+  const set = new Set(ids);
+  const slots = all.flatMap((id, i) => (set.has(id) ? [i] : []));
+  const next = [...all];
+  slots.forEach((pos, k) => { next[pos] = ids[k]; });
+  ord = next;
+  try { localStorage.setItem(ORDER_KEY, JSON.stringify(ord)); } catch { /* не страшно */ }
+  order = visible();
+}
+
 function toggleFav(id: string) {
   if (!fav.delete(id)) fav.add(id);
   saveFav();
@@ -23,17 +50,22 @@ function toggleFav(id: string) {
   paintPanel();
 }
 
-/* ---------- фильтры ---------- */
+/* ---------- фильтры: страна, жанр, избранное, поиск ---------- */
 let query = "";
-let ccFilter = fav.size ? "FAV" : "RU";
-let genreFilter = "";
+let favOnly = fav.size > 0;
+let cc = "RU";
+let genre = "";
 let order: Station[] = [];
+
+function pool(): Station[] {
+  return stations.filter((s) => (favOnly ? fav.has(s.id) : cc === "ALL" || s.cc === cc));
+}
 
 function visible(): Station[] {
   const q = norm(query.trim());
-  return stations.filter((s) => {
-    if (ccFilter === "FAV" ? !fav.has(s.id) : ccFilter !== "ALL" && s.cc !== ccFilter) return false;
-    if (genreFilter && s.g !== genreFilter) return false;
+  return sortedAll().filter((s) => {
+    if (favOnly ? !fav.has(s.id) : cc !== "ALL" && s.cc !== cc) return false;
+    if (genre && s.g !== genre) return false;
     if (!q) return true;
     const c = countries.find((x) => x.cc === s.cc);
     return norm(`${s.name} ${s.alt ?? ""} ${s.gn} ${countryName(s.cc)} ${(c?.aliases ?? []).join(" ")}`).includes(q);
@@ -45,6 +77,13 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: 
   if (cls) e.className = cls;
   if (text !== undefined) e.textContent = text;
   return e;
+}
+
+function flagImg(code: string) {
+  const f = el("img", "flag");
+  f.src = `/flags/${code.toLowerCase()}.svg`;
+  f.alt = "";
+  return f;
 }
 
 /* логотип станции или буквы на цветной плитке */
@@ -64,39 +103,57 @@ function logoOf(s: Station, cls: string) {
   return box;
 }
 
-function chip(label: string, active: boolean, onClick: () => void, flag?: string) {
-  const b = el("button", "chip-f");
+/* строка меню: подпись, число станций, отметка выбранного */
+function option(label: string, count: number, active: boolean, onPick: () => void, flag?: string) {
+  const b = el("button", "opt");
   b.type = "button";
-  b.setAttribute("aria-pressed", String(active));
-  if (flag) {
-    const f = el("img", "flag");
-    f.src = `/flags/${flag.toLowerCase()}.svg`;
-    f.alt = "";
-    b.append(f);
-  }
-  b.append(label);
-  b.onclick = onClick;
+  b.setAttribute("role", "option");
+  b.setAttribute("aria-selected", String(active));
+  if (flag) b.append(flagImg(flag));
+  b.append(el("span", "opt-name", label), el("small", undefined, String(count)));
+  b.onclick = () => { onPick(); closePops(); };
   return b;
 }
 
+function closePops() {
+  document.querySelectorAll(".pop.open").forEach((p) => p.classList.remove("open"));
+  document.querySelectorAll(".f-btn[aria-expanded=true]").forEach((b) => b.setAttribute("aria-expanded", "false"));
+}
+
 function drawFilters() {
-  $("rCountries").replaceChildren(
-    chip(`Избранное${fav.size ? ` · ${fav.size}` : ""}`, ccFilter === "FAV", () => { ccFilter = "FAV"; genreFilter = ""; drawFilters(); drawGrid(); }),
-    chip("Россия", ccFilter === "RU", () => { ccFilter = "RU"; genreFilter = ""; drawFilters(); drawGrid(); }, "RU"),
-    chip("Все страны", ccFilter === "ALL", () => { ccFilter = "ALL"; genreFilter = ""; drawFilters(); drawGrid(); }),
-    ...countries.filter((c) => c.cc !== "RU").map((c) => chip(countryName(c.cc), ccFilter === c.cc, () => { ccFilter = c.cc; genreFilter = ""; drawFilters(); drawGrid(); }, c.cc)),
+  // кнопки в панели инструментов
+  const fFav = $("fFav");
+  fFav.setAttribute("aria-pressed", String(favOnly));
+  fFav.querySelector("span")!.textContent = fav.size ? `Избранное · ${fav.size}` : "Избранное";
+  const fCountry = $("fCountry");
+  fCountry.replaceChildren();
+  if (!favOnly && cc !== "ALL") fCountry.append(flagImg(cc));
+  fCountry.append(el("span", undefined, favOnly || cc === "ALL" ? "Все страны" : countryName(cc)), el("i", "caret"));
+  const genres = new Map<string, { name: string; n: number }>();
+  for (const s of pool()) genres.set(s.g, { name: s.gn, n: (genres.get(s.g)?.n ?? 0) + 1 });
+  const fGenre = $("fGenre");
+  fGenre.hidden = genres.size < 2;
+  fGenre.replaceChildren(el("span", undefined, genre && genres.has(genre) ? genres.get(genre)!.name : "Все жанры"), el("i", "caret"));
+  fGenre.classList.toggle("on", !!genre);
+  fCountry.classList.toggle("on", !favOnly && cc !== "RU");
+
+  // выпадающие списки
+  const rows = [
+    option("Все страны", stations.length, !favOnly && cc === "ALL", () => { favOnly = false; cc = "ALL"; genre = ""; refresh(); }),
+    option("Россия", stations.filter((s) => s.cc === "RU").length, !favOnly && cc === "RU", () => { favOnly = false; cc = "RU"; genre = ""; refresh(); }, "RU"),
+    ...countries.filter((c) => c.cc !== "RU").map((c) => option(countryName(c.cc), stations.filter((s) => s.cc === c.cc).length, !favOnly && cc === c.cc, () => { favOnly = false; cc = c.cc; genre = ""; refresh(); }, c.cc)),
+  ];
+  $("pCountry").replaceChildren(...rows);
+  $("pGenre").replaceChildren(
+    option("Все жанры", pool().length, !genre, () => { genre = ""; refresh(); }),
+    ...[...genres].sort((a, b) => a[1].name.localeCompare(b[1].name, "ru")).map(([k, v]) => option(v.name, v.n, genre === k, () => { genre = k; refresh(); })),
   );
-  const pool = stations.filter((s) => (ccFilter === "FAV" ? fav.has(s.id) : ccFilter === "ALL" || s.cc === ccFilter));
-  const genres = new Map<string, string>();
-  for (const s of pool) genres.set(s.g, s.gn);
-  $("rGenres").replaceChildren(
-    ...(genres.size > 1
-      ? [
-          chip("Все жанры", !genreFilter, () => { genreFilter = ""; drawFilters(); drawGrid(); }),
-          ...[...genres].sort((a, b) => a[1].localeCompare(b[1], "ru")).map(([k, n]) => chip(n, genreFilter === k, () => { genreFilter = genreFilter === k ? "" : k; drawFilters(); drawGrid(); })),
-        ]
-      : []),
-  );
+}
+
+function refresh() {
+  drawFilters();
+  drawGrid();
+  void refreshListTracks();
 }
 
 /* названия песен в списке: только у станций с лёгким источником, раз в полминуты */
@@ -125,15 +182,14 @@ function paintTracksInList() {
 function stationCard(s: Station) {
   const card = el("div", "scard");
   card.dataset.id = s.id;
+  if (!query.trim()) card.dataset.sort = "1";
   const main = el("button", "s-main");
   main.type = "button";
   const info = el("span", "info");
-  const maxK = shown(s).at(-1)!.k;
-  const known = listTracks.get(s.id);
-  info.append(el("span", "c-name", s.name), el("span", "c-title", `${s.gn} · до ${maxK} kbps`), el("span", "s-track", known ?? ""));
+  const maxK = shown(s)[shown(s).length - 1].k;
+  info.append(el("span", "c-name", s.name), el("span", "c-title", `${s.gn} · до ${maxK} kbps`), el("span", "s-track", listTracks.get(s.id) ?? ""));
   main.append(logoOf(s, "logo"), info);
-  const current = state.station?.id === s.id;
-  if (current) {
+  if (state.station?.id === s.id) {
     card.classList.add("now");
     const eq = el("span", `eq${state.status === "playing" && !state.paused ? " on" : ""}`);
     eq.append(el("i"), el("i"), el("i"));
@@ -152,16 +208,15 @@ function stationCard(s: Station) {
 }
 
 function drawGrid() {
+  if (isSorting()) return;
   const list = visible();
   order = list;
   const grid = $("rGrid");
   grid.replaceChildren();
   if (!list.length) {
     const empty = el("p", "r-empty");
-    empty.append(
-      el("strong", undefined, ccFilter === "FAV" && !query ? "Пока пусто" : "Ничего не найдено"),
-      el("span", undefined, ccFilter === "FAV" && !query ? "Нажмите сердечко у станции, и она появится здесь." : "Попробуйте другое название, страну или жанр."),
-    );
+    const noFav = favOnly && !query.trim();
+    empty.append(el("strong", undefined, noFav ? "Пока пусто" : "Ничего не найдено"), el("span", undefined, noFav ? "Нажмите сердечко у станции, и она появится здесь." : "Попробуйте другое название, страну или жанр."));
     grid.append(empty);
     return;
   }
@@ -220,22 +275,16 @@ function paintPanel() {
   $("pName").textContent = s?.name ?? "Velvet Radio";
   const meta = $("pMeta");
   meta.replaceChildren();
-  if (s) {
-    const flag = el("img", "flag");
-    flag.src = `/flags/${s.cc.toLowerCase()}.svg`;
-    flag.alt = "";
-    meta.append(flag, `${s.gn} · ${countryName(s.cc)}`);
-  } else meta.textContent = "408 станций из России и 28 стран мира";
+  if (s) meta.append(flagImg(s.cc), `${s.gn} · ${countryName(s.cc)}`);
+  else meta.textContent = `${stations.length} станций из России и 28 стран мира`;
   $("pTrack").textContent = s ? state.track || (state.status === "playing" ? "Название песни недоступно" : "") : "Выберите станцию слева, и здесь появится, что играет.";
-  const logo = $("pLogo");
-  logo.replaceChildren(...(s ? [logoOf(s, "p-logo-in")] : []));
+  $("pLogo").replaceChildren(...(s ? [logoOf(s, "p-logo-in")] : []));
   paintQualityButtons($("pQ"), false);
   const playing = state.status === "connecting" || (state.status === "playing" && !state.paused);
   $("pPlayIcon").innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
   $("pPlay").setAttribute("aria-label", playing ? "Пауза" : "Играть");
   const heart = $("pFav");
-  const isFav = !!s && fav.has(s.id);
-  heart.setAttribute("aria-pressed", String(isFav));
+  heart.setAttribute("aria-pressed", String(!!s && fav.has(s.id)));
   heart.hidden = !s;
   ($("pVol") as HTMLInputElement).value = String(state.volume);
   $("pVol").style.setProperty("--p", `${state.volume * 100}%`);
@@ -260,13 +309,11 @@ function paintMini() {
   $("mPlayIcon").innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
   $("mPlay").setAttribute("aria-label", playing ? "Пауза" : "Играть");
   const q = $("mQ");
-  const list = shown(s);
-  q.hidden = list.length < 2;
+  q.hidden = shown(s).length < 2;
   q.textContent = state.kbps ? `${state.kbps} kbps` : "Качество";
   paintQualityButtons($("mQMenu"), true);
   ($("mVol") as HTMLInputElement).value = String(state.volume);
   $("mVol").style.setProperty("--p", `${state.volume * 100}%`);
-  mini.classList.toggle("live", playing && state.status === "playing");
 }
 
 let paintQueued = false;
@@ -281,50 +328,63 @@ function paintAll() {
   });
 }
 
-/* ---------- визуализатор ---------- */
+/* ---------- визуализатор: та же тонкая светящаяся линия, что в расширении ---------- */
 const canvas = $("pViz") as HTMLCanvasElement;
-const c2d = canvas.getContext("2d")!;
-const BARS = 44;
-const level = new Float32Array(BARS);
-let freq = new Uint8Array(128);
+const g = canvas.getContext("2d")!;
+const BANDS = 32;
+const lv = new Float32Array(BANDS), target = new Float32Array(BANDS), shownV = new Float32Array(BANDS), slow = new Float32Array(BANDS);
+let c1 = "#ff5e78", c2 = "#ff9f43", frame = 0;
 
 function drawViz() {
   requestAnimationFrame(drawViz);
   if (shell.dataset.view !== "radio" || document.hidden || !panel.offsetParent) return;
-  const rect = canvas.getBoundingClientRect();
-  const dpr = window.devicePixelRatio || 1;
-  const W = Math.round(rect.width * dpr), H = Math.round(rect.height * dpr);
-  if (!W || !H) return;
-  if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
-  c2d.clearRect(0, 0, W, H);
-  if (freq.length !== spectrumSize()) freq = new Uint8Array(spectrumSize());
-  const live = spectrum(freq);
-  const n = freq.length * 0.72;
-  const hue = state.station?.hue ?? 285;
-  const gap = 4 * dpr;
-  const bw = (W - gap * (BARS - 1)) / BARS;
-  const grad = c2d.createLinearGradient(0, H, 0, 0);
-  grad.addColorStop(0, `hsl(${hue} 80% 52%)`);
-  grad.addColorStop(1, `hsl(${(hue + 38) % 360} 95% 70%)`);
-  c2d.fillStyle = grad;
-  for (let i = 0; i < BARS; i++) {
-    let v = 0;
-    if (live) {
-      const lo = Math.floor(Math.pow(i / BARS, 1.6) * n);
-      const hi = Math.max(lo + 1, Math.floor(Math.pow((i + 1) / BARS, 1.6) * n));
-      let sum = 0;
-      for (let b = lo; b < hi; b++) sum += freq[b];
-      v = sum / (hi - lo) / 255;
-      v = Math.pow(v, 1.15);
-    }
-    level[i] = Math.max(v, level[i] * 0.9);
-    const h = Math.max(4 * dpr, level[i] * H);
-    const x = i * (bw + gap);
-    const r = Math.min(bw / 2, 6 * dpr);
-    c2d.beginPath();
-    c2d.roundRect(x, H - h, bw, h, r);
-    c2d.fill();
+  const w = canvas.clientWidth, h = canvas.clientHeight, dpr = window.devicePixelRatio || 1;
+  if (!w || !h) return;
+  if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) { canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); }
+  if (frame++ % 90 === 0) {
+    const css = getComputedStyle(document.documentElement);
+    c1 = css.getPropertyValue("--viz1").trim() || c1;
+    c2 = css.getPropertyValue("--viz2").trim() || c2;
   }
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.clearRect(0, 0, w, h);
+
+  // бас громче верхов, поэтому верхние полосы слегка усиливаем
+  const live = levels(lv);
+  for (let i = 0; i < BANDS; i++) target[i] = live ? Math.min(1, lv[i] * (0.7 + (1.3 * i) / BANDS)) : 0;
+
+  // линия «танцует» по изменениям: быстрый подъём на всплеске, мягкий спад, отсчёт — от долгого среднего каждой полосы
+  for (let i = 0; i < BANDS; i++) {
+    shownV[i] += (target[i] - shownV[i]) * (target[i] > shownV[i] ? 0.5 : 0.16);
+    slow[i] += (shownV[i] - slow[i]) * 0.012;
+  }
+  let pts = Array.from(shownV, (v, i) => (v - slow[i]) * 4.6);
+  pts = pts.map((v, i) => (pts[i - 1] ?? v) * 0.25 + v * 0.5 + (pts[i + 1] ?? v) * 0.25);
+
+  const mid = h / 2, amp = h / 2 - 4, pad = 6, step = (w - pad * 2) / (BANDS - 1);
+  const xy = pts.map((v, i) => [pad + i * step, mid - Math.max(-1, Math.min(1, v * Math.sin((Math.PI * i) / (BANDS - 1)) ** 0.6)) * amp] as [number, number]);
+  g.beginPath();
+  g.moveTo(xy[0][0], xy[0][1]);
+  for (let i = 1; i < xy.length - 1; i++) {
+    const [x, y] = xy[i], [nx, ny] = xy[i + 1];
+    g.quadraticCurveTo(x, y, (x + nx) / 2, (y + ny) / 2);
+  }
+  g.lineTo(...xy[xy.length - 1]);
+  const grad = g.createLinearGradient(0, 0, w, 0);
+  grad.addColorStop(0, "transparent");
+  grad.addColorStop(0.18, c1);
+  grad.addColorStop(0.82, c2);
+  grad.addColorStop(1, "transparent");
+  g.strokeStyle = grad;
+  g.lineWidth = 2.5;
+  g.lineCap = "round";
+  g.lineJoin = "round";
+  g.globalAlpha = 0.75;
+  g.shadowBlur = 10;
+  g.shadowColor = c1;
+  g.stroke();
+  g.globalAlpha = 1;
+  g.shadowBlur = 0;
 }
 
 /* ---------- запуск ---------- */
@@ -341,6 +401,22 @@ export function initRadio() {
   if (ready) return;
   ready = true;
   $<HTMLInputElement>("rSearch").addEventListener("input", (e) => { query = (e.target as HTMLInputElement).value; drawGrid(); void refreshListTracks(); });
+  $("fFav").onclick = () => { favOnly = !favOnly; genre = ""; closePops(); refresh(); };
+  for (const [btn, pop] of [["fCountry", "pCountry"], ["fGenre", "pGenre"]] as const) {
+    $(btn).onclick = (e) => {
+      e.stopPropagation();
+      const open = !$(pop).classList.contains("open");
+      closePops();
+      $(pop).classList.toggle("open", open);
+      $(btn).setAttribute("aria-expanded", String(open));
+    };
+  }
+  document.addEventListener("click", (e) => {
+    if (!(e.target as HTMLElement).closest(".f-wrap")) closePops();
+    if (!(e.target as HTMLElement).closest(".mqwrap")) $("mQMenu").classList.remove("open");
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closePops(); });
+
   $("pPlay").onclick = () => { if (state.station) toggle(); };
   $("pPrev").onclick = () => step(-1);
   $("pNext").onclick = () => step(1);
@@ -350,7 +426,6 @@ export function initRadio() {
   $("mNext").onclick = () => step(1);
   $("mQ").onclick = (e) => { e.stopPropagation(); $("mQMenu").classList.toggle("open"); };
   $("mOpen").onclick = () => window.dispatchEvent(new Event("velvet:open-radio"));
-  document.addEventListener("click", (e) => { if (!(e.target as HTMLElement).closest(".mqwrap")) $("mQMenu").classList.remove("open"); });
   for (const id of ["pVol", "mVol"]) $<HTMLInputElement>(id).addEventListener("input", (e) => setVolume(Number((e.target as HTMLInputElement).value)));
   $("pVolIcon").innerHTML = VOL_ON;
   $("mVolIcon").innerHTML = VOL_ON;
@@ -360,11 +435,14 @@ export function initRadio() {
     t.classList.add("on");
     setTimeout(() => t.classList.remove("on"), 3200);
   });
+  window.addEventListener("velvet:order-reset", () => { loadOrder(); if (shell.dataset.view === "radio") { drawGrid(); } });
   document.addEventListener("keydown", (e) => {
     if (shell.dataset.view !== "radio") return;
     const tag = (e.target as HTMLElement).tagName;
     if (e.key === " " && tag !== "INPUT" && tag !== "BUTTON") { e.preventDefault(); if (state.station) toggle(); }
   });
+
+  enableSort($("rGrid"), ".scard", (ids) => applyOrder(ids));
   onRadio(paintAll);
   clearInterval(listTimer);
   listTimer = window.setInterval(() => void refreshListTracks(), 30000);

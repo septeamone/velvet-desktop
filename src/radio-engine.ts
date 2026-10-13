@@ -56,8 +56,8 @@ function ensureGraph() {
   ctx = new AudioContext({ latencyHint: "playback" });
   master = ctx.createGain();
   analyser = ctx.createAnalyser();
-  analyser.fftSize = 256;
-  analyser.smoothingTimeConstant = 0.82;
+  analyser.fftSize = 512; // как в расширении
+  analyser.smoothingTimeConstant = 0.6;
   master.connect(analyser);
   analyser.connect(ctx.destination);
   for (const s of slots) {
@@ -82,13 +82,23 @@ export function setVolume(v: number) {
   emit();
 }
 
-/* кусочек спектра для визуализатора; false, если сейчас нечего показывать */
-export function spectrum(out: Uint8Array<ArrayBuffer>): boolean {
+/* уровни полос для визуализатора (как в расширении: логарифмические полосы, выше ~10 кГц почти тишина); false, если сейчас нечего показывать */
+let freqBuf = new Uint8Array(256);
+export function levels(out: Float32Array): boolean {
   if (!analyser || state.status !== "playing" || state.paused) return false;
-  analyser.getByteFrequencyData(out);
+  if (freqBuf.length !== analyser.frequencyBinCount) freqBuf = new Uint8Array(analyser.frequencyBinCount);
+  analyser.getByteFrequencyData(freqBuf);
+  const bands = out.length;
+  const top = Math.floor(freqBuf.length * 0.4);
+  for (let i = 0; i < bands; i++) {
+    const a = Math.floor(Math.pow(i / bands, 1.7) * top);
+    const b = Math.max(a + 1, Math.floor(Math.pow((i + 1) / bands, 1.7) * top));
+    let sum = 0;
+    for (let k = a; k < b; k++) sum += freqBuf[k];
+    out[i] = sum / (b - a) / 255;
+  }
   return true;
 }
-export const spectrumSize = () => analyser?.frequencyBinCount ?? 128;
 
 function wipe(s: Slot) {
   s.hls?.destroy();
