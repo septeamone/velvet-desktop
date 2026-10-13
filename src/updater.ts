@@ -99,6 +99,29 @@ async function install() {
   }
 }
 
+/* журнал радио в буфер обмена, чтобы человек мог прислать его целиком */
+async function copyLog() {
+  const status = $("logStatus");
+  const t = tauri();
+  let body = "";
+  try { body = (await t?.core.invoke<string | null>("radio_log")) ?? ""; } catch { /* нет журнала */ }
+  const head = `Velvet TV ${installed || "?"}${portable ? " (портативная)" : ""}\n${new Date().toISOString()}\n${navigator.userAgent}\n\n`;
+  const text = head + (body || "(журнал пока пуст или недоступен)");
+  try {
+    await navigator.clipboard.writeText(text);
+    status.textContent = "Журнал скопирован. Вставьте его в сообщение (Ctrl+V).";
+  } catch {
+    const ta = document.createElement("textarea"); // запасной способ копирования
+    ta.value = text;
+    document.body.append(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    ta.remove();
+    status.textContent = ok ? "Журнал скопирован. Вставьте его в сообщение (Ctrl+V)." : "Не удалось скопировать журнал.";
+  }
+  setTimeout(() => { status.textContent = ""; }, 6000);
+}
+
 export async function initUpdater() {
   const t = tauri();
   bindNews();
@@ -112,6 +135,7 @@ export async function initUpdater() {
     } catch { /* ничего */ }
   } else $("version").textContent = "Версия для разработки";
   $("btnCheck").onclick = () => void checkForUpdate();
+  $("btnCopyLog").onclick = () => void copyLog();
   $("bannerInstall").onclick = () => void install();
   $("bannerNews").onclick = () => { if (found) showChanges(installed, found.version, found.notes); };
   $("bannerLater").onclick = () => banner().classList.remove("open");

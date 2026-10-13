@@ -16,6 +16,12 @@ fn log_line(text: String) {
     log::line(&text);
 }
 
+/// Журнал радио целиком в виде текста: кнопка «Скопировать журнал» в настройках.
+#[tauri::command]
+fn radio_log() -> Option<String> {
+    log::tail()
+}
+
 #[tauri::command]
 fn is_portable() -> bool {
     portable::is_portable()
@@ -62,7 +68,7 @@ pub fn run() {
             app.manage(info);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![proxy_info, log_line, is_portable, portable_update])
+        .invoke_handler(tauri::generate_handler![proxy_info, log_line, radio_log, is_portable, portable_update])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

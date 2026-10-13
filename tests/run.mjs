@@ -167,6 +167,26 @@ check("список не перестраивается при движении 
 check("список: клавиатурный фокус не сбрасывается", grid.focusKept);
 check("список: логотипы грузятся по мере прокрутки", grid.lazy);
 
+/* ---------- журнал радио ---------- */
+console.log("Журнал радио");
+const ctx2 = await browser.newContext({ viewport: { width: 1300, height: 900 }, permissions: ["clipboard-read", "clipboard-write"] });
+await ctx2.addInitScript(() => {
+  window.__TAURI__ = {
+    core: { invoke: async (cmd) => (cmd === "proxy_info" ? { port: 1, token: "x" } : cmd === "radio_log" ? "2026-01-01T00:00:00Z радио тестовая строка журнала" : cmd === "is_portable" ? false : null) },
+    window: { getCurrentWindow: () => ({ setTheme: async () => {} }) },
+    app: { getVersion: async () => "9.9.9" }, updater: { check: async () => null }, process: { relaunch: async () => {} },
+  };
+});
+const page2 = await ctx2.newPage();
+await page2.goto(BASE);
+await page2.waitForTimeout(800);
+await page2.evaluate(() => document.getElementById("btnSettings").click());
+await page2.click("#btnCopyLog");
+await page2.waitForTimeout(400);
+const copied = await page2.evaluate(() => navigator.clipboard.readText());
+check("кнопка «Скопировать журнал» кладёт в буфер версию и журнал", copied.includes("Velvet TV 9.9.9") && copied.includes("тестовая строка журнала"), copied.slice(0, 120));
+check("после копирования показано подтверждение", (await page2.textContent("#logStatus")).includes("скопирован"));
+
 check("в консоли нет ошибок страницы", pageErrors.length === 0, pageErrors.join(" | "));
 await browser.close();
 const failed = results.filter((r) => !r.ok).length;

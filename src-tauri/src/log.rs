@@ -29,6 +29,17 @@ pub fn line(text: &str) {
     }
 }
 
+/// Последние строки журнала (для кнопки «Скопировать журнал»): не больше 300 строк и 64 КБ.
+pub fn tail() -> Option<String> {
+    let text = fs::read_to_string(FILE.get()?).ok()?;
+    let lines: Vec<&str> = text.lines().collect();
+    let from = lines.len().saturating_sub(300);
+    let joined = lines[from..].join("\n");
+    let skip = joined.len().saturating_sub(64 * 1024);
+    let start = (skip..joined.len()).find(|i| joined.is_char_boundary(*i)).unwrap_or(0);
+    Some(joined[start..].to_string())
+}
+
 /// Время по Гринвичу в виде 2026-10-13T11:02:03Z (без внешних библиотек).
 fn stamp() -> String {
     let secs = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0) as i64;
