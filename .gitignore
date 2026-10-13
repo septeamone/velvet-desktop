@@ -7,3 +7,4 @@ src-tauri/target/
 # платные каналы с неофициальных серверов: только в локальной сборке, в публичный репозиторий не отправляем
 src/data/paid.json
 public/logos/p-*
+_radio-source/

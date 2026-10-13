@@ -1,10 +1,10 @@
-// Берёт каталог радиостанций из расширения Velvet Radio (только читает его) и собирает данные для приложения.
+// Берёт каталог радиостанций из снимка расширения Velvet Radio (_radio-source) и собирает данные для приложения.
 // Запуск: node tools/gen-radio.mjs   — после того как в расширении добавили или изменили станции.
 import { pathToFileURL } from "node:url";
 import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-const ext = path.resolve("..", "radio-extension");
+const ext = path.resolve("_radio-source"); // снимок расширения Velvet Radio (версия 1.5.0)
 const { STATIONS, LOGOS, GENRES, COUNTRIES } = await import(pathToFileURL(path.join(ext, "stations.js")).href);
 
 const stations = STATIONS.map((s) => {

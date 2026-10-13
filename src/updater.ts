@@ -59,7 +59,7 @@ async function install() {
 
 export async function initUpdater() {
   const t = tauri();
-  try { $("version").textContent = t ? `Версия ${await t.app.getVersion()}` : "Версия для разработки"; } catch { /* ничего */ }
+  try { $("version").textContent = t ? `Velvet TV · версия ${await t.app.getVersion()}` : "Версия для разработки"; } catch { /* ничего */ }
   $("btnCheck").onclick = () => void checkForUpdate();
   $("bannerInstall").onclick = () => void install();
   $("bannerLater").onclick = () => banner().classList.remove("open");

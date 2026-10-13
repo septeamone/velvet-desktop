@@ -6,17 +6,28 @@ import { loadSettings, setSetting, settings, onSetting, type Settings } from "./
 import { renderHome, setQuery } from "./home";
 import { initUpdater } from "./updater";
 import { startEpg } from "./epg";
-import { openChannel, leave, hooks, pokeUi, inPip } from "./player";
+import { openChannel, leave, hooks, pokeUi, inPip, stopTv } from "./player";
 
 type View = "home" | "radio" | "settings" | "player";
 const shell = document.getElementById("shell")!;
 let tab: "tv" | "radio" = "tv";
+
+/* радио подгружается при первом открытии вкладки, чтобы телевидение стартовало быстрее */
+let radio: typeof import("./radio") | null = null;
+async function ensureRadio() {
+  if (!radio) {
+    radio = await import("./radio");
+    radio.initRadio();
+  }
+  return radio;
+}
 
 function show(view: View) {
   shell.dataset.view = view;
   document.querySelectorAll<HTMLElement>("#tabs button").forEach((b) => b.setAttribute("aria-selected", String(view !== "settings" && b.dataset.tab === tab)));
   document.getElementById("btnSettings")!.setAttribute("aria-pressed", String(view === "settings"));
   if (view === "home") renderHome(play);
+  if (view === "radio") void ensureRadio().then((r) => r.renderRadio());
 }
 
 function play(i: number) {
@@ -25,6 +36,9 @@ function play(i: number) {
   pokeUi();
 }
 
+window.addEventListener("velvet:radio-start", () => stopTv());
+window.addEventListener("velvet:open-radio", () => { tab = "radio"; show("radio"); });
+hooks.restore = () => { show("player"); pokeUi(); };
 hooks.back = () => { if (!inPip()) leave(); show(tab === "tv" ? "home" : "radio"); };
 
 document.querySelectorAll<HTMLElement>("#tabs button").forEach((b) => {

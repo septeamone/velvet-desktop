@@ -12,7 +12,7 @@ const btnVol = $("btnVol"), vol = $<HTMLInputElement>("vol"), volIcon = document
 const btnFav = $("btnFav"), btnPip = $("btnPip");
 const btnQ = $("btnQ"), qMenu = $("qMenu"), qLabel = $("qLabel"), guide = $("guide"), gList = $("gList"), gName = $("gName");
 
-export const hooks = { back: () => undefined as void };
+export const hooks = { back: () => undefined as void, restore: () => undefined as void };
 
 let cur = 0;
 let hls: HlsType | null = null;
@@ -61,7 +61,8 @@ export function openChannel(i: number) {
   renderNow();
   renderGuide();
   paintFav();
-  updateMedia();
+  window.dispatchEvent(new Event("velvet:tv-start")); // радио уступает
+  installTvMedia();
   void startSource();
 }
 
@@ -374,7 +375,11 @@ v.addEventListener("enterpictureinpicture", () => {
 });
 v.addEventListener("leavepictureinpicture", () => {
   btnPip.setAttribute("aria-pressed", "false");
-  if (!active()) leave();
+  // «вернуться на вкладку» или закрытие маленького окна: возвращаемся в обычный плеер с этим же каналом, эфир не прерываем
+  if (!active() && !quietPip) {
+    hooks.restore();
+    if (v.paused) togglePause();
+  }
 });
 
 let lastMedia = "";
@@ -392,16 +397,33 @@ function updateMedia() {
     artwork: !c.logo || c.logo.endsWith(".svg") ? [] : [{ src: new URL(c.logo, location.href).href, sizes: "512x512", type }],
   });
 }
-if ("mediaSession" in navigator) {
+function installTvMedia() {
+  if (!("mediaSession" in navigator)) return;
   const ms = navigator.mediaSession;
   const on = (action: MediaSessionAction, handler: () => void) => { try { ms.setActionHandler(action, handler); } catch { /* не поддерживается */ } };
   on("play", () => { if (v.paused) togglePause(); });
   on("pause", () => { if (!v.paused) v.pause(); });
   on("previoustrack", () => { if (active() || inPip()) openChannel(cur - 1); });
   on("nexttrack", () => { if (active() || inPip()) openChannel(cur + 1); });
-  const state = () => { ms.playbackState = v.paused ? "paused" : "playing"; };
+  updateMedia();
+}
+if ("mediaSession" in navigator) {
+  const state = () => { if (active() || inPip()) navigator.mediaSession.playbackState = v.paused ? "paused" : "playing"; };
   v.addEventListener("play", state);
   v.addEventListener("pause", state);
+}
+
+/* радио запустили — телевидение уступает (маленькое окно тоже закрываем, не возвращая плеер) */
+let quietPip = false;
+export function stopTv() {
+  stop();
+  v.pause();
+  v.removeAttribute("src");
+  v.load();
+  if (inPip()) {
+    quietPip = true;
+    document.exitPictureInPicture().catch(() => undefined).finally(() => { quietPip = false; });
+  }
 }
 
 /* ---------------- интерфейс ---------------- */
