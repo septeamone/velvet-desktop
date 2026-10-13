@@ -112,6 +112,7 @@ function wipe(s: Slot) {
   s.el.pause();
   s.el.removeAttribute("src");
   s.el.load();
+  s.el.playbackRate = 1;
   if (s.gain && ctx) s.gain.gain.cancelScheduledValues(ctx.currentTime);
   if (s.gain) s.gain.gain.value = 0;
 }
@@ -145,7 +146,18 @@ function attempt(s: Slot, url: string, isHls: boolean): Promise<boolean> {
           HlsCls ??= (await import("hls.js")).default;
           const h = new HlsCls({ lowLatencyMode: false, maxBufferLength: 20 });
           s.hls = h;
-          h.on(HlsCls.Events.ERROR, (_e, d) => { if (d.fatal) finish(false); });
+          let heals = 0;
+          const T = HlsCls.ErrorTypes;
+          h.on(HlsCls.Events.ERROR, (_e, d) => {
+            if (!d.fatal) return;
+            if (!done) { finish(false); return; }
+            // уже играет: лечим на месте, а если не помогает — подключаемся заново
+            if (s !== slots[active] || !state.station) return;
+            if (++heals > 3) { void connect(state.station, true); return; }
+            if (d.type === T.NETWORK_ERROR) h.startLoad();
+            else if (d.type === T.MEDIA_ERROR) h.recoverMediaError();
+            else void connect(state.station, true);
+          });
           h.loadSource(viaProxy(url));
           h.attachMedia(s.el);
         } else {
@@ -207,8 +219,8 @@ async function connect(s: Station, quiet = false) {
           } else wipe(old);
           state.kbps = chain[qi].k;
           state.status = "playing";
-          stuckAt = performance.now();
-          lastTime = -1;
+          stuckAt = endAt = performance.now();
+          lastTime = lastEnd = -1;
           emit();
           return;
         }
@@ -287,20 +299,39 @@ export function setQuality(k: number) {
   if (state.station) void connect(state.station, true);
 }
 
-/* ---------- сторож: если звук завис на 6 секунд, переподключаемся ---------- */
+/* ---------- сторож: звук завис на 3,5 секунды — переподключаемся; пока играет, копим запас ---------- */
+const CUSHION_LOW = 8; // ниже — играем чуть медленнее, чтобы запас рос
+const CUSHION_OK = 10; // набрали — возвращаем обычную скорость
+const SLOW = 0.96; // высота звука не меняется, на слух почти незаметно
 let lastTime = -1;
 let stuckAt = 0;
+let lastEnd = -1;
+let endAt = 0;
 setInterval(() => {
   const s = state.station;
-  if (!s || state.status !== "playing" || state.paused) { stuckAt = performance.now(); return; }
-  const t = slots[active].el.currentTime;
-  if (t !== lastTime) { lastTime = t; stuckAt = performance.now(); return; }
-  if (performance.now() - stuckAt > 6000) { stuckAt = performance.now(); void connect(s, true); }
+  const now = performance.now();
+  if (!s || state.status !== "playing" || state.paused) { stuckAt = endAt = now; return; }
+  const slot = slots[active];
+  const el = slot.el;
+  const t = el.currentTime;
+  if (t !== lastTime) { lastTime = t; stuckAt = now; }
+  else if (now - stuckAt > 3500) { stuckAt = now; void connect(s, true); return; }
+  if (slot.hls) return; // у HLS свой большой запас из кусков
+  const end = el.buffered.length ? el.buffered.end(el.buffered.length - 1) : 0;
+  const ahead = end - t;
+  // новые данные перестали приходить, а запас ещё играет: меняем источник заранее, пока тишины нет
+  if (end !== lastEnd) { lastEnd = end; endAt = now; }
+  else if (ahead > 0.5 && now - endAt > 5000) { endAt = now; void connect(s, true); return; }
+  if (ahead < CUSHION_LOW) el.playbackRate = SLOW;
+  else if (ahead >= CUSHION_OK) el.playbackRate = 1;
 }, 1000);
 for (const slot of slots) {
-  slot.el.addEventListener("error", () => {
-    if (slot === slots[active] && state.status === "playing" && state.station) void connect(state.station, true);
-  });
+  // сервер закрыл поток (например, перезапуск эфира) — не ждём сторожа
+  const lost = () => {
+    if (slot === slots[active] && state.status === "playing" && !state.paused && state.station) void connect(state.station, true);
+  };
+  slot.el.addEventListener("error", lost);
+  slot.el.addEventListener("ended", lost);
 }
 
 /* ---------- что играет сейчас ---------- */
