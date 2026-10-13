@@ -160,6 +160,11 @@ async fn handle_live(
     serve(st, token, target, req_headers, Some(prefill_from(&q))).await
 }
 
+/// «Range: bytes=0-» (так браузер всегда просит звук) — это запрос «с самого начала», а не перемотка.
+fn from_start(v: &HeaderValue) -> bool {
+    v.to_str().map(|s| s.trim() == "bytes=0-").unwrap_or(false)
+}
+
 /// Сколько секунд эфира копить перед стартом: приложение просит через ?p=…; по умолчанию 6, не больше 15.
 fn prefill_from(q: &HashMap<String, String>) -> Duration {
     Duration::from_secs(q.get("p").and_then(|v| v.parse::<u64>().ok()).unwrap_or(6).min(15))
@@ -180,8 +185,11 @@ async fn serve(st: AppState, token: String, target: String, req_headers: HeaderM
     }
 
     let mut rq = st.client.get(url.clone());
+    // браузер просит аудио с «Range: bytes=0-» — для живого эфира это просто «с начала»; станции в ответ всё равно шлют поток целиком
     if let Some(r) = req_headers.get(header::RANGE) {
-        rq = rq.header(header::RANGE, r);
+        if !(live && from_start(r)) {
+            rq = rq.header(header::RANGE, r);
+        }
     }
     // у GitHub в кеше может залежаться сжатая копия файла, а несжатая свежая: просим несжатую
     if url.host_str() == Some("raw.githubusercontent.com") {
@@ -243,7 +251,7 @@ async fn serve(st: AppState, token: String, target: String, req_headers: HeaderM
         && code.is_success()
         && open_ended
         && !chained
-        && !req_headers.contains_key(header::RANGE)
+        && req_headers.get(header::RANGE).is_none_or(from_start)
         && !req_headers.contains_key("icy-metadata");
 
     let mut out = Response::builder().status(code);
@@ -363,6 +371,7 @@ async fn pump_live(client: reqwest::Client, url: Url, first: reqwest::Response, 
                         let since = *hold_since.get_or_insert(last_data);
                         if since.elapsed() >= cfg.prefill || held >= HOLD_CAP {
                             holding = false;
+                            crate::log::line(&format!("поток {who}: запас накоплен ({} КБ за {} мс), отдаю плееру", held / 1024, since.elapsed().as_millis()));
                             for c in hold.drain(..) {
                                 if !tx.send(c) {
                                     return;
@@ -509,13 +518,21 @@ mod tests {
     async fn live_route_streams_real_station() {
         let info = start().await.unwrap();
         let target = B64.encode("http://ep128server.streamr.ru:8030/ep128");
-        let mut resp = reqwest::get(format!("http://127.0.0.1:{}/{}/live/{target}", info.port, info.token)).await.unwrap();
+        // как настоящий браузер: просит звук с «Range: bytes=0-»; запас (по умолчанию 6 с) должен сработать и для такого запроса
+        let started = std::time::Instant::now();
+        let mut resp = reqwest::Client::new()
+            .get(format!("http://127.0.0.1:{}/{}/live/{target}?p=3", info.port, info.token))
+            .header("Range", "bytes=0-")
+            .send()
+            .await
+            .unwrap();
         assert!(resp.status().is_success());
         assert!(resp.headers().get("content-length").is_none(), "эфир идёт без длины");
         let mut got = 0;
         while got < 64 * 1024 {
             got += resp.chunk().await.unwrap().expect("поток не должен заканчиваться").len();
         }
+        assert!(started.elapsed() >= Duration::from_secs(3), "запас не накопился: прокси не включил режим эфира для запроса с Range");
         let wrong = reqwest::get(format!("http://127.0.0.1:{}/bad/live/{target}", info.port)).await.unwrap();
         assert_eq!(wrong.status(), 404, "без ключа прокси не отвечает");
     }
@@ -588,6 +605,15 @@ mod tests {
             tokio::time::sleep(Duration::from_millis(100 * (chunk.len() / 10) as u64)).await; // играем то, что взяли
         }
         assert!(worst < Duration::from_millis(400), "плеер увидел паузу {worst:?}, а запас должен был её спрятать");
+    }
+
+    #[test]
+    fn range_from_zero_counts_as_live_start() {
+        let h = |v: &str| HeaderValue::from_str(v).unwrap();
+        assert!(from_start(&h("bytes=0-")));
+        assert!(from_start(&h(" bytes=0- ")));
+        assert!(!from_start(&h("bytes=1000-")));
+        assert!(!from_start(&h("bytes=0-99")));
     }
 
     #[test]
