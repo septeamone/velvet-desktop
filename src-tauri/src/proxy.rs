@@ -15,11 +15,14 @@ use serde::Serialize;
 use reqwest::dns::{Addrs, Name, Resolve, Resolving};
 use std::{
     net::{IpAddr, SocketAddr},
-    sync::Arc,
+    sync::{
+        atomic::{AtomicUsize, Ordering},
+        Arc,
+    },
     time::Duration,
 };
 use tokio::sync::mpsc;
-use tokio_stream::wrappers::ReceiverStream;
+use tokio_stream::{wrappers::UnboundedReceiverStream, Stream, StreamExt};
 use tower_http::cors::CorsLayer;
 use url::{Host, Url};
 
@@ -116,7 +119,8 @@ impl Resolve for SafeResolver {
     fn resolve(&self, name: Name) -> Resolving {
         Box::pin(async move {
             let host = name.as_str().to_string();
-            let addrs: Vec<SocketAddr> = tokio::net::lookup_host((host.as_str(), 0)).await?.filter(|a| !private_ip(a.ip())).collect();
+            let mut addrs: Vec<SocketAddr> = tokio::net::lookup_host((host.as_str(), 0)).await?.filter(|a| !private_ip(a.ip())).collect();
+            addrs.sort_by_key(|a| a.is_ipv6()); // IPv4 первым: у части провайдеров IPv6 «кривой» и подключение зависает
             if addrs.is_empty() {
                 return Err("address is not allowed".into());
             }
@@ -172,6 +176,9 @@ async fn serve(st: AppState, token: String, target: String, req_headers: HeaderM
     // название песни прямо из потока (Icecast/ICY)
     if let Some(r) = req_headers.get("icy-metadata") {
         rq = rq.header("icy-metadata", r);
+    }
+    if live {
+        rq = rq.header(header::ACCEPT_ENCODING, "identity"); // у звука сжатия нет, а лишняя распаковка только задерживает
     }
     let sent = if live {
         match tokio::time::timeout(LIVE_OPEN_TIMEOUT, rq.send()).await {
@@ -243,15 +250,53 @@ async fn serve(st: AppState, token: String, target: String, req_headers: HeaderM
         }
     }
     if pump {
-        let (tx, rx) = mpsc::channel(32);
+        let (tx, rx) = live_channel();
         let client = st.client.clone();
         tauri::async_runtime::spawn(pump_live(client, url, resp, tx, LiveCfg::default()));
-        return out.body(Body::from_stream(ReceiverStream::new(rx))).unwrap();
+        return out.body(Body::from_stream(rx)).unwrap();
     }
     out.body(Body::from_stream(resp.bytes_stream())).unwrap()
 }
 
 const LIVE_OPEN_TIMEOUT: Duration = Duration::from_secs(10);
+/// Предел копилки запаса в байтах (на случай очень тяжёлого потока).
+const HOLD_CAP: usize = 4 * 1024 * 1024;
+/// Сколько эфира (в байтах) может ждать в очереди, пока плеер его не заберёт; больше — читать станцию притормаживаем.
+const QUEUE_CAP: usize = 3 * 1024 * 1024;
+
+/// Очередь между станцией и плеером. Браузер сам держит впереди лишь 2–3 секунды, поэтому настоящий запас лежит здесь:
+/// станцию мы дочитываем всегда, а плеер забирает данные по мере надобности.
+#[derive(Clone)]
+struct LiveTx {
+    tx: mpsc::UnboundedSender<Result<Bytes, std::io::Error>>,
+    queued: Arc<AtomicUsize>,
+}
+
+impl LiveTx {
+    fn send(&self, b: Bytes) -> bool {
+        self.queued.fetch_add(b.len(), Ordering::Relaxed);
+        self.tx.send(Ok(b)).is_ok()
+    }
+    fn is_closed(&self) -> bool {
+        self.tx.is_closed()
+    }
+    fn full(&self) -> bool {
+        self.queued.load(Ordering::Relaxed) > QUEUE_CAP
+    }
+}
+
+fn live_channel() -> (LiveTx, impl Stream<Item = Result<Bytes, std::io::Error>>) {
+    let (tx, rx) = mpsc::unbounded_channel::<Result<Bytes, std::io::Error>>();
+    let queued = Arc::new(AtomicUsize::new(0));
+    let counted = queued.clone();
+    let stream = UnboundedReceiverStream::new(rx).map(move |item| {
+        if let Ok(b) = &item {
+            counted.fetch_sub(b.len(), Ordering::Relaxed);
+        }
+        item
+    });
+    (LiveTx { tx, queued }, stream)
+}
 
 #[derive(Clone, Copy)]
 struct LiveCfg {
@@ -259,11 +304,13 @@ struct LiveCfg {
     silence: Duration,
     /// сколько всего без данных, после чего сдаёмся (плеер сам подключится заново)
     give_up: Duration,
+    /// сколько эфира копим в начале и отдаём плееру разом: это его запас на случай просадки сети
+    prefill: Duration,
 }
 
 impl Default for LiveCfg {
     fn default() -> Self {
-        Self { silence: Duration::from_secs(5), give_up: Duration::from_secs(25) }
+        Self { silence: Duration::from_secs(3), give_up: Duration::from_secs(25), prefill: Duration::from_secs(6) }
     }
 }
 
@@ -273,18 +320,43 @@ fn label(u: &Url) -> String {
 
 /// Перекачивает эфир станции плееру. Если станция оборвала соединение, замолчала или закрыла поток —
 /// открывает его заново и продолжает в том же канале, чтобы плеер ничего не заметил.
-async fn pump_live(client: reqwest::Client, url: Url, first: reqwest::Response, tx: mpsc::Sender<Result<Bytes, std::io::Error>>, cfg: LiveCfg) {
+async fn pump_live(client: reqwest::Client, url: Url, first: reqwest::Response, tx: LiveTx, cfg: LiveCfg) {
     let who = label(&url);
     let mut resp = first;
     let mut last_data = tokio::time::Instant::now();
     let mut drops = 0u32;
+    let mut holding = !cfg.prefill.is_zero(); // пока копим запас, плееру ничего не отдаём
+    let mut hold: Vec<Bytes> = Vec::new();
+    let mut held = 0usize;
+    let mut hold_since: Option<tokio::time::Instant> = None;
     loop {
         let why = loop {
+            while tx.full() {
+                if tx.is_closed() {
+                    return;
+                }
+                tokio::time::sleep(Duration::from_millis(100)).await; // плеер давно не забирает: станцию пока не читаем
+            }
             match tokio::time::timeout(cfg.silence, resp.chunk()).await {
                 Ok(Ok(Some(chunk))) => {
                     last_data = tokio::time::Instant::now();
-                    if tx.send(Ok(chunk)).await.is_err() {
+                    if tx.is_closed() {
                         return; // плеер закрыл поток
+                    }
+                    if holding {
+                        held += chunk.len();
+                        hold.push(chunk);
+                        let since = *hold_since.get_or_insert(last_data);
+                        if since.elapsed() >= cfg.prefill || held >= HOLD_CAP {
+                            holding = false;
+                            for c in hold.drain(..) {
+                                if !tx.send(c) {
+                                    return;
+                                }
+                            }
+                        }
+                    } else if !tx.send(chunk) {
+                        return;
                     }
                 }
                 Ok(Ok(None)) => break "станция закрыла поток".to_string(),
@@ -305,7 +377,7 @@ async fn pump_live(client: reqwest::Client, url: Url, first: reqwest::Response, 
             if tx.is_closed() {
                 return;
             }
-            match tokio::time::timeout(LIVE_OPEN_TIMEOUT.min(cfg.give_up), client.get(url.clone()).send()).await {
+            match tokio::time::timeout(LIVE_OPEN_TIMEOUT.min(cfg.give_up), client.get(url.clone()).header(header::ACCEPT_ENCODING, "identity").send()).await {
                 Ok(Ok(r)) if r.status().is_success() => {
                     crate::log::line(&format!("поток {who}: переподключён, тишина была {} мс", last_data.elapsed().as_millis()));
                     break r;
@@ -404,11 +476,12 @@ mod tests {
         let url = u(&format!("http://127.0.0.1:{port}/live"));
         let client = reqwest::Client::new();
         let first = client.get(url.clone()).send().await.unwrap();
-        let (tx, mut rx) = mpsc::channel(32);
-        let cfg = LiveCfg { silence: Duration::from_secs(1), give_up: Duration::from_millis(1500) };
+        let (tx, rx) = live_channel();
+        tokio::pin!(rx);
+        let cfg = LiveCfg { silence: Duration::from_secs(1), give_up: Duration::from_millis(1500), prefill: Duration::ZERO };
         tokio::spawn(pump_live(client, url, first, tx, cfg));
         let mut got = Vec::new();
-        while let Some(chunk) = rx.recv().await {
+        while let Some(chunk) = rx.next().await {
             got.extend_from_slice(&chunk.unwrap());
         }
         assert_eq!(got, b"AAAABBBB", "после обрыва данные должны продолжиться в том же потоке");
@@ -431,6 +504,76 @@ mod tests {
         }
         let wrong = reqwest::get(format!("http://127.0.0.1:{}/bad/live/{target}", info.port)).await.unwrap();
         assert_eq!(wrong.status(), 404, "без ключа прокси не отвечает");
+    }
+
+    /// Станция, которая отдаёт части с задержками: (пауза в мс перед частью, данные); потом держит соединение открытым.
+    async fn slow_station(parts: Vec<(u64, &'static [u8])>) -> u16 {
+        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let port = listener.local_addr().unwrap().port();
+        tokio::spawn(async move {
+            let (mut sock, _) = listener.accept().await.unwrap();
+            let mut buf = [0u8; 1024];
+            let _ = sock.read(&mut buf).await;
+            let _ = sock.write_all(b"HTTP/1.1 200 OK\r\nContent-Type: audio/mpeg\r\nConnection: close\r\n\r\n").await;
+            for (pause, data) in parts {
+                tokio::time::sleep(Duration::from_millis(pause)).await;
+                let _ = sock.write_all(data).await;
+            }
+            tokio::time::sleep(Duration::from_secs(5)).await;
+        });
+        port
+    }
+
+    #[tokio::test]
+    async fn live_stream_holds_prefill_then_sends_it_at_once() {
+        let port = slow_station(vec![(0, b"AAAA"), (400, b"BBBB"), (400, b"CCCC"), (400, b"DDDD")]).await;
+        let url = u(&format!("http://127.0.0.1:{port}/live"));
+        let client = reqwest::Client::new();
+        let first = client.get(url.clone()).send().await.unwrap();
+        let (tx, rx) = live_channel();
+        tokio::pin!(rx);
+        let cfg = LiveCfg { silence: Duration::from_secs(2), give_up: Duration::from_secs(5), prefill: Duration::from_millis(1000) };
+        let started = tokio::time::Instant::now();
+        tokio::spawn(pump_live(client, url, first, tx, cfg));
+        let first_chunk = rx.next().await.unwrap().unwrap();
+        let waited = started.elapsed();
+        assert!(waited >= Duration::from_millis(900), "плеер получил данные слишком рано: {waited:?}");
+        assert_eq!(&first_chunk[..], b"AAAA", "копилка отдаётся с самого начала");
+        let second = tokio::time::timeout(Duration::from_millis(100), rx.next()).await.expect("накопленное идёт сразу пачкой").unwrap().unwrap();
+        assert_eq!(&second[..], b"BBBB");
+    }
+
+    /// Запас в прокси прячет просадку станции: плеер забирает данные в реальном времени (100 Б каждые 100 мс),
+    /// станция на секунду замолкает, а плеер всё равно не видит паузы.
+    #[tokio::test]
+    async fn queue_hides_upstream_stall_from_player() {
+        // 20 кусков по 100 мс; потом станция молчит 1 с и продолжает ещё 10 кусков
+        let mut parts: Vec<(u64, &'static [u8])> = (0..20).map(|_| (100, &b"0123456789"[..])).collect();
+        parts.push((1000, b"0123456789"));
+        parts.extend((0..9).map(|_| (100, &b"0123456789"[..])));
+        let port = slow_station(parts).await;
+        let url = u(&format!("http://127.0.0.1:{port}/live"));
+        let client = reqwest::Client::new();
+        let first = client.get(url.clone()).send().await.unwrap();
+        let (tx, rx) = live_channel();
+        tokio::pin!(rx);
+        let cfg = LiveCfg { silence: Duration::from_secs(3), give_up: Duration::from_secs(5), prefill: Duration::from_millis(1200) };
+        tokio::spawn(pump_live(client, url, first, tx, cfg));
+        // плеер забирает по куску каждые 100 мс, как играющий звук
+        let mut last = tokio::time::Instant::now();
+        let mut worst = Duration::ZERO;
+        let mut got = 0;
+        while got < 30 {
+            let chunk = tokio::time::timeout(Duration::from_secs(3), rx.next()).await.expect("поток встал").unwrap().unwrap();
+            got += chunk.len() / 10;
+            if got > 12 {
+                worst = worst.max(last.elapsed()); // самый долгий промежуток между порциями
+            }
+            last = tokio::time::Instant::now();
+            tokio::time::sleep(Duration::from_millis(100 * (chunk.len() / 10) as u64)).await; // играем то, что взяли
+        }
+        assert!(worst < Duration::from_millis(400), "плеер увидел паузу {worst:?}, а запас должен был её спрятать");
     }
 
     #[test]

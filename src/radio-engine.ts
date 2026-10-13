@@ -36,16 +36,16 @@ const listeners = new Set<() => void>();
 export const onRadio = (f: () => void) => { listeners.add(f); };
 const emit = () => listeners.forEach((f) => f());
 
-/* ---------- звук: два «слота», чтобы старая станция играла, пока новая подключается ---------- */
+/* ---------- звук: три «слота»: один играет, в двух других подключается новая станция (или два адреса сразу) ---------- */
 
-type Slot = { el: HTMLAudioElement; gain: GainNode | null; hls: HlsType | null };
+type Slot = { el: HTMLAudioElement; gain: GainNode | null; tap: AnalyserNode | null; hls: HlsType | null };
 const makeSlot = (): Slot => {
   const el = new Audio();
   el.crossOrigin = "anonymous"; // наш прокси разрешает чтение, поэтому визуализатор работает у всех станций
   el.preload = "none";
-  return { el, gain: null, hls: null };
+  return { el, gain: null, tap: null, hls: null };
 };
-const slots: [Slot, Slot] = [makeSlot(), makeSlot()];
+const slots: Slot[] = [makeSlot(), makeSlot(), makeSlot()];
 let active = 0;
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
@@ -79,6 +79,9 @@ function ensureGraph() {
     const src = ctx.createMediaElementSource(s.el);
     s.gain = ctx.createGain();
     s.gain.gain.value = 0;
+    s.tap = ctx.createAnalyser(); // слушает станцию до громкости и эквалайзера: нужен, чтобы заметить «залипшую» тишину
+    s.tap.fftSize = 1024;
+    src.connect(s.tap);
     src.connect(s.gain);
     s.gain.connect(master);
   }
@@ -164,9 +167,14 @@ function wipe(s: Slot) {
   if (s.gain) s.gain.gain.value = 0;
 }
 
+const WANT_AHEAD = 2; // браузер сам держит впереди лишь 2–3 с; настоящий запас (6 с) копит прокси ещё до первых данных
+const SOFT_MS = 12000; // если запас так и не набрался, но звук идёт, стартуем с тем, что есть
+const NO_DATA_MS = 13000; // прокси копит запас ~6 с, поэтому до первых данных ждём дольше
+const CAP_MS = 16000;
+
 /* пробуем один адрес: звук не слышен, пока не наберётся запас — так меньше заиканий.
-   Возвращает "" при успехе, иначе причину неудачи (для журнала). */
-function attempt(s: Slot, url: string, isHls: boolean): Promise<string> {
+   Возвращает "" при успехе, иначе причину неудачи (для журнала); ctl.cancel() прерывает попытку. */
+function attempt(s: Slot, url: string, isHls: boolean, ctl: { cancel: () => void }): Promise<string> {
   return new Promise((resolve) => {
     wipe(s);
     let done = false;
@@ -178,16 +186,17 @@ function attempt(s: Slot, url: string, isHls: boolean): Promise<string> {
       s.el.removeEventListener("error", onErr);
       resolve(why);
     };
+    ctl.cancel = () => finish("отменено");
     const onErr = () => finish("ошибка потока");
-    const timer = window.setTimeout(() => finish("не успел за 14 с"), 14000);
+    const timer = window.setTimeout(() => finish(`не успел за ${CAP_MS / 1000} с`), CAP_MS);
     const t0 = performance.now();
     const poll = window.setInterval(() => {
       const el = s.el;
       const waited = performance.now() - t0;
-      if (!el.buffered.length && waited > 6000) { finish("нет данных 6 с"); return; } // мёртвый адрес не держит очередь
+      if (!el.buffered.length && waited > NO_DATA_MS) { finish(`нет данных ${NO_DATA_MS / 1000} с`); return; } // мёртвый адрес не держит очередь
       if (el.readyState < 3 || el.currentTime <= 0) return;
       const ahead = el.buffered.length ? el.buffered.end(el.buffered.length - 1) - el.currentTime : 0;
-      if (ahead >= 2 || waited > 3500) finish("");
+      if (ahead >= WANT_AHEAD || waited > SOFT_MS) finish("");
     }, 250);
     s.el.addEventListener("error", onErr);
     void (async () => {
@@ -266,11 +275,11 @@ function ordered(s: Station, q: RQ): Addr[] {
 let curUrl = ""; // адрес, который играет сейчас
 
 /* поток завис или оборвался: запоминаем виновника, чтобы переподключение начало с другого адреса */
-function reconnect(why: string) {
+function reconnect(why: string, blame = true) {
   const s = state.station;
   if (!s) return;
   rlog(`${s.id}: ${why}, переподключаюсь (${hostOf(curUrl)})`);
-  if (curUrl) markBad(curUrl);
+  if (blame && curUrl && navigator.onLine) markBad(curUrl); // после сна или без интернета адрес не виноват
   void connect(s, true);
 }
 
@@ -285,9 +294,43 @@ async function connect(s: Station, quiet = false) {
   try { await run; } finally { if (gen === mine) busy = false; }
 }
 
-/* выбранное качество → все его адреса (два круга) → качества ниже → ошибка */
+/* адреса пробуем волнами по два сразу (каждый в своём слоте): играет тот, кто первым набрал запас */
+type Won = { slot: Slot; url: string; ms: number };
+let cancelers: Array<() => void> = [];
+const cancelAttempts = () => { const c = cancelers; cancelers = []; for (const f of c) f(); };
+
+async function race(s: Station, q: RQ, free: Slot[], mine: number): Promise<Won | null> {
+  const list = ordered(s, q);
+  for (let i = 0; i < list.length; i += free.length) {
+    const res: { won: Won | null } = { won: null };
+    const wave = list.slice(i, i + free.length).map(async (addr, k) => {
+      const url = urlOf(addr);
+      const slot = free[k];
+      const ctl = { cancel: () => undefined as void };
+      cancelers.push(() => ctl.cancel());
+      const t0 = performance.now();
+      const why = await attempt(slot, url, !!q.hls || (typeof addr !== "string" && !!addr.hls), ctl);
+      const ms = Math.round(performance.now() - t0);
+      if (why === "отменено") return;
+      if (why) {
+        if (navigator.onLine) markBad(url); // без интернета адрес не виноват
+        rlog(`${s.id} ${q.k}k ${hostOf(url)}: не вышло (${why}, ${ms} мс)`);
+        return;
+      }
+      if (res.won || mine !== gen) { wipe(slot); return; }
+      res.won = { slot, url, ms };
+      cancelAttempts(); // остальные попытки волны больше не нужны
+    });
+    await Promise.all(wave);
+    if (res.won || mine !== gen) return res.won;
+  }
+  return null;
+}
+
+/* выбранное качество → все его адреса (волнами по два, два круга) → качества ниже → ошибка */
 async function connectNow(s: Station, quiet = false) {
   const mine = ++gen;
+  cancelAttempts();
   ensureGraph();
   void ctx?.resume();
   const previous = state.station;
@@ -296,43 +339,36 @@ async function connectNow(s: Station, quiet = false) {
   state.paused = false;
   if (!quiet || !wasPlaying) state.status = "connecting";
   emit();
-  const target = 1 - active;
+  const free = slots.filter((_, i) => i !== active);
   const first = pickQuality(s);
   const chain = [first, ...s.q.filter((x) => x.k < first.k).sort((a, b) => b.k - a.k)];
   for (let qi = 0; qi < chain.length; qi++) {
     for (let round = 0; round < (qi === 0 ? 2 : 1); round++) {
-      for (const addr of ordered(s, chain[qi])) {
-        const url = urlOf(addr);
-        if (mine !== gen) return;
-        const t0 = performance.now();
-        const why = await attempt(slots[target], url, !!chain[qi].hls || (typeof addr !== "string" && !!addr.hls));
-        if (mine !== gen) { if (!why) wipe(slots[target]); return; }
-        if (why) {
-          markBad(url);
-          rlog(`${s.id} ${chain[qi].k}k ${hostOf(url)}: не вышло (${why}, ${Math.round(performance.now() - t0)} мс)`);
-          continue;
-        }
-        markGood(s, chain[qi], url);
-        curUrl = url;
-        rlog(`${s.id} ${chain[qi].k}k ${hostOf(url)}: играет (старт ${Math.round(performance.now() - t0)} мс${qi ? ", качество понижено" : ""})`);
-        const old = slots[active];
-        active = target;
-        fade(slots[target], 1, wasPlaying ? 0.9 : 0.35);
-        if (wasPlaying) {
-          fade(old, 0, 0.9);
-          window.setTimeout(() => { if (slots[active] !== old) wipe(old); }, 1100);
-        } else wipe(old);
-        state.kbps = chain[qi].k;
-        state.status = "playing";
-        stuckAt = endAt = performance.now();
-        lastTime = lastEnd = -1;
-        emit();
-        return;
-      }
+      const won = await race(s, chain[qi], free, mine);
+      if (mine !== gen) { if (won) wipe(won.slot); return; }
+      if (!won) continue;
+      markGood(s, chain[qi], won.url);
+      curUrl = won.url;
+      rlog(`${s.id} ${chain[qi].k}k ${hostOf(won.url)}: играет (старт ${won.ms} мс${qi ? ", качество понижено" : ""})`);
+      const old = slots[active];
+      active = slots.indexOf(won.slot);
+      for (const f of free) if (f !== won.slot) wipe(f);
+      fade(won.slot, 1, wasPlaying ? 0.9 : 0.35);
+      if (wasPlaying) {
+        fade(old, 0, 0.9);
+        window.setTimeout(() => { if (slots[active] !== old) wipe(old); }, 1100);
+      } else wipe(old);
+      state.kbps = chain[qi].k;
+      state.status = "playing";
+      stuckAt = endAt = performance.now();
+      silentSince = 0;
+      lastTime = lastEnd = -1;
+      emit();
+      return;
     }
   }
   if (mine !== gen) return;
-  wipe(slots[target]);
+  for (const f of free) wipe(f);
   if (wasPlaying && previous) { // новая станция недоступна, а прежняя продолжает играть
     state.station = previous;
     state.status = "playing";
@@ -383,6 +419,7 @@ export function toggle() {
 export function stop() {
   gen++;
   busy = false;
+  cancelAttempts();
   for (const s of slots) wipe(s);
   state.status = "idle";
   state.paused = false;
@@ -404,35 +441,75 @@ export function setQuality(k: number) {
   if (state.station) void connect(state.station, true);
 }
 
-/* ---------- сторож: звук завис на 3,5 секунды — переподключаемся ---------- */
+/* ---------- сторож: следит, чтобы звук не завис, не пропал и не замолчал ---------- */
+const SILENT_S = 8; // столько секунд подряд тишины на выходе станции — считаем поток «залипшим»
 let lastTime = -1;
 let stuckAt = 0;
 let lastEnd = -1;
 let endAt = 0;
-setInterval(() => {
+let lastTick = Date.now();
+let silentSince = 0;
+let lastSilenceFix = 0;
+const tapBuf = new Float32Array(1024);
+
+/* слышно ли что-то на выходе станции (до громкости и эквалайзера, поэтому нулевая громкость не мешает) */
+function audible(slot: Slot): boolean {
+  if (!slot.tap) return true;
+  slot.tap.getFloatTimeDomainData(tapBuf);
+  let peak = 0;
+  for (let i = 0; i < tapBuf.length; i++) peak = Math.max(peak, Math.abs(tapBuf[i]));
+  return peak > 0.0005;
+}
+
+function watchdog() {
   const s = state.station;
   const now = performance.now();
-  if (!s || state.status !== "playing" || state.paused || busy) { stuckAt = endAt = now; return; } // пока идёт подключение, не мешаем ему
+  const wall = Date.now();
+  const slept = wall - lastTick > 8000; // тиков не было: компьютер спал или система «замораживала» приложение
+  lastTick = wall;
+  if (!s || state.status !== "playing" || state.paused) { stuckAt = endAt = now; silentSince = 0; return; }
+  if (slept) { void ctx?.resume(); reconnect("после сна или паузы системы", false); return; }
+  if (busy || !navigator.onLine) { stuckAt = endAt = now; silentSince = 0; return; } // идёт подключение или нет интернета — не мешаем
   const slot = slots[active];
   const el = slot.el;
   const t = el.currentTime;
   if (t !== lastTime) { lastTime = t; stuckAt = now; }
   else if (now - stuckAt > 3500) { stuckAt = now; reconnect("звук завис 3,5 с"); return; }
+  if (ctx?.state === "running" && !audible(slot)) {
+    silentSince ||= now;
+    if (now - silentSince > SILENT_S * 1000 && wall - lastSilenceFix > 60000) { lastSilenceFix = wall; silentSince = 0; reconnect(`тишина ${SILENT_S} с`); return; }
+  } else silentSince = 0;
   if (slot.hls) return; // у HLS свой большой запас из кусков
   const end = el.buffered.length ? el.buffered.end(el.buffered.length - 1) : 0;
   const ahead = end - t;
   // новые данные перестали приходить, а запас ещё играет: меняем источник заранее, пока тишины нет
   if (end !== lastEnd) { lastEnd = end; endAt = now; }
-  else if (ahead > 0.5 && now - endAt > 8000) { endAt = now; reconnect("данные не приходят 8 с, запас ещё играет"); return; } // прокси ждёт 5 с и сам переподключается; это уже запасной случай
-}, 1000);
+  else if (ahead > 0.5 && now - endAt > 8000) { endAt = now; reconnect("данные не приходят 8 с, запас ещё играет"); } // прокси ждёт 3 с и сам переподключается; это запасной случай
+}
+
+/* тикает рабочий поток, а не таймер страницы: у свёрнутого окна таймеры страницы замедляются, а сторож нужен как раз тогда */
+try {
+  const ticker = new Worker(URL.createObjectURL(new Blob(["setInterval(() => postMessage(0), 1000)"], { type: "text/javascript" })));
+  ticker.onmessage = watchdog;
+} catch { setInterval(watchdog, 1000); }
+
 for (const slot of slots) {
   // сервер закрыл поток (например, перезапуск эфира) — не ждём сторожа
   const lost = (why: string) => () => {
-    if (slot === slots[active] && state.status === "playing" && !state.paused && state.station) reconnect(why);
+    if (slot === slots[active] && state.status === "playing" && !state.paused && !busy && navigator.onLine && state.station) reconnect(why);
   };
   slot.el.addEventListener("error", lost("ошибка потока"));
   slot.el.addEventListener("ended", lost("поток закрыт"));
 }
+
+/* интернет пропал и вернулся — подключаемся сразу, а не ждём сторожа */
+window.addEventListener("offline", () => { if (state.station && state.status !== "idle") rlog(`${state.station.id}: интернет пропал`); });
+window.addEventListener("online", () => {
+  const s = state.station;
+  if (!s || state.status === "idle" || state.paused) return;
+  rlog(`${s.id}: интернет вернулся, подключаюсь`);
+  void connect(s, true);
+});
 
 /* ---------- что играет сейчас ---------- */
 let trackTimer = 0;
