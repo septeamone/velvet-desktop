@@ -30,6 +30,7 @@ export function enableSort(container: HTMLElement, itemSel: string, onSorted: (i
   let scroller: HTMLElement | null = null;
   let scrollTimer = 0;
 
+  if (getComputedStyle(container).position === "static") container.style.position = "relative";
   const items = () => [...container.querySelectorAll<HTMLElement>(itemSel)];
 
   container.addEventListener("pointerdown", (e) => {
@@ -69,13 +70,14 @@ export function enableSort(container: HTMLElement, itemSel: string, onSorted: (i
     reorder();
   }
 
+  /* где карточка стоит «по-настоящему» (без учёта плавного смещения во время анимации) */
   function reorder() {
     if (!drag) return;
-    if (ghost) ghost.style.display = "none";
-    const hit = document.elementFromPoint(lastX, lastY)?.closest<HTMLElement>(itemSel);
-    if (ghost) ghost.style.display = "";
-    if (!hit || hit === drag || !container.contains(hit)) return;
+    const cr = container.getBoundingClientRect();
+    const px = lastX - cr.left, py = lastY - cr.top;
     const list = items();
+    const hit = list.find((el) => px >= el.offsetLeft && px < el.offsetLeft + el.offsetWidth && py >= el.offsetTop && py < el.offsetTop + el.offsetHeight);
+    if (!hit || hit === drag) return;
     const from = list.indexOf(drag), to = list.indexOf(hit);
     if (from < 0 || to < 0) return;
     flip(list, () => { if (from < to) hit.after(drag!); else hit.before(drag!); });

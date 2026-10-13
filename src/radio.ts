@@ -1,6 +1,6 @@
 /* Вкладка «Радио»: список станций, панель «Сейчас играет» с визуализатором и мини-плеер. */
 import {
-  stations, countries, shown, state, play, toggle, setQuality, setVolume, onRadio, levels, setStepper, lastNotice, LIVE,
+  stations, countries, shown, state, play, toggle, setQuality, setVolume, toggleMute, onRadio, levels, setStepper, lastNotice, LIVE,
   type Station,
 } from "./radio-engine";
 import { fetchTrack } from "./nowplaying";
@@ -91,7 +91,7 @@ function logoOf(s: Station, cls: string) {
   const box = el("span", cls);
   if (s.logo) {
     const img = el("img");
-    img.src = `/radio/${s.id}.png`;
+    img.src = `/radio/${s.id}.webp`;
     img.alt = "";
     img.draggable = false;
     box.append(img);
@@ -235,7 +235,21 @@ setStepper(step);
 const HEART = '<svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8 3.4 5 6.6 5c2 0 3.5 1.1 4.4 2.6h2C13.9 6.1 15.4 5 17.4 5c3.2 0 5.1 3 3.9 6.3-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>';
 const ICON_PLAY = '<path d="M8 5.5v13l11-6.5z"/>';
 const ICON_PAUSE = '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>';
-const VOL_ON = '<path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/>';
+const VOL_HIGH = '<path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/>';
+const VOL_LOW = '<path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/>';
+const VOL_OFF = '<path d="M3 9v6h4l5 4V5L7 9H3zm13.6 .6L15.2 11l-1.4-1.4-1.4 1.4 1.4 1.4-1.4 1.4 1.4 1.4 1.4-1.4 1.4 1.4 1.4-1.4-1.4-1.4 1.4-1.4z"/>';
+
+/* громкость: ползунок, процент, значок по уровню; везде одинаково (панель и мини-плеер) */
+function paintVolume() {
+  const v = state.volume;
+  for (const [slider, icon, btn] of [["pVol", "pVolIcon", "pVolBtn"], ["mVol", "mVolIcon", "mVolBtn"]] as const) {
+    ($(slider) as HTMLInputElement).value = String(v);
+    $(slider).style.setProperty("--p", `${v * 100}%`);
+    $(icon).innerHTML = v === 0 ? VOL_OFF : v < 0.5 ? VOL_LOW : VOL_HIGH;
+    $(btn).setAttribute("aria-label", v === 0 ? "Включить звук" : "Выключить звук");
+  }
+  $("pPct").textContent = `${Math.round(v * 100)}%`;
+}
 
 /* ---------- панель «Сейчас играет» и мини-плеер ---------- */
 const panel = $("rPanel");
@@ -286,8 +300,7 @@ function paintPanel() {
   const heart = $("pFav");
   heart.setAttribute("aria-pressed", String(!!s && fav.has(s.id)));
   heart.hidden = !s;
-  ($("pVol") as HTMLInputElement).value = String(state.volume);
-  $("pVol").style.setProperty("--p", `${state.volume * 100}%`);
+  paintVolume();
 }
 
 function paintMini() {
@@ -312,8 +325,7 @@ function paintMini() {
   q.hidden = shown(s).length < 2;
   q.textContent = state.kbps ? `${state.kbps} kbps` : "Качество";
   paintQualityButtons($("mQMenu"), true);
-  ($("mVol") as HTMLInputElement).value = String(state.volume);
-  $("mVol").style.setProperty("--p", `${state.volume * 100}%`);
+  paintVolume();
 }
 
 let paintQueued = false;
@@ -427,8 +439,11 @@ export function initRadio() {
   $("mQ").onclick = (e) => { e.stopPropagation(); $("mQMenu").classList.toggle("open"); };
   $("mOpen").onclick = () => window.dispatchEvent(new Event("velvet:open-radio"));
   for (const id of ["pVol", "mVol"]) $<HTMLInputElement>(id).addEventListener("input", (e) => setVolume(Number((e.target as HTMLInputElement).value)));
-  $("pVolIcon").innerHTML = VOL_ON;
-  $("mVolIcon").innerHTML = VOL_ON;
+  $("pVolBtn").onclick = toggleMute;
+  $("mVolBtn").onclick = toggleMute;
+  paintVolume();
+  // колесо мыши над панелью меняет громкость, стрелки влево/вправо тоже
+  panel.addEventListener("wheel", (e) => { setVolume(state.volume - Math.sign(e.deltaY) * 0.05); }, { passive: true });
   window.addEventListener("velvet:rnotice", (e) => {
     const t = $("rToast");
     t.textContent = (e as CustomEvent<string>).detail || lastNotice();
@@ -440,6 +455,9 @@ export function initRadio() {
     if (shell.dataset.view !== "radio") return;
     const tag = (e.target as HTMLElement).tagName;
     if (e.key === " " && tag !== "INPUT" && tag !== "BUTTON") { e.preventDefault(); if (state.station) toggle(); }
+    if (tag !== "INPUT" && e.key === "ArrowLeft") setVolume(state.volume - 0.05);
+    if (tag !== "INPUT" && e.key === "ArrowRight") setVolume(state.volume + 0.05);
+    if (tag !== "INPUT" && (e.key === "m" || e.key === "M")) toggleMute();
   });
 
   enableSort($("rGrid"), ".scard", (ids) => applyOrder(ids));

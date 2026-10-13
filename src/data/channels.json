@@ -2,7 +2,7 @@
  {
   "id": "pervy",
   "name": "Первый канал",
-  "logo": "/logos/pervy.png",
+  "logo": "/logos/pervy.webp",
   "sources": [
    {
     "rutube": "c58f502c7bb34a8fcdd976b221fca292"
@@ -13,7 +13,7 @@
  {
   "id": "rossiya1",
   "name": "Россия 1",
-  "logo": "/logos/rossiya1.png",
+  "logo": "/logos/rossiya1.webp",
   "sources": [
    "https://stream.smotrim.ru/hls2/russia_hd/playlist_6.m3u8",
    {
@@ -26,7 +26,7 @@
  {
   "id": "ntv",
   "name": "НТВ",
-  "logo": "/logos/ntv.png",
+  "logo": "/logos/ntv.webp",
   "sources": [
    {
     "rutube": "c37cd74192c6bc3d6cd6077c0c4fd686"
@@ -38,7 +38,7 @@
  {
   "id": "five",
   "name": "Пятый канал",
-  "logo": "/logos/five.png",
+  "logo": "/logos/five.webp",
   "sources": [
    "https://fs.uplink.kz/5_kanal/mono.m3u8?token=onlinetv",
    "http://31.148.5.241/kanal_5/index.m3u8",
@@ -56,7 +56,7 @@
  {
   "id": "ren",
   "name": "РЕН ТВ",
-  "logo": "/logos/ren.png",
+  "logo": "/logos/ren.webp",
   "sources": [
    "https://fs.uplink.kz/ren/mono.m3u8?token=onlinetv",
    "http://185.23.80.23:8080/REN/index.m3u8",
@@ -86,7 +86,7 @@
  {
   "id": "rossiya24",
   "name": "Россия 24",
-  "logo": "/logos/rossiya24.png",
+  "logo": "/logos/rossiya24.webp",
   "sources": [
    {
     "rutube": "ad6ba2e9e587406b29978b861b7b7dd1"
@@ -97,7 +97,7 @@
  {
   "id": "kultura",
   "name": "Россия К",
-  "logo": "/logos/kultura.png",
+  "logo": "/logos/kultura.webp",
   "sources": [
    "https://stream.smotrim.ru/hls2/russia_k/playlist_5.m3u8",
    {
@@ -122,7 +122,7 @@
  {
   "id": "zvezda",
   "name": "Звезда",
-  "logo": "/logos/zvezda.png",
+  "logo": "/logos/zvezda.webp",
   "sources": [
    "https://tvzvezda.bonus-tv.ru/cdn/tvzvezda/playlist.m3u8",
    {
@@ -134,7 +134,7 @@
  {
   "id": "tnt",
   "name": "ТНТ",
-  "logo": "/logos/tnt.png",
+  "logo": "/logos/tnt.webp",
   "sources": [
    "http://stream.mcquack.net/135/index.m3u8",
    "http://31.148.5.241/kanal_19/index.m3u8",
@@ -150,7 +150,7 @@
  {
   "id": "tnt4",
   "name": "ТНТ4",
-  "logo": "/logos/tnt4.png",
+  "logo": "/logos/tnt4.webp",
   "sources": [
    "http://stream.mcquack.net/106/index.m3u8",
    "https://fs.uplink.kz/tnt4/mono.m3u8?token=onlinetv",
@@ -168,7 +168,7 @@
  {
   "id": "sts",
   "name": "СТС",
-  "logo": "/logos/sts.png",
+  "logo": "/logos/sts.webp",
   "sources": [
    "http://stream.mcquack.net/138/index.m3u8",
    "http://31.148.5.241/kanal_13/index.m3u8",
@@ -186,7 +186,7 @@
  {
   "id": "stslove",
   "name": "СТС Love",
-  "logo": "/logos/stslove.png",
+  "logo": "/logos/stslove.webp",
   "sources": [
    {
     "rutube": "32dc45cf878497abe1c9695e228f039b"
@@ -197,7 +197,7 @@
  {
   "id": "tv3",
   "name": "ТВ-3",
-  "logo": "/logos/tv3.png",
+  "logo": "/logos/tv3.webp",
   "sources": [
    "http://stream.mcquack.net/136/index.m3u8",
    "http://31.148.5.241/kanal_15/index.m3u8",
@@ -215,7 +215,7 @@
  {
   "id": "friday",
   "name": "Пятница!",
-  "logo": "/logos/friday.png",
+  "logo": "/logos/friday.webp",
   "sources": [
    "http://stream.mcquack.net/181/index.m3u8",
    "https://vod.tuva.ru/friday/index.m3u8"
@@ -229,7 +229,7 @@
  {
   "id": "domashniy",
   "name": "Домашний",
-  "logo": "/logos/domashniy.jpeg",
+  "logo": "/logos/domashniy.webp",
   "sources": [
    "http://stream.mcquack.net/227/index.m3u8",
    "http://31.148.5.241/kanal_14/index.m3u8",
@@ -245,7 +245,7 @@
  {
   "id": "x2x2",
   "name": "2x2",
-  "logo": "/logos/x2x2.png",
+  "logo": "/logos/x2x2.webp",
   "sources": [
    "http://stream.mcquack.net/187/index.m3u8",
    "http://176.118.197.101/2x2/index.m3u8",
@@ -263,7 +263,7 @@
  {
   "id": "subbota",
   "name": "Суббота!",
-  "logo": "/logos/subbota.png",
+  "logo": "/logos/subbota.webp",
   "sources": [
    {
     "rutube": "310744c10a5809da38aa445c952976da"
@@ -283,7 +283,7 @@
  {
   "id": "u",
   "name": "Ю",
-  "logo": "/logos/u.png",
+  "logo": "/logos/u.webp",
   "sources": [
    "http://stream.mcquack.net/230/index.m3u8",
    "https://fs.uplink.kz/u/mono.m3u8?token=onlinetv",
@@ -299,7 +299,7 @@
  {
   "id": "muz",
   "name": "МУЗ-ТВ",
-  "logo": "/logos/muz.png",
+  "logo": "/logos/muz.webp",
   "sources": [
    "http://stream.mcquack.net/86/index.m3u8",
    "http://31.148.5.241/kanal_20/index.m3u8",
@@ -311,7 +311,7 @@
  {
   "id": "che",
   "name": "Че!",
-  "logo": "/logos/che.png",
+  "logo": "/logos/che.webp",
   "sources": [
    {
     "rutube": "5bbff90167d1b1d88fda92376ec7a651"
@@ -323,7 +323,7 @@
  {
   "id": "match",
   "name": "Матч! Ультра",
-  "logo": "/logos/match.png",
+  "logo": "/logos/match.webp",
   "sources": [
    "http://stream.mcquack.net/169/index.m3u8",
    "http://31.148.5.241/kanal_3/index.m3u8",
@@ -340,7 +340,7 @@
  {
   "id": "matcharena",
   "name": "Матч! Арена",
-  "logo": "/logos/matcharena.png",
+  "logo": "/logos/matcharena.webp",
   "sources": [
    "http://stream.mcquack.net/163/index.m3u8"
   ],
@@ -349,7 +349,7 @@
  {
   "id": "matchigra",
   "name": "Матч! Игра",
-  "logo": "/logos/matchigra.png",
+  "logo": "/logos/matchigra.webp",
   "sources": [
    "http://stream.mcquack.net/188/index.m3u8"
   ],
@@ -358,7 +358,7 @@
  {
   "id": "matchboets",
   "name": "Матч! Боец",
-  "logo": "/logos/matchboets.png",
+  "logo": "/logos/matchboets.webp",
   "sources": [
    "http://stream.mcquack.net/112/index.m3u8"
   ],
@@ -368,7 +368,7 @@
  {
   "id": "matchstrana",
   "name": "Матч! Страна",
-  "logo": "/logos/matchstrana.png",
+  "logo": "/logos/matchstrana.webp",
   "sources": [
    "http://stream.mcquack.net/143/index.m3u8"
   ],
@@ -378,7 +378,7 @@
  {
   "id": "carousel",
   "name": "Карусель",
-  "logo": "/logos/carousel.png",
+  "logo": "/logos/carousel.webp",
   "sources": [
    "https://stream.smotrim.ru/hls2/karusel/playlist_3.m3u8",
    "http://stream.mcquack.net/120/index.m3u8"
@@ -388,7 +388,7 @@
  {
   "id": "mult",
   "name": "Мульт",
-  "logo": "/logos/mult.png",
+  "logo": "/logos/mult.webp",
   "sources": [
    "http://stream.mcquack.net/232/index.m3u8",
    "https://fs.uplink.kz/mult/mono.m3u8?token=onlinetv",
@@ -404,7 +404,7 @@
  {
   "id": "multilandia",
   "name": "Мультилэндия",
-  "logo": "/logos/multilandia.png",
+  "logo": "/logos/multilandia.webp",
   "sources": [
    "https://fs.uplink.kz/multilandia/mono.m3u8?token=onlinetv",
    "https://stream8.cinerama.uz/1440/tracks-v1a1/mono.m3u8"
@@ -414,7 +414,7 @@
  {
   "id": "multmuz",
   "name": "Мульт и музыка",
-  "logo": "/logos/multmuz.png",
+  "logo": "/logos/multmuz.webp",
   "sources": [
    "http://stream.mcquack.net/82/index.m3u8"
   ],
@@ -423,7 +423,7 @@
  {
   "id": "izvestia",
   "name": "Известия",
-  "logo": "/logos/izvestia.png",
+  "logo": "/logos/izvestia.webp",
   "sources": [
    {
     "rutube": "3c47861a8b4b51639e41be092053b966"
@@ -435,7 +435,7 @@
  {
   "id": "moscow24",
   "name": "Москва 24",
-  "logo": "/logos/moscow24.png",
+  "logo": "/logos/moscow24.webp",
   "sources": [
    {
     "rutube": "ca70d39eba2e8771358bbcb4bfbad860"
@@ -447,7 +447,7 @@
  {
   "id": "ch360",
   "name": "360",
-  "logo": "/logos/ch360.png",
+  "logo": "/logos/ch360.webp",
   "sources": [
    {
     "rutube": "07beff61e617797db550cc3a5f6ad92b"
@@ -458,7 +458,7 @@
  {
   "id": "spas",
   "name": "СПАС",
-  "logo": "/logos/spas.png",
+  "logo": "/logos/spas.webp",
   "sources": [
    {
     "rutube": "2bbfa9ebf9d79ade480d7281fcef1008"
@@ -469,7 +469,7 @@
  {
   "id": "moymir",
   "name": "Мой мир",
-  "logo": "/logos/moymir.png",
+  "logo": "/logos/moymir.webp",
   "sources": [
    {
     "rutube": "0064bd09060c8b8469fef19f269e8a8a"
@@ -481,7 +481,7 @@
  {
   "id": "prosv",
   "name": "Просвещение",
-  "logo": "/logos/prosv.png",
+  "logo": "/logos/prosv.webp",
   "sources": [
    "http://cdn-01.bonus-tv.ru/prosveschenie_edge/index.m3u8"
   ],
@@ -490,7 +490,7 @@
  {
   "id": "brics",
   "name": "ТВ БРИКС",
-  "logo": "/logos/brics.png",
+  "logo": "/logos/brics.webp",
   "sources": [
    "http://185.23.80.23:8080/TVBRICS/index.m3u8"
   ],
@@ -500,7 +500,7 @@
  {
   "id": "euronews",
   "name": "Euronews",
-  "logo": "/logos/euronews.png",
+  "logo": "/logos/euronews.webp",
   "sources": [
    "https://cdn-euronews.akamaized.net/live/eds/euronews-ru/25071/index.m3u8"
   ],
@@ -510,7 +510,7 @@
  {
   "id": "curtime",
   "name": "Настоящее время",
-  "logo": "/logos/curtime.png",
+  "logo": "/logos/curtime.webp",
   "sources": [
    "https://rfe-ingest.akamaized.net/hls/live/2033043/tvmc05/master.m3u8"
   ],
@@ -520,7 +520,7 @@
  {
   "id": "mir24",
   "name": "Мир 24",
-  "logo": "/logos/mir24.png",
+  "logo": "/logos/mir24.webp",
   "sources": [
    "http://hls.mirtv.cdnvideo.ru/mirtv-parampublish/mir24_2500/playlist.m3u8",
    "http://5.188.159.128:8070/mir_24/index.m3u8",

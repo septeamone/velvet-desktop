@@ -1,6 +1,7 @@
 // Берёт каталог радиостанций из снимка расширения Velvet Radio (_radio-source) и собирает данные для приложения.
 // Запуск: node tools/gen-radio.mjs   — после того как в расширении добавили или изменили станции.
 import { pathToFileURL } from "node:url";
+import { execSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
@@ -33,3 +34,4 @@ np = np.replace("await fetch(url, { cache: 'no-store' })", "await fetch(viaProxy
 np = np.replace("const r = await fetch(url, { headers: { 'Icy-MetaData': '1' }, signal: ctrl.signal });", "const r = await fetch(viaProxy(url), { headers: { 'Icy-MetaData': '1' }, signal: ctrl.signal });");
 writeFileSync("src/nowplaying.ts", `// @ts-nocheck — копия nowplaying.js из расширения (генерируется tools/gen-radio.mjs, руками не править)\nimport { viaProxy } from "./net";\n${np}`);
 console.log(`станций ${stations.length}, логотипов ${logos}, флагов ${flags}, стран ${countries.length}`);
+execSync("python tools/to-webp.py", { stdio: "inherit" }); // логотипы в WebP: приложение легче

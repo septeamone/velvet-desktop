@@ -1,6 +1,6 @@
 [package]
 name = "velvet-radio-desktop"
-version = "0.1.0"
+version = "1.0.0"
 description = "Velvet TV и радио"
 authors = ["septeamone"]
 edition = "2024"
@@ -36,7 +36,7 @@ rand = "0.9"
 [profile.release]
 codegen-units = 1
 lto = true
-opt-level = 3
+opt-level = "s"
 panic = "abort"
 strip = true
 

@@ -75,6 +75,12 @@ function applyVolume() {
   if (master && ctx) master.gain.setTargetAtTime(state.volume * state.volume, ctx.currentTime, 0.02);
 }
 
+let beforeMute = 0.6;
+export function toggleMute() {
+  if (state.volume > 0) { beforeMute = state.volume; setVolume(0); }
+  else setVolume(beforeMute || 0.6);
+}
+
 export function setVolume(v: number) {
   state.volume = Math.min(1, Math.max(0, v));
   try { localStorage.setItem("velvet.rvol", String(state.volume)); } catch { /* не страшно */ }
@@ -323,7 +329,7 @@ function syncMedia() {
     title: state.track || s.name,
     artist: s.name,
     album: "Velvet TV · Радио",
-    artwork: s.logo ? [{ src: new URL(`/radio/${s.id}.png`, location.href).href, sizes: "128x128", type: "image/png" }] : [],
+    artwork: s.logo ? [{ src: new URL(`/radio/${s.id}.webp`, location.href).href, sizes: "128x128", type: "image/webp" }] : [],
   });
   navigator.mediaSession.playbackState = state.paused ? "paused" : "playing";
 }

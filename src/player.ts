@@ -389,7 +389,7 @@ function updateMedia() {
   const now = Date.now();
   const show = programs().find((x) => x.s <= now && now < x.e);
   lastMedia = show?.t ?? "";
-  const type = c.logo.endsWith(".jpeg") ? "image/jpeg" : "image/png";
+  const type = c.logo.endsWith(".webp") ? "image/webp" : c.logo.endsWith(".jpeg") ? "image/jpeg" : "image/png";
   navigator.mediaSession.metadata = new MediaMetadata({
     title: show?.t ?? c.name,
     artist: c.name,
