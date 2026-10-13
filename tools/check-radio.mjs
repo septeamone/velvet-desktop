@@ -51,9 +51,12 @@ for (const [url, r] of results) {
 }
 for (const u of Object.keys(health.urls)) if (!jobs.has(u) && !ONLY.length) delete health.urls[u]; // адреса, которых в каталоге уже нет
 health.updated = now;
+// откуда шла проверка: из другой страны результат другой (у слушателей из России свой путь до станций)
+try { health.checkedFrom = (await (await fetch("http://ip-api.com/json/?fields=countryCode", { signal: AbortSignal.timeout(6000) })).json()).countryCode ?? "?"; } catch { health.checkedFrom = "?"; }
 writeFileSync(HEALTH, JSON.stringify(health, null, 1));
 
-console.log(`\nпроверено адресов ${results.size}, живых ${results.size - dead}, не отвечают ${dead}`);
+console.log(`\nпроверка велась из страны: ${health.checkedFrom}. Результат отражает путь оттуда; у слушателей из других стран (например, России) он может быть другим.`);
+console.log(`проверено адресов ${results.size}, живых ${results.size - dead}, не отвечают ${dead}`);
 const lost = [];
 for (const s of stations) {
   if (ONLY.length && !ONLY.includes(s.id)) continue;

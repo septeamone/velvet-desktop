@@ -23,7 +23,9 @@ if (existsSync("tools/radio-health.json")) {
   let removed = 0, demoted = 0, droppedQ = 0;
   for (const s of stations) {
     for (const q of s.q) {
-      const alive = q.u.filter((u) => n(u) < 2);
+      // Адреса сами не удаляем: проверка идёт из одной точки мира, а у слушателей (в России и не только) путь до станций другой.
+      // Упавший адрес лишь уходит в конец списка; удалять — только осознанно: RADIO_PRUNE=1 node tools/gen-radio.mjs
+      const alive = process.env.RADIO_PRUNE === "1" ? q.u.filter((u) => n(u) < 2) : q.u;
       if (alive.length && alive.length < q.u.length) removed += q.u.length - alive.length;
       const keep = alive.length ? alive : q.u; // если мёртвы все адреса качества, не трогаем
       const sorted = [...keep.filter((u) => n(u) === 0), ...keep.filter((u) => n(u) > 0)]; // порядок составителя сохраняется
