@@ -3,7 +3,7 @@
 //! Слушает только 127.0.0.1 и требует секретный ключ, который известен лишь окну приложения.
 
 use axum::{
-    body::Body,
+    body::{Body, Bytes},
     extract::{Path, State},
     http::{header, HeaderMap, HeaderName, HeaderValue, StatusCode},
     response::Response,
@@ -18,6 +18,8 @@ use std::{
     sync::Arc,
     time::Duration,
 };
+use tokio::sync::mpsc;
+use tokio_stream::wrappers::ReceiverStream;
 use tower_http::cors::CorsLayer;
 use url::{Host, Url};
 
@@ -54,6 +56,7 @@ pub fn build_client() -> Result<reqwest::Client, String> {
         }))
         .connect_timeout(Duration::from_secs(8))
         .read_timeout(Duration::from_secs(20))
+        .tcp_keepalive(Duration::from_secs(15)) // мёртвое соединение замечаем сами, а не через минуты
         .build()
         .map_err(|e| e.to_string())
 }
@@ -68,6 +71,7 @@ pub async fn start() -> Result<ProxyInfo, String> {
     let state = AppState { client, port, token: Arc::from(token.as_str()) };
     let app = Router::new()
         .route("/{token}/{target}", get(handle))
+        .route("/{token}/live/{target}", get(handle_live))
         .layer(CorsLayer::permissive())
         .with_state(state);
 
@@ -137,11 +141,16 @@ fn status(code: StatusCode, text: &str) -> Response {
     Response::builder().status(code).body(Body::from(text.to_string())).unwrap()
 }
 
-async fn handle(
-    State(st): State<AppState>,
-    Path((token, target)): Path<(String, String)>,
-    req_headers: HeaderMap,
-) -> Response {
+async fn handle(State(st): State<AppState>, Path((token, target)): Path<(String, String)>, req_headers: HeaderMap) -> Response {
+    serve(st, token, target, req_headers, false).await
+}
+
+/// Прямой эфир (Icecast/Shoutcast): если станция оборвала соединение, прокси сам тихо переподключается.
+async fn handle_live(State(st): State<AppState>, Path((token, target)): Path<(String, String)>, req_headers: HeaderMap) -> Response {
+    serve(st, token, target, req_headers, true).await
+}
+
+async fn serve(st: AppState, token: String, target: String, req_headers: HeaderMap, live: bool) -> Response {
     if token != *st.token {
         return status(StatusCode::NOT_FOUND, "not found");
     }
@@ -164,9 +173,22 @@ async fn handle(
     if let Some(r) = req_headers.get("icy-metadata") {
         rq = rq.header("icy-metadata", r);
     }
-    let resp = match rq.send().await {
+    let sent = if live {
+        match tokio::time::timeout(LIVE_OPEN_TIMEOUT, rq.send()).await {
+            Ok(r) => r.map_err(|e| e.to_string()),
+            Err(_) => Err("нет ответа 10 с".to_string()),
+        }
+    } else {
+        rq.send().await.map_err(|e| e.to_string())
+    };
+    let resp = match sent {
         Ok(r) => r,
-        Err(e) => return status(StatusCode::BAD_GATEWAY, &format!("upstream: {e}")),
+        Err(e) => {
+            if live {
+                crate::log::line(&format!("поток {}: не открылся ({e})", label(&url)));
+            }
+            return status(StatusCode::BAD_GATEWAY, &format!("upstream: {e}"));
+        }
     };
 
     let code = StatusCode::from_u16(resp.status().as_u16()).unwrap_or(StatusCode::BAD_GATEWAY);
@@ -193,6 +215,16 @@ async fn handle(
             .unwrap();
     }
 
+    // живой эфир без длины: перекачиваем сами, с переподключением при обрыве
+    let open_ended = resp.headers().get(header::CONTENT_LENGTH).is_none();
+    let chained = ctype.contains("ogg") || ctype.contains("opus"); // у цепочек Ogg после стыка другой заголовок
+    let pump = live
+        && code.is_success()
+        && open_ended
+        && !chained
+        && !req_headers.contains_key(header::RANGE)
+        && !req_headers.contains_key("icy-metadata");
+
     let mut out = Response::builder().status(code);
     for name in [
         header::CONTENT_TYPE,
@@ -210,7 +242,78 @@ async fn handle(
             }
         }
     }
+    if pump {
+        let (tx, rx) = mpsc::channel(32);
+        let client = st.client.clone();
+        tauri::async_runtime::spawn(pump_live(client, url, resp, tx, LiveCfg::default()));
+        return out.body(Body::from_stream(ReceiverStream::new(rx))).unwrap();
+    }
     out.body(Body::from_stream(resp.bytes_stream())).unwrap()
+}
+
+const LIVE_OPEN_TIMEOUT: Duration = Duration::from_secs(10);
+
+#[derive(Clone, Copy)]
+struct LiveCfg {
+    /// сколько ждём новых данных, прежде чем считать соединение мёртвым
+    silence: Duration,
+    /// сколько всего без данных, после чего сдаёмся (плеер сам подключится заново)
+    give_up: Duration,
+}
+
+impl Default for LiveCfg {
+    fn default() -> Self {
+        Self { silence: Duration::from_secs(5), give_up: Duration::from_secs(25) }
+    }
+}
+
+fn label(u: &Url) -> String {
+    u.host_str().unwrap_or("?").to_string()
+}
+
+/// Перекачивает эфир станции плееру. Если станция оборвала соединение, замолчала или закрыла поток —
+/// открывает его заново и продолжает в том же канале, чтобы плеер ничего не заметил.
+async fn pump_live(client: reqwest::Client, url: Url, first: reqwest::Response, tx: mpsc::Sender<Result<Bytes, std::io::Error>>, cfg: LiveCfg) {
+    let who = label(&url);
+    let mut resp = first;
+    let mut last_data = tokio::time::Instant::now();
+    let mut drops = 0u32;
+    loop {
+        let why = loop {
+            match tokio::time::timeout(cfg.silence, resp.chunk()).await {
+                Ok(Ok(Some(chunk))) => {
+                    last_data = tokio::time::Instant::now();
+                    if tx.send(Ok(chunk)).await.is_err() {
+                        return; // плеер закрыл поток
+                    }
+                }
+                Ok(Ok(None)) => break "станция закрыла поток".to_string(),
+                Ok(Err(e)) => break format!("обрыв: {e}"),
+                Err(_) => break format!("тишина {} с", cfg.silence.as_secs()),
+            }
+        };
+        drops += 1;
+        crate::log::line(&format!("поток {who}: {why}, переподключаю (обрыв №{drops})"));
+        let mut wait = Duration::from_millis(200);
+        resp = loop {
+            if last_data.elapsed() > cfg.give_up {
+                crate::log::line(&format!("поток {who}: не вернулся за {} с, отпускаю плеер", cfg.give_up.as_secs()));
+                return;
+            }
+            tokio::time::sleep(wait).await;
+            wait = (wait * 2).min(Duration::from_secs(2));
+            if tx.is_closed() {
+                return;
+            }
+            match tokio::time::timeout(LIVE_OPEN_TIMEOUT.min(cfg.give_up), client.get(url.clone()).send()).await {
+                Ok(Ok(r)) if r.status().is_success() => {
+                    crate::log::line(&format!("поток {who}: переподключён, тишина была {} мс", last_data.elapsed().as_millis()));
+                    break r;
+                }
+                _ => continue,
+            }
+        };
+    }
 }
 
 fn prox(base: &Url, reference: &str, port: u16, token: &str) -> String {
@@ -271,6 +374,46 @@ mod tests {
         for ok in ["https://example.com/a.m3u8", "http://45.153.24.78/TNT/index.m3u8", "https://[2606:4700::1111]/x"] {
             assert!(!blocked(&u(ok)), "{ok} должен быть разрешён");
         }
+    }
+
+    /// Станция-пустышка: n-е соединение получает plan[n] и закрывается; когда план кончился, соединения не принимаются.
+    async fn fake_station(plan: Vec<&'static [u8]>) -> (u16, std::sync::Arc<std::sync::atomic::AtomicUsize>) {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let count = std::sync::Arc::new(AtomicUsize::new(0));
+        let seen = count.clone();
+        tokio::spawn(async move {
+            for body in plan {
+                let (mut sock, _) = listener.accept().await.unwrap();
+                seen.fetch_add(1, Ordering::SeqCst);
+                let mut buf = [0u8; 1024];
+                let _ = sock.read(&mut buf).await;
+                let _ = sock.write_all(b"HTTP/1.1 200 OK\r\nContent-Type: audio/mpeg\r\nConnection: close\r\n\r\n").await;
+                let _ = sock.write_all(body).await;
+                let _ = sock.shutdown().await;
+            }
+        });
+        (port, count)
+    }
+
+    #[tokio::test]
+    async fn live_stream_reconnects_after_drop_and_gives_up() {
+        let (port, count) = fake_station(vec![b"AAAA", b"BBBB"]).await;
+        let url = u(&format!("http://127.0.0.1:{port}/live"));
+        let client = reqwest::Client::new();
+        let first = client.get(url.clone()).send().await.unwrap();
+        let (tx, mut rx) = mpsc::channel(32);
+        let cfg = LiveCfg { silence: Duration::from_secs(1), give_up: Duration::from_millis(1500) };
+        tokio::spawn(pump_live(client, url, first, tx, cfg));
+        let mut got = Vec::new();
+        while let Some(chunk) = rx.recv().await {
+            got.extend_from_slice(&chunk.unwrap());
+        }
+        assert_eq!(got, b"AAAABBBB", "после обрыва данные должны продолжиться в том же потоке");
+        assert_eq!(count.load(std::sync::atomic::Ordering::SeqCst), 2, "станцию открывали дважды");
+        // поток закрылся сам, когда станция не вернулась (цикл выше закончился)
     }
 
     #[test]

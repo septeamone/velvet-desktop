@@ -2,7 +2,8 @@
 import type HlsType from "hls.js";
 import radioData from "./data/radio.json";
 import { fetchTrack } from "./nowplaying";
-import { viaProxy } from "./net";
+import { viaLive, viaProxy } from "./net";
+import { rlog } from "./log";
 import { settings } from "./settings";
 
 export type RQ = { k: number; u: string[]; h?: 1; hls?: 1; n?: string };
@@ -117,27 +118,30 @@ function wipe(s: Slot) {
   if (s.gain) s.gain.gain.value = 0;
 }
 
-/* пробуем один адрес: звук не слышен, пока не наберётся запас — так меньше заиканий */
-function attempt(s: Slot, url: string, isHls: boolean): Promise<boolean> {
+/* пробуем один адрес: звук не слышен, пока не наберётся запас — так меньше заиканий.
+   Возвращает "" при успехе, иначе причину неудачи (для журнала). */
+function attempt(s: Slot, url: string, isHls: boolean): Promise<string> {
   return new Promise((resolve) => {
     wipe(s);
     let done = false;
-    const finish = (ok: boolean) => {
+    const finish = (why: string) => {
       if (done) return;
       done = true;
       clearTimeout(timer);
       clearInterval(poll);
       s.el.removeEventListener("error", onErr);
-      resolve(ok);
+      resolve(why);
     };
-    const onErr = () => finish(false);
-    const timer = window.setTimeout(() => finish(false), 14000);
+    const onErr = () => finish("ошибка потока");
+    const timer = window.setTimeout(() => finish("не успел за 14 с"), 14000);
     const t0 = performance.now();
     const poll = window.setInterval(() => {
       const el = s.el;
+      const waited = performance.now() - t0;
+      if (!el.buffered.length && waited > 6000) { finish("нет данных 6 с"); return; } // мёртвый адрес не держит очередь
       if (el.readyState < 3 || el.currentTime <= 0) return;
       const ahead = el.buffered.length ? el.buffered.end(el.buffered.length - 1) - el.currentTime : 0;
-      if (ahead >= 2 || performance.now() - t0 > 3500) finish(true);
+      if (ahead >= 2 || waited > 3500) finish("");
     }, 250);
     s.el.addEventListener("error", onErr);
     void (async () => {
@@ -150,22 +154,23 @@ function attempt(s: Slot, url: string, isHls: boolean): Promise<boolean> {
           const T = HlsCls.ErrorTypes;
           h.on(HlsCls.Events.ERROR, (_e, d) => {
             if (!d.fatal) return;
-            if (!done) { finish(false); return; }
+            if (!done) { finish(`HLS: ${d.details}`); return; }
             // уже играет: лечим на месте, а если не помогает — подключаемся заново
             if (s !== slots[active] || !state.station) return;
-            if (++heals > 3) { void connect(state.station, true); return; }
+            rlog(`${state.station.id}: HLS ${d.details}, лечу на месте (№${heals + 1})`);
+            if (++heals > 3) { reconnect("HLS не лечится"); return; }
             if (d.type === T.NETWORK_ERROR) h.startLoad();
             else if (d.type === T.MEDIA_ERROR) h.recoverMediaError();
-            else void connect(state.station, true);
+            else reconnect(`HLS ${d.details}`);
           });
           h.loadSource(viaProxy(url));
           h.attachMedia(s.el);
         } else {
-          s.el.src = viaProxy(url);
+          s.el.src = viaLive(url);
         }
         await s.el.play();
-      } catch {
-        finish(false);
+      } catch (e) {
+        finish(`play: ${e instanceof Error ? e.name : "?"}`);
       }
     })();
   });
@@ -190,6 +195,41 @@ function pickQuality(s: Station): RQ {
   return settings.quality === "low" ? vis[0] : vis[vis.length - 1];
 }
 
+/* ---------- память об адресах: что последним играло хорошо, что только что падало ---------- */
+const BAD_MS = 10 * 60 * 1000; // столько минут недавно упавший адрес пробуем в последнюю очередь
+type Health = { good: Record<string, string>; bad: Record<string, number> };
+let health: Health = { good: {}, bad: {} };
+try { health = { good: {}, bad: {}, ...JSON.parse(localStorage.getItem("velvet.rhealth") ?? "{}") }; } catch { /* пусто */ }
+function saveHealth() {
+  const now = Date.now();
+  for (const u of Object.keys(health.bad)) if (now - health.bad[u] > BAD_MS) delete health.bad[u];
+  try { localStorage.setItem("velvet.rhealth", JSON.stringify(health)); } catch { /* не страшно */ }
+}
+const goodKey = (s: Station, q: RQ) => `${s.id}:${q.k}`;
+const markGood = (s: Station, q: RQ, url: string) => { health.good[goodKey(s, q)] = url; delete health.bad[url]; saveHealth(); };
+const markBad = (url: string) => { health.bad[url] = Date.now(); saveHealth(); };
+
+/* сначала адрес, который играл хорошо, потом обычные, в конце недавно упавшие */
+function ordered(s: Station, q: RQ): string[] {
+  const now = Date.now();
+  const good = health.good[goodKey(s, q)];
+  const rank = (u: string) => (u === good ? 0 : health.bad[u] && now - health.bad[u] < BAD_MS ? 2 : 1);
+  return [...q.u].sort((a, b) => rank(a) - rank(b));
+}
+
+let curUrl = ""; // адрес, который играет сейчас
+
+/* поток завис или оборвался: запоминаем виновника, чтобы переподключение начало с другого адреса */
+function reconnect(why: string) {
+  const s = state.station;
+  if (!s) return;
+  rlog(`${s.id}: ${why}, переподключаюсь (${hostOf(curUrl)})`);
+  if (curUrl) markBad(curUrl);
+  void connect(s, true);
+}
+
+const hostOf = (u: string) => { try { return new URL(u).host; } catch { return u.slice(0, 40); } };
+
 /* выбранное качество → все его адреса (два круга) → качества ниже → ошибка */
 async function connect(s: Station, quiet = false) {
   const mine = ++gen;
@@ -206,24 +246,32 @@ async function connect(s: Station, quiet = false) {
   const chain = [first, ...s.q.filter((x) => x.k < first.k).sort((a, b) => b.k - a.k)];
   for (let qi = 0; qi < chain.length; qi++) {
     for (let round = 0; round < (qi === 0 ? 2 : 1); round++) {
-      for (const url of chain[qi].u) {
+      for (const url of ordered(s, chain[qi])) {
         if (mine !== gen) return;
-        if (await attempt(slots[target], url, !!chain[qi].hls)) {
-          if (mine !== gen) { wipe(slots[target]); return; }
-          const old = slots[active];
-          active = target;
-          fade(slots[target], 1, wasPlaying ? 0.9 : 0.35);
-          if (wasPlaying) {
-            fade(old, 0, 0.9);
-            window.setTimeout(() => { if (slots[active] !== old) wipe(old); }, 1100);
-          } else wipe(old);
-          state.kbps = chain[qi].k;
-          state.status = "playing";
-          stuckAt = endAt = performance.now();
-          lastTime = lastEnd = -1;
-          emit();
-          return;
+        const t0 = performance.now();
+        const why = await attempt(slots[target], url, !!chain[qi].hls);
+        if (mine !== gen) { if (!why) wipe(slots[target]); return; }
+        if (why) {
+          markBad(url);
+          rlog(`${s.id} ${chain[qi].k}k ${hostOf(url)}: не вышло (${why}, ${Math.round(performance.now() - t0)} мс)`);
+          continue;
         }
+        markGood(s, chain[qi], url);
+        curUrl = url;
+        rlog(`${s.id} ${chain[qi].k}k ${hostOf(url)}: играет (старт ${Math.round(performance.now() - t0)} мс${qi ? ", качество понижено" : ""})`);
+        const old = slots[active];
+        active = target;
+        fade(slots[target], 1, wasPlaying ? 0.9 : 0.35);
+        if (wasPlaying) {
+          fade(old, 0, 0.9);
+          window.setTimeout(() => { if (slots[active] !== old) wipe(old); }, 1100);
+        } else wipe(old);
+        state.kbps = chain[qi].k;
+        state.status = "playing";
+        stuckAt = endAt = performance.now();
+        lastTime = lastEnd = -1;
+        emit();
+        return;
       }
     }
   }
@@ -315,23 +363,23 @@ setInterval(() => {
   const el = slot.el;
   const t = el.currentTime;
   if (t !== lastTime) { lastTime = t; stuckAt = now; }
-  else if (now - stuckAt > 3500) { stuckAt = now; void connect(s, true); return; }
+  else if (now - stuckAt > 3500) { stuckAt = now; reconnect("звук завис 3,5 с"); return; }
   if (slot.hls) return; // у HLS свой большой запас из кусков
   const end = el.buffered.length ? el.buffered.end(el.buffered.length - 1) : 0;
   const ahead = end - t;
   // новые данные перестали приходить, а запас ещё играет: меняем источник заранее, пока тишины нет
   if (end !== lastEnd) { lastEnd = end; endAt = now; }
-  else if (ahead > 0.5 && now - endAt > 5000) { endAt = now; void connect(s, true); return; }
+  else if (ahead > 0.5 && now - endAt > 8000) { endAt = now; reconnect("данные не приходят 8 с, запас ещё играет"); return; } // прокси ждёт 5 с и сам переподключается; это уже запасной случай
   if (ahead < CUSHION_LOW) el.playbackRate = SLOW;
   else if (ahead >= CUSHION_OK) el.playbackRate = 1;
 }, 1000);
 for (const slot of slots) {
   // сервер закрыл поток (например, перезапуск эфира) — не ждём сторожа
-  const lost = () => {
-    if (slot === slots[active] && state.status === "playing" && !state.paused && state.station) void connect(state.station, true);
+  const lost = (why: string) => () => {
+    if (slot === slots[active] && state.status === "playing" && !state.paused && state.station) reconnect(why);
   };
-  slot.el.addEventListener("error", lost);
-  slot.el.addEventListener("ended", lost);
+  slot.el.addEventListener("error", lost("ошибка потока"));
+  slot.el.addEventListener("ended", lost("поток закрыт"));
 }
 
 /* ---------- что играет сейчас ---------- */

@@ -1,3 +1,4 @@
+mod log;
 mod portable;
 mod proxy;
 
@@ -7,6 +8,12 @@ use tauri::Manager;
 #[tauri::command]
 fn proxy_info(info: tauri::State<'_, ProxyInfo>) -> ProxyInfo {
     info.inner().clone()
+}
+
+/// Строка в журнал радио (из интерфейса).
+#[tauri::command]
+fn log_line(text: String) {
+    log::line(&text);
 }
 
 #[tauri::command]
@@ -45,6 +52,9 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_process::init())
         .setup(|app| {
+            if let Ok(dir) = app.path().app_log_dir() {
+                log::init(dir);
+            }
             portable::cleanup_old();
             #[cfg(desktop)]
             app.handle().plugin(tauri_plugin_updater::Builder::new().build())?;
@@ -52,7 +62,7 @@ pub fn run() {
             app.manage(info);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![proxy_info, is_portable, portable_update])
+        .invoke_handler(tauri::generate_handler![proxy_info, log_line, is_portable, portable_update])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
