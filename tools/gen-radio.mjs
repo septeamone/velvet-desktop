@@ -35,6 +35,18 @@ if (existsSync("tools/radio-health.json")) {
   }
   console.log(`по итогам проверки: убрано мёртвых адресов ${removed}, переставлено качеств ${demoted}, убрано качеств ${droppedQ}`);
 }
+// запасные адреса, найденные tools/find-mirrors.mjs (проверены, тот же владелец и тот же путь потока)
+if (existsSync("tools/radio-mirrors.json")) {
+  const mirrors = JSON.parse(readFileSync("tools/radio-mirrors.json", "utf8"));
+  let added = 0;
+  for (const s of stations) {
+    for (const q of s.q) {
+      const have = new Set(q.u.map((a) => (typeof a === "string" ? a : a.url)));
+      for (const u of mirrors[s.id]?.[q.k] ?? []) if (!have.has(u)) { q.u.push(u); added++; }
+    }
+  }
+  console.log(`запасных адресов добавлено: ${added}`);
+}
 const countries = [{ cc: "RU", aliases: ["россия", "russia", "рф"] }, ...COUNTRIES].filter((c, i, a) => a.findIndex((x) => x.cc === c.cc) === i);
 writeFileSync("src/data/radio.json", JSON.stringify({ stations, countries }));
 
@@ -49,7 +61,7 @@ for (const c of countries) {
 
 // «что играет сейчас»: тот же код, но запросы идут через встроенный прокси
 let np = readFileSync(path.join(ext, "nowplaying.js"), "utf8");
-np = np.replace("await fetch(url, { cache: 'no-store' })", "await fetch(viaProxy(url), { cache: 'no-store' })");
+np = np.replace("await fetch(url, { cache: 'no-store' })", "await fetch(viaProxy(url), { cache: 'no-store', signal: AbortSignal.timeout(8000) })"); // зависший запрос не копится
 np = np.replace("const r = await fetch(url, { headers: { 'Icy-MetaData': '1' }, signal: ctrl.signal });", "const r = await fetch(viaProxy(url), { headers: { 'Icy-MetaData': '1' }, signal: ctrl.signal });");
 writeFileSync("src/nowplaying.ts", `// @ts-nocheck — копия nowplaying.js из расширения (генерируется tools/gen-radio.mjs, руками не править)\nimport { viaProxy } from "./net";\n${np}`);
 console.log(`станций ${stations.length}, логотипов ${logos}, флагов ${flags}, стран ${countries.length}`);

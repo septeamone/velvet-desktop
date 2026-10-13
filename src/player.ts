@@ -27,6 +27,9 @@ let lastProgress = 0;
 let lastTime = -1;
 let stuckSince = 0;
 let attempt = 0;
+let netRetries = 0; // повторы загрузки при сетевой ошибке до смены источника
+let gaveUp = false; // все источники канала не ответили (нужно, чтобы вернуться, когда появится интернет)
+let lastTick = Date.now();
 
 const active = () => shell.dataset.view === "player";
 export const inPip = () => document.pictureInPictureElement === v;
@@ -84,6 +87,7 @@ function nextSource(reason: string) {
     void startSource();
   } else {
     stop();
+    gaveUp = true;
     say(reason, 4000);
   }
 }
@@ -91,7 +95,7 @@ function nextSource(reason: string) {
 /* у Rutube ссылка на эфир выдаётся отдельным запросом */
 async function resolve(src: Source): Promise<string> {
   if (typeof src === "string") return src;
-  const r = await fetch(viaProxy(`https://rutube.ru/api/play/options/${src.rutube}/?no_404=true&referer=https%3A%2F%2Frutube.ru`));
+  const r = await fetch(viaProxy(`https://rutube.ru/api/play/options/${src.rutube}/?no_404=true&referer=https%3A%2F%2Frutube.ru`), { signal: AbortSignal.timeout(10000) });
   const url = ((await r.json()) as { live_streams?: { hls?: { url: string }[] } }).live_streams?.hls?.[0]?.url;
   if (!url) throw new Error("эфир закрыт правообладателем");
   return url;
@@ -100,6 +104,8 @@ async function resolve(src: Source): Promise<string> {
 async function startSource() {
   stop();
   const mine = ++attempt;
+  netRetries = 0;
+  gaveUp = false;
   const src = channels[cur].sources[srcIdx];
   if (!src) return nextSource("Канал сейчас недоступен");
   let url: string;
@@ -128,6 +134,7 @@ async function startSource() {
   h.on(Hls.Events.ERROR, (_e, d) => {
     if (!d.fatal || h !== hls) return;
     if (d.type === Hls.ErrorTypes.MEDIA_ERROR) h.recoverMediaError();
+    else if (d.type === Hls.ErrorTypes.NETWORK_ERROR && netRetries++ < 2) h.startLoad(); // обрыв сети бывает кратким: сначала повторяем
     else nextSource("Канал сейчас недоступен");
   });
   h.loadSource(viaProxy(url));
@@ -136,12 +143,22 @@ async function startSource() {
 
 /* если картинка стоит на месте — сначала пробуем снова, потом следующий источник */
 setInterval(() => {
+  const wall = Date.now();
+  const slept = wall - lastTick > 8000; // тиков не было: компьютер спал
+  lastTick = wall;
+  if (slept && (active() || inPip()) && !v.paused) { srcIdx = 0; void startSource(); return; }
+  if (!navigator.onLine) { stuckSince = performance.now(); return; } // без интернета источники не перебираем
   if (!(active() || inPip()) || !hls || v.paused) { stuckSince = performance.now(); return; }
   if (v.currentTime !== lastTime) { lastTime = v.currentTime; stuckSince = performance.now(); return; }
   const stuck = performance.now() - stuckSince;
   if (stuck > 12000) nextSource("Канал сейчас недоступен");
   else if (stuck > 6000) hls.startLoad();
 }, 1000);
+
+/* интернет вернулся: если канал сдался из-за его отсутствия, начинаем сначала */
+window.addEventListener("online", () => {
+  if ((active() || inPip()) && gaveUp) { srcIdx = 0; say("Интернет вернулся"); void startSource(); }
+});
 
 function togglePause() {
   if (v.paused) {

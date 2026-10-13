@@ -85,6 +85,7 @@ function flagImg(code: string) {
   const f = el("img", "flag");
   f.src = `/flags/${code.toLowerCase()}.svg`;
   f.alt = "";
+  f.loading = "lazy";
   return f;
 }
 
@@ -95,6 +96,7 @@ function logoOf(s: Station, cls: string) {
     const img = el("img");
     img.src = `/radio/${s.id}.webp`;
     img.alt = "";
+    img.loading = "lazy"; // 400 логотипов сразу не нужны: грузим те, что на экране
     img.draggable = false;
     box.append(img);
   } else {
@@ -161,16 +163,27 @@ function refresh() {
 /* названия песен в списке: только у станций с лёгким источником, раз в полминуты */
 const listTracks = new Map<string, string>();
 let listTimer = 0;
+let listBusy = false;
 async function refreshListTracks() {
-  if (shell.dataset.view !== "radio") return;
-  const targets = visible().filter((s) => LIVE.has(s.id)).slice(0, 24);
-  for (const s of targets) {
-    try {
-      const t = await fetchTrack(s.id);
-      if (t) listTracks.set(s.id, t);
-    } catch { /* без названия */ }
+  if (shell.dataset.view !== "radio" || listBusy) return; // прошлый опрос ещё идёт — не накладываем
+  listBusy = true;
+  try {
+    const targets = visible().filter((s) => LIVE.has(s.id)).slice(0, 24);
+    // по 6 станций одновременно: одна медленная не задерживает остальные
+    let next = 0;
+    await Promise.all(Array.from({ length: Math.min(6, targets.length) }, async () => {
+      while (next < targets.length) {
+        const s = targets[next++];
+        try {
+          const t = await fetchTrack(s.id);
+          if (t) listTracks.set(s.id, t);
+        } catch { /* без названия */ }
+      }
+    }));
+    paintTracksInList();
+  } finally {
+    listBusy = false;
   }
-  paintTracksInList();
 }
 function paintTracksInList() {
   document.querySelectorAll<HTMLElement>("#rGrid .scard").forEach((card) => {
@@ -309,6 +322,9 @@ function statusText(): string {
 
 function paintQualityButtons(host: HTMLElement, compact: boolean) {
   const s = state.station;
+  const key = `${s?.id ?? ""}:${state.kbps}`;
+  if (host.dataset.k === key) return;
+  host.dataset.k = key;
   host.replaceChildren();
   if (!s) return;
   const list = shown(s);
@@ -333,9 +349,12 @@ function paintPanel() {
   panel.dataset.status = s ? (state.paused && state.status === "playing" ? "paused" : state.status) : "idle";
   $("pName").textContent = s?.name ?? "Velvet Radio";
   const meta = $("pMeta");
-  meta.replaceChildren();
-  if (s) meta.append(flagImg(s.cc), `${s.gn} · ${countryName(s.cc)}`);
-  else meta.textContent = `${stations.length} станций из России и 28 стран мира`;
+  if (meta.dataset.k !== (s?.id ?? "")) {
+    meta.dataset.k = s?.id ?? "";
+    meta.replaceChildren();
+    if (s) meta.append(flagImg(s.cc), `${s.gn} · ${countryName(s.cc)}`);
+    else meta.textContent = `${stations.length} станций из России и 28 стран мира`;
+  }
   $("pTrack").textContent = s ? state.track || (state.status === "playing" ? "Название песни недоступно" : "") : "Выберите станцию слева, и здесь появится, что играет.";
   const link = !!s && state.status === "playing" && !!state.track; // название песни — ссылка на поиск в Google
   const trackRow = $("pTrackRow");
@@ -343,7 +362,11 @@ function paintPanel() {
   trackRow.tabIndex = link ? 0 : -1;
   trackRow.setAttribute("role", link ? "link" : "presentation");
   trackRow.title = link ? "Найти в Google" : "";
-  $("pLogo").replaceChildren(...(s ? [logoOf(s, "p-logo-in")] : []));
+  const logoHost = $("pLogo");
+  if (logoHost.dataset.k !== (s?.id ?? "")) {
+    logoHost.dataset.k = s?.id ?? "";
+    logoHost.replaceChildren(...(s ? [logoOf(s, "p-logo-in")] : []));
+  }
   paintQualityButtons($("pQ"), false);
   const playing = state.status === "connecting" || (state.status === "playing" && !state.paused);
   $("pPlayIcon").innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
@@ -366,9 +389,12 @@ function paintMini() {
   t.textContent = state.status === "connecting" ? "Подключаюсь…" : state.status === "error" ? "Станция недоступна" : state.track || s.gn;
   t.classList.toggle("err", state.status === "error");
   const mLogo = $("mLogo");
-  mLogo.replaceChildren(...logoOf(s, "x").childNodes);
-  mLogo.className = `logo sm${s.logo ? "" : " mark"}`;
-  mLogo.style.background = s.logo ? "" : `hsl(${s.hue} 45% 30%)`;
+  if (mLogo.dataset.k !== s.id) {
+    mLogo.dataset.k = s.id;
+    mLogo.replaceChildren(...logoOf(s, "x").childNodes);
+    mLogo.className = `logo sm${s.logo ? "" : " mark"}`;
+    mLogo.style.background = s.logo ? "" : `hsl(${s.hue} 45% 30%)`;
+  }
   const playing = state.status === "connecting" || (state.status === "playing" && !state.paused);
   $("mPlayIcon").innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
   $("mPlay").setAttribute("aria-label", playing ? "Пауза" : "Играть");
@@ -380,6 +406,29 @@ function paintMini() {
 }
 
 let paintQueued = false;
+/* играющая станция меняется часто (громкость, песня, пауза): обновляем только отметки на карточках, а не пересоздаём весь список —
+   иначе дёргается картинка, сбрасывается клавиатурный фокус и впустую тратится время */
+function patchGrid() {
+  if (isSorting()) return;
+  const cur = state.station?.id;
+  const playing = state.status === "playing" && !state.paused;
+  document.querySelectorAll<HTMLElement>("#rGrid .scard").forEach((card) => {
+    const isNow = card.dataset.id === cur;
+    card.classList.toggle("now", isNow);
+    const main = card.querySelector<HTMLElement>(".s-main");
+    let eq = main?.querySelector<HTMLElement>(".eq") ?? null;
+    if (isNow && main) {
+      if (!eq) {
+        eq = el("span", "eq");
+        eq.append(el("i"), el("i"), el("i"));
+        main.append(eq);
+      }
+      eq.classList.toggle("on", playing);
+    } else eq?.remove();
+  });
+  paintTracksInList();
+}
+
 function paintAll() {
   if (paintQueued) return;
   paintQueued = true;
@@ -387,7 +436,7 @@ function paintAll() {
     paintQueued = false;
     paintPanel();
     paintMini();
-    if (shell.dataset.view === "radio") { drawGrid(); paintTracksInList(); }
+    if (shell.dataset.view === "radio") patchGrid();
   });
 }
 

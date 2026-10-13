@@ -4,7 +4,7 @@ import { viaProxy } from "./net";
 // Каждый источник возвращает { artist, title } или null; если у станции источника нет — названия песни не будет.
 
 const getJson = async (url) => {
-  const r = await fetch(viaProxy(url), { cache: 'no-store' });
+  const r = await fetch(viaProxy(url), { cache: 'no-store', signal: AbortSignal.timeout(8000) });
   if (!r.ok) throw new Error(r.status);
   return r.json();
 };

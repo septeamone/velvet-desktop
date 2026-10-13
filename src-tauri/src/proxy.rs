@@ -186,10 +186,8 @@ async fn serve(st: AppState, token: String, target: String, req_headers: HeaderM
 
     let mut rq = st.client.get(url.clone());
     // браузер просит аудио с «Range: bytes=0-» — для живого эфира это просто «с начала»; станции в ответ всё равно шлют поток целиком
-    if let Some(r) = req_headers.get(header::RANGE) {
-        if !(live && from_start(r)) {
-            rq = rq.header(header::RANGE, r);
-        }
+    if let Some(r) = req_headers.get(header::RANGE).filter(|r| !(live && from_start(r))) {
+        rq = rq.header(header::RANGE, r);
     }
     // у GitHub в кеше может залежаться сжатая копия файла, а несжатая свежая: просим несжатую
     if url.host_str() == Some("raw.githubusercontent.com") {
@@ -265,10 +263,8 @@ async fn serve(st: AppState, token: String, target: String, req_headers: HeaderM
         HeaderName::from_static("icy-name"),
         HeaderName::from_static("icy-br"),
     ] {
-        if let Some(v) = resp.headers().get(&name) {
-            if let Ok(v) = HeaderValue::from_bytes(v.as_bytes()) {
-                out = out.header(name, v);
-            }
+        if let Some(Ok(v)) = resp.headers().get(&name).map(|v| HeaderValue::from_bytes(v.as_bytes())) {
+            out = out.header(name, v);
         }
     }
     if pump {

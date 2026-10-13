@@ -1,0 +1,40 @@
+{
+ "us-npr": {
+  "96": [
+   "https://npr-ice.streamguys1.com/live.mp3"
+  ]
+ },
+ "gb-bbcradio1": {
+  "96": [
+   "http://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_one.m3u8"
+  ],
+  "320": [
+   "http://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8"
+  ]
+ },
+ "gb-bbcradio4": {
+  "128": [
+   "http://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d128000.norewind.m3u8"
+  ]
+ },
+ "gb-bbc6music": {
+  "320": [
+   "http://as-hls-ww-live.akamaized.net/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8"
+  ]
+ },
+ "es-dial": {
+  "128": [
+   "http://playerservices.streamtheworld.com/api/livestream-redirect/CADENADIAL.mp3"
+  ]
+ },
+ "nl-radio2": {
+  "192": [
+   "http://icecast.omroep.nl/radio2-bb-mp3"
+  ]
+ },
+ "az-autolife": {
+  "128": [
+   "http://radio.autoliferadio.com:8090/radio"
+  ]
+ }
+}

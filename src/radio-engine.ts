@@ -416,6 +416,17 @@ export function toggle() {
     syncMedia();
     return;
   }
+  if (state.status === "connecting") { // пауза в момент подключения: отменяем его, иначе звук включился бы сам при «паузе» на экране
+    gen++;
+    busy = false;
+    cancelAttempts();
+    for (const sl of slots) wipe(sl);
+    state.status = "playing";
+    state.paused = true;
+    emit();
+    syncMedia();
+    return;
+  }
   slots[active].el.pause();
   state.paused = true;
   emit();
@@ -540,7 +551,10 @@ function listenDelay(): number {
 function fetchNow(s: Station) {
   clearInterval(trackTimer);
   titleDue = "";
+  let loading = false;
   const load = async () => {
+    if (loading) return; // прошлый запрос ещё идёт
+    loading = true;
     try {
       const t = await fetchTrack(s.id);
       if (!t || state.station?.id !== s.id) return;
@@ -548,7 +562,7 @@ function fetchNow(s: Station) {
       // первое название и то же самое — сразу; новая песня — когда её реально услышит человек, а не по эфиру студии
       if (!state.track || t === state.track) show();
       else if (t !== titleDue) { titleDue = t; setTimeout(() => { if (titleDue === t) show(); }, listenDelay()); }
-    } catch { /* оставляем прошлое */ }
+    } catch { /* оставляем прошлое */ } finally { loading = false; }
   };
   void load();
   trackTimer = window.setInterval(() => { if (!state.paused) void load(); }, 20000);

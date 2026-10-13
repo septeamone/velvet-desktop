@@ -41,7 +41,7 @@ export async function checkForUpdate(): Promise<CheckResult> {
   setStatus("Проверяю…");
   try {
     if (portable) {
-      const r = await fetch(viaProxy(`${PORTABLE_JSON}?v=${Math.floor(Date.now() / 300000)}`), { cache: "no-store" });
+      const r = await fetch(viaProxy(`${PORTABLE_JSON}?v=${Math.floor(Date.now() / 300000)}`), { cache: "no-store", signal: AbortSignal.timeout(15000) });
       if (!r.ok) throw new Error(String(r.status));
       const info = (await r.json()) as PortableInfo;
       if (!newer(info.version, await t.app.getVersion())) { setStatus("У вас последняя версия."); return "none"; }

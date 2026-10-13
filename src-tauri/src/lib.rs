@@ -16,18 +16,6 @@ fn log_line(text: String) {
     log::line(&text);
 }
 
-/// Дополнительные каналы из файла extra-channels.json в папке данных программы (если он есть).
-/// Файл лежит только на этом компьютере: в программу и в публичный репозиторий он не входит.
-#[tauri::command]
-fn extra_channels(app: tauri::AppHandle) -> Option<String> {
-    let path = app.path().app_local_data_dir().ok()?.join("extra-channels.json");
-    let meta = std::fs::metadata(&path).ok()?;
-    if meta.len() > 2 * 1024 * 1024 {
-        return None;
-    }
-    std::fs::read_to_string(path).ok()
-}
-
 #[tauri::command]
 fn is_portable() -> bool {
     portable::is_portable()
@@ -74,7 +62,7 @@ pub fn run() {
             app.manage(info);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![proxy_info, log_line, extra_channels, is_portable, portable_update])
+        .invoke_handler(tauri::generate_handler![proxy_info, log_line, is_portable, portable_update])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

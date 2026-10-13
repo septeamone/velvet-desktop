@@ -18,7 +18,7 @@ type Raw = {
 const mskDay = (offset: number) => new Date(Date.now() + 3 * 3600e3 + offset * 86400e3).toISOString().slice(0, 10).replace(/-/g, "");
 
 async function loadDay(offset: number): Promise<Raw> {
-  const r = await fetch(viaProxy(ENDPOINT + mskDay(offset)));
+  const r = await fetch(viaProxy(ENDPOINT + mskDay(offset)), { signal: AbortSignal.timeout(15000) });
   if (!r.ok) throw new Error(String(r.status));
   return (await r.json()) as Raw;
 }
@@ -51,7 +51,7 @@ export async function refreshHosted(): Promise<boolean> {
   for (const url of HOSTED) {
     try {
       // метка времени на 5 минут: у GitHub есть свой кеш, и без неё можно получить старую копию
-      const r = await fetch(viaProxy(`${url}?v=${Math.floor(Date.now() / 300000)}`), { cache: "no-store" });
+      const r = await fetch(viaProxy(`${url}?v=${Math.floor(Date.now() / 300000)}`), { cache: "no-store", signal: AbortSignal.timeout(15000) });
       if (!r.ok) continue;
       const h = (await r.json()) as Hosted;
       if (!h.channels) continue;
