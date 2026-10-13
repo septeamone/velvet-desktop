@@ -500,3 +500,22 @@ body.sorting, body.sorting * { cursor: grabbing !important; user-select: none !i
 
 body.sorting .tile:hover, body.sorting .scard:hover { transform: none; }
 body.sorting .tile, body.sorting .scard { will-change: auto; }
+
+/* эквалайзер: окошко над плеером; видно и в панели, и в мини-плеере, в любом масштабе */
+.eqbox { position: fixed; z-index: 25; right: 32px; bottom: 96px; width: 390px; max-height: calc(100vh - 112px); overflow-y: auto; padding: 14px 18px 16px; border-radius: 24px; background: var(--card); border: 1px solid var(--hair); box-shadow: 0 24px 60px rgba(0, 0, 0, .45); scrollbar-width: none; }
+.eqbox[hidden] { display: none; }
+@media (max-width: 1100px) { .eqbox { right: auto; left: 50%; transform: translateX(-50%); bottom: 100px; width: min(420px, calc(100vw - 40px)); } }
+.eq-head { display: flex; align-items: center; gap: 8px; }
+.eq-head strong { font-size: 16px; font-weight: 650; }
+.eq-head .m-btn { width: 36px; height: 36px; }
+.eq-bands { display: flex; justify-content: space-between; gap: 4px; margin-top: 12px; }
+.eq-band { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; min-width: 0; font-size: 12px; color: var(--fg-muted); font-variant-numeric: tabular-nums; }
+.eq-band output { min-height: 1.2em; color: var(--fg); font-weight: 600; }
+.eq-band input {
+  -webkit-appearance: none; appearance: none; writing-mode: vertical-lr; direction: rtl; width: 4px; height: min(150px, 24vh); min-height: 70px; margin: 6px 0; border-radius: 4px; cursor: pointer;
+  background: linear-gradient(to top, var(--hair) var(--lo, 50%), var(--fg) var(--lo, 50%) var(--hi, 50%), var(--hair) var(--hi, 50%));
+}
+.eq-band input::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); box-shadow: 0 1px 4px rgba(0, 0, 0, .35); }
+.eq-band input:focus-visible { outline: none; }
+.eq-band input:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 35%, transparent); }
+.eq-note { margin: 12px 2px 0; font-size: 12px; color: var(--fg-muted); }

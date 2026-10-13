@@ -1,6 +1,7 @@
 /* Вкладка «Радио»: список станций, панель «Сейчас играет» с визуализатором и мини-плеер. */
 import {
   stations, countries, shown, state, play, toggle, setQuality, setVolume, toggleMute, onRadio, levels, setStepper, lastNotice, LIVE,
+  EQ_LABELS, EQ_MAX, getEq, setEq, resetEq,
   type Station,
 } from "./radio-engine";
 import { fetchTrack } from "./nowplaying";
@@ -251,6 +252,49 @@ function paintVolume() {
   $("pPct").textContent = `${Math.round(v * 100)}%`;
 }
 
+/* ---------- эквалайзер: окошко с шестью полосами (кнопка есть и в панели, и в мини-плеере) ---------- */
+function initEq() {
+  const box = $("eq");
+  const sliders = EQ_LABELS.map((label, i) => {
+    const wrap = document.createElement("label");
+    wrap.className = "eq-band";
+    const out = document.createElement("output");
+    const input = document.createElement("input");
+    input.type = "range";
+    input.min = String(-EQ_MAX);
+    input.max = String(EQ_MAX);
+    input.step = "1";
+    input.setAttribute("aria-label", `${label} Гц`);
+    const name = document.createElement("span");
+    name.textContent = label;
+    wrap.append(out, input, name);
+    $("eqBands").append(wrap);
+    input.addEventListener("input", () => { setEq(i, Number(input.value)); paint(); });
+    input.addEventListener("dblclick", () => { setEq(i, 0); paint(); });
+    return { input, out };
+  });
+  const paint = () => getEq().forEach((g, i) => {
+    const { input, out } = sliders[i];
+    const p = ((g + EQ_MAX) / (2 * EQ_MAX)) * 100;
+    input.value = String(g);
+    input.style.setProperty("--lo", `${Math.min(p, 50)}%`);
+    input.style.setProperty("--hi", `${Math.max(p, 50)}%`);
+    out.textContent = g > 0 ? `+${g}` : String(g);
+  });
+  const show = (open: boolean) => {
+    box.hidden = !open;
+    for (const id of ["pEq", "mEq"]) $(id).setAttribute("aria-expanded", String(open));
+    if (open) paint();
+  };
+  for (const id of ["pEq", "mEq"]) $(id).addEventListener("click", () => show(box.hidden === true));
+  $("eqClose").addEventListener("click", () => show(false));
+  $("eqReset").addEventListener("click", () => { resetEq(); paint(); });
+  document.addEventListener("click", (e) => { if (!box.hidden && !(e.target as HTMLElement).closest("#eq, #pEq, #mEq")) show(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") show(false); });
+  new MutationObserver(() => show(false)).observe(shell, { attributes: true, attributeFilter: ["data-view"] }); // ушли с радио — окошко закрываем
+  paint();
+}
+
 /* ---------- панель «Сейчас играет» и мини-плеер ---------- */
 const panel = $("rPanel");
 const mini = $("mini");
@@ -442,6 +486,7 @@ export function initRadio() {
   $("pVolBtn").onclick = toggleMute;
   $("mVolBtn").onclick = toggleMute;
   paintVolume();
+  initEq();
   // колесо мыши над панелью меняет громкость, стрелки влево/вправо тоже
   panel.addEventListener("wheel", (e) => { setVolume(state.volume - Math.sign(e.deltaY) * 0.05); }, { passive: true });
   window.addEventListener("velvet:rnotice", (e) => {

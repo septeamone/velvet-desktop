@@ -72,6 +72,7 @@
             <div class="p-bottom">
               <button id="pFav" class="p-heart" type="button" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8 3.4 5 6.6 5c2 0 3.5 1.1 4.4 2.6h2C13.9 6.1 15.4 5 17.4 5c3.2 0 5.1 3 3.9 6.3-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg></button>
               <div class="vol sm"><button type="button" class="v-btn" id="pVolBtn" aria-label="Выключить звук"><svg viewBox="0 0 24 24" id="pVolIcon"></svg></button><input id="pVol" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Громкость радио" /><span class="v-pct" id="pPct">80%</span></div>
+              <button type="button" class="v-btn" id="pEq" aria-label="Эквалайзер" aria-expanded="false" aria-controls="eq"><svg viewBox="0 0 24 24"><path d="M5 3h2v6H5zM5 13h2v8H5zM3 9h6v4H3zM11 3h2v10h-2zM11 17h2v4h-2zM9 13h6v4H9zM17 3h2v4h-2zM17 11h2v10h-2zM15 7h6v4h-6z"/></svg></button>
             </div>
           </aside>
         </div>
@@ -198,8 +199,20 @@
         <button class="m-btn big" id="mPlay" type="button" aria-label="Играть"><svg viewBox="0 0 24 24" id="mPlayIcon"></svg></button>
         <button class="m-btn" id="mNext" type="button" aria-label="Следующая станция"><svg viewBox="0 0 24 24"><path d="M15.8 5H18v14h-2.2zM15 12L5.5 19V5z"/></svg></button>
         <div class="vol sm"><button type="button" class="v-btn" id="mVolBtn" aria-label="Выключить звук"><svg viewBox="0 0 24 24" id="mVolIcon"></svg></button><input id="mVol" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Громкость радио" /></div>
+        <button class="m-btn" id="mEq" type="button" aria-label="Эквалайзер" aria-expanded="false" aria-controls="eq"><svg viewBox="0 0 24 24"><path d="M5 3h2v6H5zM5 13h2v8H5zM3 9h6v4H3zM11 3h2v10h-2zM11 17h2v4h-2zM9 13h6v4H9zM17 3h2v4h-2zM17 11h2v10h-2zM15 7h6v4h-6z"/></svg></button>
       </div>
       <div id="rToast" class="toast" role="status"></div>
+
+      <div id="eq" class="eqbox" role="dialog" aria-label="Эквалайзер" hidden>
+        <div class="eq-head">
+          <strong>Эквалайзер</strong>
+          <span class="grow"></span>
+          <button class="pill sm" id="eqReset" type="button">Сбросить</button>
+          <button class="m-btn" id="eqClose" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M6.4 5L5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6L19 6.4 17.6 5 12 10.6z"/></svg></button>
+        </div>
+        <div class="eq-bands" id="eqBands"></div>
+        <p class="eq-note">Один для всех станций. Двойной щелчок по полосе — сбросить её.</p>
+      </div>
 
       <dialog id="addDlg" class="dlg" aria-labelledby="addTitle">
         <form id="addForm">

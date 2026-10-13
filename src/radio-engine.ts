@@ -50,6 +50,8 @@ let active = 0;
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
 let analyser: AnalyserNode | null = null;
+let eqFilters: BiquadFilterNode[] = [];
+let eqTrim: GainNode | null = null;
 let HlsCls: typeof HlsType | null = null;
 
 try { state.volume = Number(localStorage.getItem("velvet.rvol") ?? 0.8); } catch { /* пока по умолчанию */ }
@@ -62,7 +64,16 @@ function ensureGraph() {
   analyser = ctx.createAnalyser();
   analyser.fftSize = 512; // как в расширении
   analyser.smoothingTimeConstant = 0.6;
-  master.connect(analyser);
+  // эквалайзер: master → 6 полос → запас от перегруза → анализатор → колонки
+  eqFilters = EQ_BANDS.map((f, i) => {
+    const b = ctx!.createBiquadFilter();
+    b.type = i === 0 ? "lowshelf" : i === EQ_BANDS.length - 1 ? "highshelf" : "peaking";
+    b.frequency.value = f;
+    b.Q.value = 1;
+    return b;
+  });
+  eqTrim = ctx.createGain();
+  [master, ...eqFilters, eqTrim, analyser].reduce((a, b) => { a.connect(b); return b; });
   analyser.connect(ctx.destination);
   for (const s of slots) {
     const src = ctx.createMediaElementSource(s.el);
@@ -72,11 +83,44 @@ function ensureGraph() {
     s.gain.connect(master);
   }
   applyVolume();
+  applyEq();
 }
 
 /* громкость по закону слуха: у середины ползунка звук заметно тише, а не «почти полный» */
 function applyVolume() {
   if (master && ctx) master.gain.setTargetAtTime(state.volume * state.volume, ctx.currentTime, 0.02);
+}
+
+/* ---------- эквалайзер: 6 полос, общий для всех станций, помнится между запусками ---------- */
+export const EQ_BANDS = [60, 170, 500, 1500, 5000, 12000]; // Гц
+export const EQ_LABELS = ["60", "170", "500", "1,5к", "5к", "12к"];
+export const EQ_MAX = 12; // дБ вверх и вниз
+let eqGains: number[] = EQ_BANDS.map(() => 0);
+try {
+  const saved = JSON.parse(localStorage.getItem("velvet.req") ?? "[]") as unknown;
+  if (Array.isArray(saved) && saved.length === EQ_BANDS.length) eqGains = saved.map((g) => Math.min(EQ_MAX, Math.max(-EQ_MAX, Number(g) || 0)));
+} catch { /* пока ровно */ }
+
+export const getEq = () => [...eqGains];
+
+function applyEq() {
+  if (!ctx || !eqTrim) return;
+  const t = ctx.currentTime;
+  eqFilters.forEach((f, i) => f.gain.setTargetAtTime(eqGains[i], t, 0.02));
+  // самая сильная прибавка поднимает общий уровень: слегка убавляем, чтобы не хрипело
+  eqTrim.gain.setTargetAtTime(10 ** (-Math.max(0, ...eqGains) * 0.5 / 20), t, 0.02);
+}
+
+export function setEq(band: number, db: number) {
+  eqGains[band] = Math.min(EQ_MAX, Math.max(-EQ_MAX, Math.round(db)));
+  try { localStorage.setItem("velvet.req", JSON.stringify(eqGains)); } catch { /* не страшно */ }
+  applyEq();
+}
+
+export function resetEq() {
+  eqGains = EQ_BANDS.map(() => 0);
+  try { localStorage.setItem("velvet.req", JSON.stringify(eqGains)); } catch { /* не страшно */ }
+  applyEq();
 }
 
 let beforeMute = 0.6;
