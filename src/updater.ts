@@ -1,6 +1,7 @@
 import { tauri, type UpdateInfo } from "./tauri";
 import { viaProxy } from "./net";
-import { bindNews, hasNews, initNews, showNews } from "./news";
+import { bindNews, hasNews, initNews, showChanges } from "./news";
+import { newer } from "./version";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -20,19 +21,12 @@ function setStatus(text: string) {
   $("updateStatus").textContent = text;
 }
 
-/* true, если версия a новее версии b (формат 1.2.3) */
-function newer(a: string, b: string): boolean {
-  const x = a.split(".").map((n) => Number.parseInt(n, 10) || 0);
-  const y = b.split(".").map((n) => Number.parseInt(n, 10) || 0);
-  for (let i = 0; i < 3; i++) if ((x[i] ?? 0) !== (y[i] ?? 0)) return (x[i] ?? 0) > (y[i] ?? 0);
-  return false;
-}
-
+let installed = ""; // установленная версия
 let found: { version: string; notes?: string } | null = null; // найденное обновление: для окна «Что нового»
 
 function announce(version: string, notes?: string) {
   found = { version, notes };
-  $("bannerNews").hidden = !hasNews(version, notes);
+  $("bannerNews").hidden = !hasNews(installed, version, notes);
   setStatus(`Доступна версия ${version}.`);
   chip().hidden = false;
   $("bannerText").textContent = `Доступна версия ${version}`;
@@ -112,13 +106,14 @@ export async function initUpdater() {
     try { portable = await t.core.invoke<boolean>("is_portable"); } catch { portable = false; }
     try {
       const v = await t.app.getVersion();
+      installed = v;
       $("version").textContent = `Velvet TV · версия ${v}${portable ? " · портативная" : ""}`;
       initNews(v);
     } catch { /* ничего */ }
   } else $("version").textContent = "Версия для разработки";
   $("btnCheck").onclick = () => void checkForUpdate();
   $("bannerInstall").onclick = () => void install();
-  $("bannerNews").onclick = () => { if (found) showNews(found); };
+  $("bannerNews").onclick = () => { if (found) showChanges(installed, found.version, found.notes); };
   $("bannerLater").onclick = () => banner().classList.remove("open");
   chip().onclick = () => banner().classList.add("open");
   // тихая проверка после запуска

@@ -17,7 +17,9 @@ changelog = json.loads((Path(__file__).resolve().parent.parent / "src" / "data" 
 items = next((e["items"] for e in changelog if e["version"] == version), None)
 if not items:
     sys.exit(f"В src/data/changelog.json нет записи про версию {version}: добавьте, что нового")
-notes = chr(10).join("• " + t for t in items)
+# в обновление кладём заметки последних 10 версий с заголовками «## 1.0.3»: программа сама покажет человеку только то, что новее его версии
+nl = chr(10)
+notes = (nl + nl).join("## " + e["version"] + nl + nl.join("• " + t for t in e["items"]) for e in changelog[:10])
 (out / "notes.md").write_text(chr(10).join("- " + t for t in items) + chr(10), encoding="utf-8")
 
 latest = {

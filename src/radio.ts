@@ -6,6 +6,7 @@ import {
 } from "./radio-engine";
 import { fetchTrack } from "./nowplaying";
 import { enableSort, isSorting } from "./sortable";
+import { openExternal } from "./tauri";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const shell = $("shell");
@@ -336,6 +337,12 @@ function paintPanel() {
   if (s) meta.append(flagImg(s.cc), `${s.gn} · ${countryName(s.cc)}`);
   else meta.textContent = `${stations.length} станций из России и 28 стран мира`;
   $("pTrack").textContent = s ? state.track || (state.status === "playing" ? "Название песни недоступно" : "") : "Выберите станцию слева, и здесь появится, что играет.";
+  const link = !!s && state.status === "playing" && !!state.track; // название песни — ссылка на поиск в Google
+  const trackRow = $("pTrackRow");
+  trackRow.classList.toggle("link", link);
+  trackRow.tabIndex = link ? 0 : -1;
+  trackRow.setAttribute("role", link ? "link" : "presentation");
+  trackRow.title = link ? "Найти в Google" : "";
   $("pLogo").replaceChildren(...(s ? [logoOf(s, "p-logo-in")] : []));
   paintQualityButtons($("pQ"), false);
   const playing = state.status === "connecting" || (state.status === "playing" && !state.paused);
@@ -473,6 +480,9 @@ export function initRadio() {
   });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closePops(); });
 
+  const openSearch = () => { if (state.status === "playing" && state.track) openExternal(`https://www.google.com/search?q=${encodeURIComponent(state.track)}`); };
+  $("pTrackRow").addEventListener("click", openSearch);
+  $("pTrackRow").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openSearch(); } });
   $("pPlay").onclick = () => { if (state.station) toggle(); };
   $("pPrev").onclick = () => step(-1);
   $("pNext").onclick = () => step(1);

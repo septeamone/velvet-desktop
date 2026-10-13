@@ -174,7 +174,7 @@ const CAP_MS = 16000;
 
 /* пробуем один адрес: звук не слышен, пока не наберётся запас — так меньше заиканий.
    Возвращает "" при успехе, иначе причину неудачи (для журнала); ctl.cancel() прерывает попытку. */
-function attempt(s: Slot, url: string, isHls: boolean, ctl: { cancel: () => void }): Promise<string> {
+function attempt(s: Slot, url: string, isHls: boolean, ctl: { cancel: () => void }, prefill: number): Promise<string> {
   return new Promise((resolve) => {
     wipe(s);
     let done = false;
@@ -221,7 +221,7 @@ function attempt(s: Slot, url: string, isHls: boolean, ctl: { cancel: () => void
           h.loadSource(viaProxy(url));
           h.attachMedia(s.el);
         } else {
-          s.el.src = viaLive(url, settings.rstart === "fast" ? 0 : 6);
+          s.el.src = viaLive(url, prefill);
         }
         await s.el.play();
       } catch (e) {
@@ -287,8 +287,8 @@ const hostOf = (u: string) => { try { return new URL(u).host; } catch { return u
 
 let busy = false; // идёт подключение
 
-async function connect(s: Station, quiet = false) {
-  const run = connectNow(s, quiet);
+async function connect(s: Station, quiet = false, quick = false) {
+  const run = connectNow(s, quiet, quick);
   const mine = gen; // connectNow сразу увеличил счётчик, значит это его номер
   busy = true;
   try { await run; } finally { if (gen === mine) busy = false; }
@@ -299,7 +299,7 @@ type Won = { slot: Slot; url: string; ms: number };
 let cancelers: Array<() => void> = [];
 const cancelAttempts = () => { const c = cancelers; cancelers = []; for (const f of c) f(); };
 
-async function race(s: Station, q: RQ, free: Slot[], mine: number): Promise<Won | null> {
+async function race(s: Station, q: RQ, free: Slot[], mine: number, prefill: number): Promise<Won | null> {
   const list = ordered(s, q);
   for (let i = 0; i < list.length; i += free.length) {
     const res: { won: Won | null } = { won: null };
@@ -309,7 +309,7 @@ async function race(s: Station, q: RQ, free: Slot[], mine: number): Promise<Won 
       const ctl = { cancel: () => undefined as void };
       cancelers.push(() => ctl.cancel());
       const t0 = performance.now();
-      const why = await attempt(slot, url, !!q.hls || (typeof addr !== "string" && !!addr.hls), ctl);
+      const why = await attempt(slot, url, !!q.hls || (typeof addr !== "string" && !!addr.hls), ctl, prefill);
       const ms = Math.round(performance.now() - t0);
       if (why === "отменено") return;
       if (why) {
@@ -328,7 +328,7 @@ async function race(s: Station, q: RQ, free: Slot[], mine: number): Promise<Won 
 }
 
 /* выбранное качество → все его адреса (волнами по два, два круга) → качества ниже → ошибка */
-async function connectNow(s: Station, quiet = false) {
+async function connectNow(s: Station, quiet = false, quick = false) {
   const mine = ++gen;
   cancelAttempts();
   ensureGraph();
@@ -339,12 +339,13 @@ async function connectNow(s: Station, quiet = false) {
   state.paused = false;
   if (!quiet || !wasPlaying) state.status = "connecting";
   emit();
+  const prefill = quick || settings.rstart === "fast" ? 0 : 6; // секунд эфира, которые прокси копит как запас
   const free = slots.filter((_, i) => i !== active);
   const first = pickQuality(s);
   const chain = [first, ...s.q.filter((x) => x.k < first.k).sort((a, b) => b.k - a.k)];
   for (let qi = 0; qi < chain.length; qi++) {
     for (let round = 0; round < (qi === 0 ? 2 : 1); round++) {
-      const won = await race(s, chain[qi], free, mine);
+      const won = await race(s, chain[qi], free, mine, prefill);
       if (mine !== gen) { if (won) wipe(won.slot); return; }
       if (!won) continue;
       markGood(s, chain[qi], won.url);
@@ -443,7 +444,16 @@ window.addEventListener("velvet:tv-start", () => {
 export function setQuality(k: number) {
   wanted = k;
   try { localStorage.setItem("velvet.rq", String(k)); } catch { /* не страшно */ }
-  if (state.station) void connect(state.station, true);
+  const s = state.station;
+  if (!s) return;
+  // старый поток замолкает сразу: у разных качеств разное запаздывание (HLS отстаёт на 20–30 с), и пока новый подключается,
+  // старый играл бы «другой трек». Новое качество стартует быстро, без накопления запаса.
+  for (const sl of slots) wipe(sl);
+  state.kbps = k;
+  state.status = "connecting";
+  state.paused = false;
+  emit();
+  void connect(s, false, true);
 }
 
 /* ---------- сторож: следит, чтобы звук не завис, не пропал и не замолчал ---------- */
@@ -518,12 +528,26 @@ window.addEventListener("online", () => {
 
 /* ---------- что играет сейчас ---------- */
 let trackTimer = 0;
+let titleDue = ""; // название, которое ждёт своего часа
+
+/* через сколько секунд песня, вышедшая в эфир, слышна именно в этом потоке: HLS отстаёт на 20–30 с, у обычного потока — запас прокси */
+function listenDelay(): number {
+  const h = slots[active].hls;
+  const sec = h ? (h.latency > 0 ? h.latency : 18) : (settings.rstart === "fast" ? 0 : 6) + 2;
+  return Math.min(60, sec) * 1000;
+}
+
 function fetchNow(s: Station) {
   clearInterval(trackTimer);
+  titleDue = "";
   const load = async () => {
     try {
       const t = await fetchTrack(s.id);
-      if (t && state.station?.id === s.id) { state.track = t; emit(); syncMedia(); }
+      if (!t || state.station?.id !== s.id) return;
+      const show = () => { if (state.station?.id === s.id) { state.track = t; emit(); syncMedia(); } };
+      // первое название и то же самое — сразу; новая песня — когда её реально услышит человек, а не по эфиру студии
+      if (!state.track || t === state.track) show();
+      else if (t !== titleDue) { titleDue = t; setTimeout(() => { if (titleDue === t) show(); }, listenDelay()); }
     } catch { /* оставляем прошлое */ }
   };
   void load();

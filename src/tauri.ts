@@ -12,6 +12,14 @@ export type TauriGlobal = {
   app: { getVersion: () => Promise<string> };
   updater: { check: () => Promise<UpdateInfo | null> };
   process: { relaunch: () => Promise<void> };
+  opener?: { openUrl: (url: string) => Promise<void> };
 };
+
+/* открыть ссылку в браузере по умолчанию (в обычном браузере — новая вкладка) */
+export function openExternal(url: string) {
+  const o = (window as unknown as { __TAURI__?: TauriGlobal }).__TAURI__?.opener;
+  if (o) void o.openUrl(url).catch(() => undefined);
+  else window.open(url, "_blank", "noopener");
+}
 
 export const tauri = (): TauriGlobal | undefined => (window as unknown as { __TAURI__?: TauriGlobal }).__TAURI__;

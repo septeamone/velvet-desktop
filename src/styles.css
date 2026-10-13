@@ -236,7 +236,7 @@ h1 {
 .c-bar b { display: block; height: 100%; background: var(--accent); }
 
 
-.settings { max-width: 720px; margin: 0 auto; }
+.settings { max-width: 1280px; margin: 0 auto; }
 .page-title { font-size: 28px; font-weight: 650; letter-spacing: -0.02em; margin: 14px 0 12px; }
 .row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--hair); }
 .row:last-child { border-bottom: 0; }
@@ -532,3 +532,22 @@ body.sorting .tile, body.sorting .scard { will-change: auto; }
 .news-body li { position: relative; padding-left: 18px; font-size: 14.5px; line-height: 1.45; color: var(--fg); }
 .news-body li::before { content: ""; position: absolute; left: 2px; top: .55em; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 #bannerNews[hidden] { display: none; }
+
+/* настройки по горизонтали: «Общие», «ТВ» и «Радио» рядом (на узком окне — друг под другом) */
+.set-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 0 40px; align-items: start; }
+.set-col h2, .set-about h2 { margin-top: 26px; }
+.set-col .row { flex-direction: column; align-items: flex-start; gap: 12px; }
+.set-col .seg { max-width: 100%; flex-wrap: wrap; }
+.set-col .custom-list { margin-top: 0; }
+.set-about { max-width: 720px; }
+
+/* название песни в плеере: цвет как в расширении, лупа и переход в поиск Google по клику */
+.p-trackrow { display: flex; align-items: flex-start; gap: 8px; margin-top: 14px; border-radius: 8px; user-select: none; }
+.r-panel .p-trackrow { margin-top: 10px; }
+.p-trackrow .p-track { flex: 1; min-width: 0; margin-top: 0; color: var(--fg-muted); transition: color .3s ease; }
+.p-hint { display: none; flex: none; width: 15px; height: 15px; margin-top: .45em; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; color: var(--fg-muted); opacity: .55; transition: opacity .3s ease, color .3s ease, transform .35s var(--ease); }
+.p-trackrow.link { cursor: pointer; }
+.p-trackrow.link .p-hint { display: block; }
+.p-trackrow.link:hover .p-hint, .p-trackrow.link:focus-visible .p-hint { opacity: 1; color: var(--accent); transform: translateX(2px) scale(1.12); }
+.p-trackrow.link:hover .p-track { color: var(--fg); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 70%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+.p-trackrow.link:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent) 50%, transparent); outline-offset: 2px; }

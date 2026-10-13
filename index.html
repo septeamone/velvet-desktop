@@ -61,7 +61,10 @@
             <div class="p-status"><i></i><span id="pStatus">Выберите станцию</span></div>
             <h2 id="pName">Velvet Radio</h2>
             <p class="p-meta" id="pMeta"></p>
-            <p class="p-track" id="pTrack"></p>
+            <div class="p-trackrow" id="pTrackRow">
+              <p class="p-track" id="pTrack"></p>
+              <svg class="p-hint" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+            </div>
             <canvas id="pViz" class="viz-line" aria-hidden="true"></canvas>
             <div class="p-q" id="pQ" role="radiogroup" aria-label="Качество звука"></div>
             <div class="p-ctrl">
@@ -82,6 +85,8 @@
         <div class="settings">
           <h1 class="page-title">Настройки</h1>
 
+          <div class="set-grid">
+          <section class="set-col">
           <h2>Общие</h2>
           <div class="row">
             <div><strong>Тема</strong><p>Как выглядит приложение</p></div>
@@ -103,6 +108,8 @@
             <button class="btn" id="btnResetOrder" type="button">Сбросить порядок</button>
           </div>
 
+          </section>
+          <section class="set-col">
           <h2>ТВ</h2>
           <div class="row">
             <div><strong>Качество видео</strong><p>«Экономное» подходит для слабого интернета</p></div>
@@ -132,6 +139,8 @@
           </div>
           <ul class="custom-list" id="customList"></ul>
 
+          </section>
+          <section class="set-col">
           <h2>Радио</h2>
           <div class="row">
             <div><strong>Плавное переключение станций</strong><p>Старая станция играет, пока подключается новая, потом звук плавно переходит. Если выключить, старая замолкает сразу.</p></div>
@@ -156,6 +165,9 @@
             </div>
           </div>
 
+          </section>
+          </div>
+          <section class="set-about">
           <h2>О программе</h2>
           <div class="row">
             <div><strong>Velvet TV</strong><p id="version">Версия</p><p id="updateStatus" class="status" role="status"></p></div>
@@ -164,6 +176,7 @@
               <button class="btn" id="btnCheck" type="button">Проверить обновления</button>
             </div>
           </div>
+        </section>
         </div>
       </main>
 
