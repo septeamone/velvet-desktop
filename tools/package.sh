@@ -36,6 +36,8 @@ echo "=== Чистая версия (без платных каналов) ==="
 for f in public/logos/p-*; do [ -e "$f" ] && mv "$f" "$STASH/"; done
 pnpm tauri build
 collect ""
+# портативная версия обновляет себя сама: ей тоже нужна подпись
+env -u TAURI_SIGNING_PRIVATE_KEY -u TAURI_SIGNING_PRIVATE_KEY_PASSWORD pnpm tauri signer sign -f "$HOME/.tauri/velvet.key" -p "" "$OUT/VelvetTV_${VERSION}_portable.exe" > /dev/null
 restore
 
 if [ -f src/data/paid.json ]; then

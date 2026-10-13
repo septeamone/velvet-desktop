@@ -37,12 +37,9 @@ struct AppState {
     token: Arc<str>,
 }
 
-pub async fn start() -> Result<ProxyInfo, String> {
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.map_err(|e| e.to_string())?;
-    let port = listener.local_addr().map_err(|e| e.to_string())?.port();
-    let token = format!("{:032x}", rand::random::<u128>());
-
-    let client = reqwest::Client::builder()
+/// Общий безопасный клиент: свой DNS-фильтр (никаких внутренних адресов), проверка каждого перенаправления, без системного прокси.
+pub fn build_client() -> Result<reqwest::Client, String> {
+    reqwest::Client::builder()
         .user_agent(UA)
         .no_proxy()
         .dns_resolver(Arc::new(SafeResolver))
@@ -58,7 +55,15 @@ pub async fn start() -> Result<ProxyInfo, String> {
         .connect_timeout(Duration::from_secs(8))
         .read_timeout(Duration::from_secs(20))
         .build()
-        .map_err(|e| e.to_string())?;
+        .map_err(|e| e.to_string())
+}
+
+pub async fn start() -> Result<ProxyInfo, String> {
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.map_err(|e| e.to_string())?;
+    let port = listener.local_addr().map_err(|e| e.to_string())?.port();
+    let token = format!("{:032x}", rand::random::<u128>());
+
+    let client = build_client()?;
 
     let state = AppState { client, port, token: Arc::from(token.as_str()) };
     let app = Router::new()

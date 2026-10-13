@@ -30,6 +30,7 @@ tower-http = { version = "0.6", features = ["cors"] }
 base64 = "0.22"
 url = "2"
 rand = "0.9"
+minisign-verify = "0.2"
 
 
 # Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration

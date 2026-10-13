@@ -1,7 +1,15 @@
 import { tauri, type UpdateInfo } from "./tauri";
+import { viaProxy } from "./net";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+
+/* Установленная версия обновляется встроенным механизмом Tauri (установщик). Портативная заменяет сама себя новым файлом. */
+const PORTABLE_JSON = "https://github.com/septeamone/velvet-desktop/releases/latest/download/latest-portable.json";
+type PortableInfo = { version: string; url: string; signature: string };
+
 let pending: UpdateInfo | null = null;
+let pendingPortable: PortableInfo | null = null;
+let portable = false;
 let busy = false;
 
 const chip = () => $("updateChip");
@@ -11,6 +19,21 @@ function setStatus(text: string) {
   $("updateStatus").textContent = text;
 }
 
+/* true, если версия a новее версии b (формат 1.2.3) */
+function newer(a: string, b: string): boolean {
+  const x = a.split(".").map((n) => Number.parseInt(n, 10) || 0);
+  const y = b.split(".").map((n) => Number.parseInt(n, 10) || 0);
+  for (let i = 0; i < 3; i++) if ((x[i] ?? 0) !== (y[i] ?? 0)) return (x[i] ?? 0) > (y[i] ?? 0);
+  return false;
+}
+
+function announce(version: string) {
+  setStatus(`Доступна версия ${version}.`);
+  chip().hidden = false;
+  $("bannerText").textContent = `Доступна версия ${version}`;
+  banner().classList.add("open");
+}
+
 export type CheckResult = "found" | "none" | "error" | "browser";
 
 export async function checkForUpdate(): Promise<CheckResult> {
@@ -18,13 +41,19 @@ export async function checkForUpdate(): Promise<CheckResult> {
   if (!t) { setStatus("Обновления работают в установленной программе."); return "browser"; }
   setStatus("Проверяю…");
   try {
+    if (portable) {
+      const r = await fetch(viaProxy(`${PORTABLE_JSON}?v=${Math.floor(Date.now() / 300000)}`), { cache: "no-store" });
+      if (!r.ok) throw new Error(String(r.status));
+      const info = (await r.json()) as PortableInfo;
+      if (!newer(info.version, await t.app.getVersion())) { setStatus("У вас последняя версия."); return "none"; }
+      pendingPortable = info;
+      announce(info.version);
+      return "found";
+    }
     const u = await t.updater.check();
     if (!u) { setStatus("У вас последняя версия."); return "none"; }
     pending = u;
-    setStatus(`Доступна версия ${u.version}.`);
-    chip().hidden = false;
-    $("bannerText").textContent = `Доступна версия ${u.version}`;
-    banner().classList.add("open");
+    announce(u.version);
     return "found";
   } catch {
     setStatus("Не удалось проверить обновления. Проверьте подключение к интернету.");
@@ -33,14 +62,28 @@ export async function checkForUpdate(): Promise<CheckResult> {
 }
 
 async function install() {
-  if (!pending || busy) return;
+  if (busy || (!pending && !pendingPortable)) return;
   busy = true;
   const t = tauri();
   const bar = $("bannerBar"), text = $("bannerText");
   banner().classList.add("open", "busy");
+
+  if (pendingPortable) { // портативная версия: файл скачивается, проверяется и подменяется, потом программа сама перезапускается
+    text.textContent = "Загружаю обновление…";
+    bar.style.width = "100%";
+    try {
+      await t!.core.invoke("portable_update", { url: pendingPortable.url, signature: pendingPortable.signature });
+    } catch {
+      busy = false;
+      banner().classList.remove("busy");
+      text.textContent = "Не удалось обновить. Переместите файл программы в обычную папку (не в Program Files) и повторите.";
+    }
+    return;
+  }
+
   let total = 0, got = 0;
   try {
-    await pending.downloadAndInstall((e) => {
+    await pending!.downloadAndInstall((e) => {
       if (e.event === "Started") total = e.data?.contentLength ?? 0;
       if (e.event === "Progress") {
         got += e.data?.chunkLength ?? 0;
@@ -59,11 +102,14 @@ async function install() {
 
 export async function initUpdater() {
   const t = tauri();
-  try { $("version").textContent = t ? `Velvet TV · версия ${await t.app.getVersion()}` : "Версия для разработки"; } catch { /* ничего */ }
+  if (t) {
+    try { portable = await t.core.invoke<boolean>("is_portable"); } catch { portable = false; }
+    try { $("version").textContent = `Velvet TV · версия ${await t.app.getVersion()}${portable ? " · портативная" : ""}`; } catch { /* ничего */ }
+  } else $("version").textContent = "Версия для разработки";
   $("btnCheck").onclick = () => void checkForUpdate();
   $("bannerInstall").onclick = () => void install();
   $("bannerLater").onclick = () => banner().classList.remove("open");
   chip().onclick = () => banner().classList.add("open");
   // тихая проверка после запуска
-  setTimeout(() => void checkForUpdate().then(() => { if (!pending) setStatus(""); }), 6000);
+  setTimeout(() => void checkForUpdate().then(() => { if (!pending && !pendingPortable) setStatus(""); }), 6000);
 }

@@ -25,6 +25,17 @@ latest = {
 }
 (out / "latest.json").write_text(json.dumps(latest, ensure_ascii=False, indent=2), encoding="utf-8")
 
+portable_file = out / f"VelvetTV_{version}_portable.exe"
+portable_sig = out / f"VelvetTV_{version}_portable.exe.sig"
+if portable_file.exists() and portable_sig.exists():
+    (out / "latest-portable.json").write_text(json.dumps({
+        "version": version,
+        "notes": latest["notes"],
+        "pub_date": latest["pub_date"],
+        "url": f"https://github.com/septeamone/velvet-desktop/releases/download/v{version}/{portable_file.name}",
+        "signature": portable_sig.read_text(encoding="utf-8").strip(),
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
+
 size = lambda p: f"{p.stat().st_size / 1024 / 1024:.1f} МБ" if p.exists() else "—"
 portable = out / f"VelvetTV_{version}_portable.exe"
 (out / "ПРОЧИТАЙ ПЕРЕД УСТАНОВКОЙ.txt").write_text(f"""VELVET TV {version}
@@ -39,7 +50,7 @@ portable = out / f"VelvetTV_{version}_portable.exe"
 
 БЕЗ УСТАНОВКИ
 Файл «{portable.name}» ({size(portable)}) запускается сразу, откуда угодно (например, с флешки).
-В нём не работают автоматические обновления.
+Он тоже умеет обновляться: в настройках кнопка «Проверить обновления», программа сама заменит свой файл на новую версию.
 
 ЧТО ВНУТРИ
 - ТВ: десятки российских каналов, программа передач, выбор качества, картинка в картинке.
@@ -51,4 +62,26 @@ portable = out / f"VelvetTV_{version}_portable.exe"
 Каналы идут через сторонние серверы, иногда какой-то не отвечает.
 Подожди полминуты или выбери другое качество в кнопке внизу.
 """, encoding="utf-8")
-print("latest.json и инструкция готовы")
+# файл «двойной клик»: выкладывает релиз на GitHub от имени владельца репозитория
+files = [setup.name, sig.name, portable_file.name, portable_sig.name, "latest.json", "latest-portable.json"]
+quoted = " ".join(f'"{f}"' for f in files)
+bat = f"""@echo off
+chcp 65001 >nul
+cd /d "%~dp0"
+echo Выкладываю Velvet TV {version} на GitHub...
+echo.
+gh release view v{version} >nul 2>&1
+if %errorlevel%==0 (
+  gh release upload v{version} {quoted} --clobber
+) else (
+  gh release create v{version} {quoted} --title "Velvet TV {version}" --notes "{latest['notes']}"
+)
+echo.
+if %errorlevel%==0 (echo ГОТОВО. Теперь у всех, у кого стоит программа, появится кнопка «Обновить».) else (echo НЕ ПОЛУЧИЛОСЬ. Покажи этот текст Клоду.)
+echo.
+pause
+"""
+lf = chr(10)
+crlf = chr(13) + chr(10)  # у файлов .bat переводы строк Windows
+(out / "ВЫЛОЖИТЬ НА GITHUB (двойной клик).bat").write_bytes(bat.replace(crlf, lf).replace(lf, crlf).encode("utf-8"))
+print("latest.json, latest-portable.json, инструкция и файл выкладки готовы")
