@@ -16,6 +16,25 @@ const stations = STATIONS.map((s) => {
     q: s.qualities.map((x) => ({ k: x.kbps, u: x.urls, ...(x.hide ? { h: 1 } : {}), ...(x.hls ? { hls: 1 } : {}), ...(x.note ? { n: x.note } : {}) })),
   };
 });
+// итоги проверки адресов (tools/check-radio.mjs): упавшие дважды подряд убираем, упавшие один раз — в конец списка
+if (existsSync("tools/radio-health.json")) {
+  const fails = JSON.parse(readFileSync("tools/radio-health.json", "utf8")).urls;
+  const n = (a) => fails[typeof a === "string" ? a : a.url]?.fails ?? 0; // адрес — строка или {url, hls}
+  let removed = 0, demoted = 0, droppedQ = 0;
+  for (const s of stations) {
+    for (const q of s.q) {
+      const alive = q.u.filter((u) => n(u) < 2);
+      if (alive.length && alive.length < q.u.length) removed += q.u.length - alive.length;
+      const keep = alive.length ? alive : q.u; // если мёртвы все адреса качества, не трогаем
+      const sorted = [...keep.filter((u) => n(u) === 0), ...keep.filter((u) => n(u) > 0)]; // порядок составителя сохраняется
+      if (sorted.some((u, i) => u !== keep[i])) demoted++;
+      q.u = sorted;
+    }
+    const live = s.q.filter((q) => q.u.some((u) => n(u) < 2));
+    if (live.length && live.length < s.q.length) { droppedQ += s.q.length - live.length; s.q = live; } // качество без живых адресов убираем, если у станции есть другие
+  }
+  console.log(`по итогам проверки: убрано мёртвых адресов ${removed}, переставлено качеств ${demoted}, убрано качеств ${droppedQ}`);
+}
 const countries = [{ cc: "RU", aliases: ["россия", "russia", "рф"] }, ...COUNTRIES].filter((c, i, a) => a.findIndex((x) => x.cc === c.cc) === i);
 writeFileSync("src/data/radio.json", JSON.stringify({ stations, countries }));
 

@@ -1,0 +1,5777 @@
+{
+ "urls": {
+  "http://ep128server.streamr.ru:8030/ep128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1353,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://europaplussrc.hostingradio.ru:8014/europaplus320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1772,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://europaplus.hostingradio.ru:8014/europaplus320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1981,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/rr_main96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2179,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://retro.hostingradio.ru:8014/europaplus320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2312,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ep256.hostingradio.ru:8052/europaplus256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2309,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://recordsrc.hostingradio.ru:9010/rr_main": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2417,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-02-europaplus.emgsound.ru/11/192/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2783,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://retroserver.streamr.ru:8043/retro256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2617,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ep128.hostingradio.ru:8030/ep128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2697,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://europaplussrc.hostingradio.ru:8014/retro320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2680,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://retro.hostingradio.ru:8043/retro128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2713,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://emgregion.hostingradio.ru:8064/moscow.europaplus.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3168,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radio7server.streamr.ru:8040/radio7256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3316,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/rr_main96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3381,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://europaplussrc.hostingradio.ru:8014/radiosept320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 768,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record/112/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3695,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radio7.hostingradio.ru:8040/radio7256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2114,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://retro.hostingradio.ru:8014/retro320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3631,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://europaplussrc.hostingradio.ru:8014/europaplus320f.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3655,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://emgregion.hostingradio.ru:8064/moscow.retrofm.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3729,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://europaplus.hostingradio.ru:8014/retro320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3870,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://europaplussrc.hostingradio.ru:8014/europaplus320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3880,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/mayakfm_mp3_128kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 377,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/vestifm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 509,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/vestifm_mp3_192kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 695,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/vestifm_mp3_128kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 792,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://dorognoe.hostingradio.ru:8000/radio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1263,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/mayakfm_mp3_192kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 306,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/vestifm_mp3_128kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 825,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://europaplus.hostingradio.ru:8014/radiosept320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2280,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/vestifm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 746,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/vestifm_mp3_192kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 880,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/mayakfm_mp3_128kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 734,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/mayakfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 306,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://emgregion.hostingradio.ru:8064/moscow.radio7.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1730,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/mayakfm_mp3_192kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 586,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/mayakfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 593,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://europaplussrc.hostingradio.ru:8014/retro320f.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4743,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://europaplussrc.hostingradio.ru:8014/retro320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4742,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://emgregion.hostingradio.ru:8064/moscow.dorognoe.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1566,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dorognoe.hostingradio.ru:8000/radio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2230,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://bfm.hostingradio.ru:8004/fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 740,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radio7server.streamr.ru:8040/radio7128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3024,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://europaplussrc.hostingradio.ru:8014/radiosept320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2899,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://europaplussrc.hostingradio.ru:8014/radiosept320f.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3002,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://chanson.hostingradio.ru:8041/chanson256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 948,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://chanson.hostingradio.ru:8041/chanson128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1161,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-retro.emgsound.ru/12/192/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 5893,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://europaplussrc.hostingradio.ru:8014/dorognoe320.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2985,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe3.hostingradio.ru/ultra-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 855,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe1.hostingradio.ru/ultra-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1401,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe3.hostingradio.ru/ultra-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1371,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe1.hostingradio.ru/ultra-192.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1360,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe1.hostingradio.ru/ultra-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1065,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe3.hostingradio.ru/ultra-192.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1114,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe1.hostingradio.ru/nashe-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 805,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://bfm.hostingradio.ru/bfm256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1855,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://main.hostingradio.ru/ultra-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 949,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://bfmreg.hostingradio.ru/fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1923,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radio7.emgsound.ru/13/192/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4059,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe3.hostingradio.ru/nashe-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 501,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe3.hostingradio.ru/nashe-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 847,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://bfm.hostingradio.ru:9075/fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2078,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe1.hostingradio.ru/nashe-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 690,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://chanson.hostingradio.ru:8041/chanson128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2187,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://chanson.hostingradio.ru:8041/chanson256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2071,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-dorognoe.emgsound.ru/15/192/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4113,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://nashe1.hostingradio.ru/ultra-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2313,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://nashe1.hostingradio.ru/ultra-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1854,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://nashe1.hostingradio.ru/ultra-192.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2268,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://nashe1.hostingradio.ru/nashe-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1679,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://rusradio.hostingradio.ru/rusradio128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1127,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://main.hostingradio.ru/nashe-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1640,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://nashe1.hostingradio.ru/nashe-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1572,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://dfm.hostingradio.ru/dfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1425,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://maximum.hostingradio.ru/maximum128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 912,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://depechemode.hostingradio.ru/rusradio128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2408,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://depechemode.hostingradio.ru/dfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2384,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast01.hostingradio.ru/rusradio96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2784,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast01.hostingradio.ru/rusradio128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2979,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://rusradio.hostingradio.ru/rusradio128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3231,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://depechemode.hostingradio.ru/maximum128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2062,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast01.hostingradio.ru/dfm96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3025,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://rusradio.hostingradio.ru/rusradio96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3405,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://maximum.hostingradio.ru/maximum96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2769,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://maximum.hostingradio.ru/maximum128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2681,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://mc-mcgold.hostingradio.ru/rusradio128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3457,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://hitfm.hostingradio.ru/hitfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 634,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast01.hostingradio.ru/maximum96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2923,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://mc-mcgold.hostingradio.ru/dfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3204,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hitfm.hostingradio.ru/hitfm96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2061,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hitfm.hostingradio.ru/hitfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1588,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dfm.hostingradio.ru/dfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3416,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dfm.hostingradio.ru/dfm96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3453,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast01.hostingradio.ru/dfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3389,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast01.hostingradio.ru/hitfm96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2344,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://rusradio.ru/t/radio/master.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3986,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast01.hostingradio.ru/maximum128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3130,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://mc-mcgold.hostingradio.ru/maximum128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2858,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://montecarlo.hostingradio.ru/montecarlo128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 471,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://microit.n340.com:9000/VgMv0WV17ZVx1uuo_12_love_128_reg_44": {
+   "fails": 0,
+   "ok": true,
+   "ms": 504,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://depechemode.hostingradio.ru/hitfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1642,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://pub0201.101.ru/stream/trust/mp3/128/24": {
+   "fails": 0,
+   "ok": true,
+   "ms": 567,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://maximum.ru/t/maximum-omsk/master.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3218,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://srv02.gpmradio.ru:8443/stream/trust/mp3/128/24": {
+   "fails": 0,
+   "ok": true,
+   "ms": 689,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://pub0101.101.ru/stream/trust/mp3/128/24": {
+   "fails": 0,
+   "ok": true,
+   "ms": 713,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://srv01.gpmradio.ru/stream/trust/mp3/128/24": {
+   "fails": 0,
+   "ok": true,
+   "ms": 747,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast01.hostingradio.ru/hitfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2369,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://rmg.hostingradio.ru/gpm-comedyradio495.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1173,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://zvezda-radio-rzv.mediacdn.ru/radio/zvezda/zvezda_128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1393,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://rmg.hostingradio.ru/gpm-humorfm495.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 570,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://rmg.hostingradio.ru/gpm-likefm495.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 682,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://rmg.hostingradio.ru/gpm-energyfm495.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 785,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://rmg.hostingradio.ru/gpm-romantika495.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 477,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://depechemode.hostingradio.ru/montecarlo128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1687,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://montecarlo.hostingradio.ru/montecarlo128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1862,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://montecarlo.hostingradio.ru/montecarlo96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2094,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://rmg.hostingradio.ru/gpm-avtoradio495.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1137,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://mc-mcgold.hostingradio.ru/hitfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2411,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-zvezda.mediacdn.ru/radio/zvezda/zvezda_128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1513,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-gpm.hostingradio.ru/comedyradio495/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1652,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-gpm.hostingradio.ru/likefm495/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1360,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://emgregion.hostingradio.ru:8064/moscow.novoe.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 410,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-gpm.hostingradio.ru/energyfm495/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1594,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-gpm.hostingradio.ru/avtoradio495/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1621,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.newradio.ru/moscow.novoe.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 741,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://microit.n340.com:9000/VgMv0WV17ZVx1uuo_12_dacha_128_reg_1093": {
+   "fails": 0,
+   "ok": true,
+   "ms": 462,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream2.n340.com/12_dacha_128_reg_1093?type=aac&UID=1C254BF561F74C9BFDBAF0957371CB7B": {
+   "fails": 0,
+   "ok": true,
+   "ms": 461,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream2.n340.com/12_love_128_reg_44?type=aac&UID=1C254BF561F74C9BFDBAF0957371CB7B": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2010,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-gpm.hostingradio.ru/romantika495/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1326,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast01.hostingradio.ru/montecarlo96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2485,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe1.hostingradio.ru/rock-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 480,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe3.hostingradio.ru/rock-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 479,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe3.hostingradio.ru/rock-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 461,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe1.hostingradio.ru/rock-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 483,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-gpm.hostingradio.ru/humorfm495/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1570,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast01.hostingradio.ru/montecarlo128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2594,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://mc-mcgold.hostingradio.ru/montecarlo128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2505,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe1.hostingradio.ru/best-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 462,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe3.hostingradio.ru/best-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 463,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe1.hostingradio.ru/best-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 447,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe3.hostingradio.ru/best-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 461,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://nashe.streamr.ru/best-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 780,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://emgregion.hostingradio.ru:8064/moscow.novoe.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1437,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls.newradio.ru/novoeradio-msk/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1744,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://nashe1.hostingradio.ru/rock-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1602,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://choco.hostingradio.ru:10010/fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1097,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream2.n340.com/12_dacha_128_reg_1093?type=aac&UID=1C254BF561F74C9BFDBAF0957371CB7B": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1994,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://nashe1.hostingradio.ru/best-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1542,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://main.hostingradio.ru/rock-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1620,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiomv.hostingradio.ru/radiomv256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1284,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiomv.hostingradio.ru/radiomv128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1362,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://main.hostingradio.ru/best-256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1584,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.stranafm.cdnvideo.ru/stranafm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1545,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-choco.hostingradio.ru/choco/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1880,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.newradio.ru/novoe96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3046,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-stranafm.cdnvideo.ru/stranafm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1762,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream1.radiord.ru:8000/live128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1272,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream1.radiord.ru:8000/live96.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1579,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiomv.hostingradio.ru/radiomv/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2236,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://213.59.4.27:8000/silver128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1306,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://silverrain.hostingradio.ru/silver128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1731,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://chanson.hostingradio.ru:8041/chanson-uncensored128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 451,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream1.radiord.ru:8000/live128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1680,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://chanson.hostingradio.ru:8041/chanson-uncensored256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 412,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://pub0201.101.ru/stream/trust/mp3/128/17": {
+   "fails": 0,
+   "ok": true,
+   "ms": 812,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://pub0201.101.ru/stream/trust/mp3/128/5": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1452,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://chanson.hostingradio.ru:8041/chanson-romantic128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 410,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiomv.hostingradio.ru:80/radiomv256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2251,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://srv02.gpmradio.ru:8443/stream/trust/mp3/128/17": {
+   "fails": 0,
+   "ok": true,
+   "ms": 837,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://pub0101.101.ru/stream/trust/mp3/128/17": {
+   "fails": 0,
+   "ok": true,
+   "ms": 824,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://pub0101.101.ru/stream/trust/mp3/128/5": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1200,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiomv.hostingradio.ru:80/radiomv128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2344,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/rrzonam_mp3_128kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 306,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://srv01.gpmradio.ru/stream/trust/mp3/128/17": {
+   "fails": 0,
+   "ok": true,
+   "ms": 912,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://srv02.gpmradio.ru:8443/stream/trust/mp3/128/5": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1228,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://srv01.gpmradio.ru/stream/trust/mp3/128/5": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1574,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/rrzonam_mp3_192kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 307,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/kulturafm_mp3_192kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 300,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://chanson.hostingradio.ru:8041/chanson-romantic256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 442,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/rrzonam_mp3_128kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 609,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/unost_mp3_192kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 298,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/rrzonam_mp3_192kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 576,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/kulturafm_mp3_192kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 586,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/unost_mp3_192kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 592,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/rrzonam": {
+   "fails": 0,
+   "ok": true,
+   "ms": 906,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/rrzonam": {
+   "fails": 0,
+   "ok": true,
+   "ms": 927,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://choco.hostingradio.ru:10010/fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3236,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/kulturafm_mp3_128kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1062,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/kulturafm_mp3_128kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1085,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://silverrain.hostingradio.ru/silver128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3088,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://orfeyfm.hostingradio.ru:8034/orfeyfm192.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 556,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://orfeyfm.hostingradio.ru:8034/orfeyfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 565,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://chanson.hostingradio.ru:8041/chanson-uncensored128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1799,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://chanson.hostingradio.ru:8041/chanson-uncensored256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1713,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/kulturafm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1067,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/kulturafm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1069,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/unost_mp3_128kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1092,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://chanson.hostingradio.ru:8041/chanson-romantic128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1634,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/unost_mp3_128kbps": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1121,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.vgtrk.cdnvideo.ru/unost": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1328,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-vgtrk.cdnvideo.ru/unost": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1336,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://hermitage.hostingradio.ru/hermitage128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 915,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://chanson.hostingradio.ru:8041/chanson-romantic256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1663,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://jazz.streamr.ru/jazz-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1048,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://orfeyfm.hostingradio.ru:8034/orfeyfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1781,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://kommersant77.hostingradio.ru:8085/kommersant128.mp3": {
+   "fails": 1,
+   "ok": false,
+   "why": "ECONNRESET",
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://orfeyfm.hostingradio.ru:8034/orfeyfm192.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1577,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-gpm.hostingradio.ru/detifm495/128/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 706,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast-rian.cdnvideo.ru/voicerus": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1104,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast-rian.cdnvideo.ru/voicerushi": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1079,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://media.govoritmoskva.ru:8880/rufm_m.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1096,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://media.govoritmoskva.ru:8880/rufm.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1230,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-rian.cdnvideo.ru/voicerushi": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1382,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-rian.cdnvideo.ru/voicerus": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1476,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://kpradio.hostingradio.ru:8000/russia.radiokp128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1326,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://kpradio.hostingradio.ru:8000/russia.radiokp256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1304,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radonezh.cdnvideo.ru:8000/rad128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1268,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://rmg.hostingradio.ru/gpm-detifm495.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1384,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hermitage.hostingradio.ru/hermitage128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2213,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-mirtv.cdnvideo.ru/radio_mir_256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1672,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://jazz.streamr.ru/jazz-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2247,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://bookradio.hostingradio.ru:8069/fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1527,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://kommersant77.hostingradio.ru:8085/kommersant128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2319,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/rock96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 642,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/trap96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1008,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/rus96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1068,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media.govoritmoskva.ru/radio/rufm.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 977,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/sd9096.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 415,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/mix96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 625,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/deep96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1102,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://kpradio.hostingradio.ru:8000/russia.radiokp128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2390,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://kpradio.hostingradio.ru:8000/russia.radiokp256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2536,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-deep/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1668,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-rock/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1325,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/phonk96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 425,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-trap/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1770,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/chil96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 475,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-rus/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1930,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-mix/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1309,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-sd90/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1357,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://bookradio.hostingradio.ru:8069/fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2690,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/deep96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2029,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/trap96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2163,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/rus96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2379,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/sd9096.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1528,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/teo96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 667,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-phonk/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1122,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://retro70.hostingradio.ru:8025/retro70-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 849,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/hype96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 484,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/rock96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2019,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-chil/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1391,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/mix96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1853,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-teo/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1116,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/club96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 718,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/reggae96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 456,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-club/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 692,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/chil96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1587,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://retro80.hostingradio.ru:8025/retro80-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 912,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/phonk96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1532,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-reggae/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 643,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-hype/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1153,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/rv96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 409,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/lofi96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 418,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-rv/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 695,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-lofi/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 730,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/dub96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 467,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-dub/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 717,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/teo96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1803,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/hype96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1512,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/rapclassics96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 462,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-rapclassics/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 684,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-eurodance/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 659,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://retro70.hostingradio.ru:8025/retro70-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2085,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-techouse/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 700,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/bighits96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 557,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/club96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1884,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/techouse96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 959,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/russiangold96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 559,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-russiangold/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 649,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://retro80.hostingradio.ru:8025/retro80-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2145,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://retro90.hostingradio.ru:8025/retro90-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1015,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/reggae96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1739,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/rv96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1656,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-bighits/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1057,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-drumhits/playlist.m3u8": {
+   "fails": 1,
+   "ok": false,
+   "why": "HTTP 503",
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/eurodance96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1233,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/drumhits96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 607,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/198096.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 480,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/dub96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1690,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/lofi96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1963,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/rapclassics96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1668,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-1980/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 890,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/eurodance96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1741,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/techouse96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1854,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/chillhouse96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 525,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://dfm-dfmrusdance.hostingradio.ru/dfmrusdance96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 698,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/fut96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 696,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/pump96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 479,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-fut/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 929,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-chillhouse/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 831,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-pump/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 750,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/bighits96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1918,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/rap96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 860,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/trancehits96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 362,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/198096.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1455,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://retro90.hostingradio.ru:8025/retro90-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2118,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/drumhits96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1654,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-trancehits/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 658,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-rap/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1300,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/russiangold96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1997,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/techno96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 558,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/200096.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 629,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-gold/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 644,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://dfm-disc90.hostingradio.ru/disc9096.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 666,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-techno/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 710,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/fut96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1569,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/chillhouse96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1444,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiorecord.hostingradio.ru/record-2000/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 866,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/trancehits96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1257,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiorecord.hostingradio.ru/gold96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 680,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dfm-dfmrusdance.hostingradio.ru/dfmrusdance96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1928,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/pump96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1524,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice1.somafm.com/bootliquor-128-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 482,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice2.somafm.com/bootliquor-128-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 481,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://listen.181fm.com/181-highway_128k.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 473,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/rap96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1831,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.181fm.com/181-highway_128k.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 697,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice1.somafm.com/bootliquor-320-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 481,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://sc.hot108.com:4000/": {
+   "fails": 0,
+   "ok": true,
+   "ms": 424,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://26343.live.streamtheworld.com/977_COUNTRY_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1055,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice4.somafm.com/bootliquor-320-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 563,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice5.somafm.com/bootliquor-320-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 570,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://listen.181fm.com/181-oldschool_128k.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 502,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.181fm.com/181-oldschool_128k.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 686,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://listen.mrg.fm:8100/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 631,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/200096.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1663,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://listen.181fm.com/181-power_128k.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 563,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/techno96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1713,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.181fm.com/181-power_128k.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 633,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dfm-disc90.hostingradio.ru/disc9096.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1976,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.radioparadise.com/rock-128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 401,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.radioparadise.com/rock-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 397,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://pureplay.cdnstream1.com/6041_128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 669,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/977_COUNTRY_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1171,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/977_COUNTRY.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1177,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://18853.live.streamtheworld.com:3690/977_HITS_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 909,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.radioparadise.com/rock-128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 735,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiorecord.hostingradio.ru/gold96.aacp": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1941,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.radioparadise.com/rock-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 741,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://26343.live.streamtheworld.com/977_JAMZ_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1111,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://pureplay.cdnstream1.com/6041_128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1065,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://listen.181fm.com/181-eagle_128k.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 499,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://knkx-live-a.edge.audiocdn.com/6285_128k": {
+   "fails": 0,
+   "ok": true,
+   "ms": 508,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream2.wfmu.org/freeform-128k": {
+   "fails": 0,
+   "ok": true,
+   "ms": 563,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream0.wfmu.org/freeform-extrahigh-primary.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 672,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://knkx-live-a.edge.audiocdn.com/6285_256k": {
+   "fails": 0,
+   "ok": true,
+   "ms": 481,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://hydra.cdnstream.com/1521_128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1248,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.181fm.com/181-eagle_128k.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 692,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://jking.cdnstream1.com/b22139_128mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 424,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/977_JAMZ.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1349,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://listen.181fm.com/181-blues_128k.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 647,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/977_JAMZ_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1350,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ais-sa8.cdnstream1.com/3629_128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 956,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/977_HITS_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1303,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://streams.kcrw.com/kcrw_mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 716,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/977_HITS.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1411,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice1.somafm.com/groovesalad-128-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 527,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice4.somafm.com/groovesalad-128-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 486,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.181fm.com/181-blues_128k.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 990,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice4.somafm.com/groovesalad-256-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 478,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice2.somafm.com/groovesalad-128-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 497,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice1.somafm.com/groovesalad-256-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 506,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice1.somafm.com/defcon-128-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 486,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice6.somafm.com/groovesalad-256-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 510,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://live-mp3-128.kexp.org/kexp128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1211,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice1.somafm.com/defcon-256-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 484,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://streams.kcrw.com/kcrw_mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1090,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://pulseedm.cdnstream1.com:8124/1373_128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 326,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice4.somafm.com/defcon-256-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 485,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice2.somafm.com/secretagent-128-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 484,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice6.somafm.com/defcon-256-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 520,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice1.somafm.com/secretagent-128-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 520,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.wqxr.org/wqxr-web": {
+   "fails": 0,
+   "ok": true,
+   "ms": 693,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice4.somafm.com/secretagent-128-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 476,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice1.somafm.com/reggae-128-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 474,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice1.somafm.com/reggae-256-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 495,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.radioparadise.com/aac-128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 398,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ice4.somafm.com/reggae-256-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 482,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.radioparadise.com/aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 403,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.radioparadise.com/mp3-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 403,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://wwoz-sc.streamguys.com/wwoz-hi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1146,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://kexp.streamguys1.com/kexp160.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1884,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.radioparadise.com/aac-128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 734,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.radioparadise.com/aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 739,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.walmradio.com:8443/classic": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1698,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://liveaudio.lamusica.com/LA_KXOL_icy": {
+   "fails": 0,
+   "ok": true,
+   "ms": 711,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://liveaudio.lamusica.com/MIA_WXDJ_icy": {
+   "fails": 0,
+   "ok": true,
+   "ms": 720,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_23461179/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 410,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_23461179/live/ww/bbc_radio_three/bbc_radio_three.isml/bbc_radio_three-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 404,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://npr-ice.streamguys1.com/live.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 785,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_62063831/live/ww/bbc_radio_one_dance/bbc_radio_one_dance.isml/bbc_radio_one_dance-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 834,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/KUSCMP256.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1527,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_fourfm.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 712,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_one.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1033,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_three.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 794,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 717,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 342,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 347,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_four_extra.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 950,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.wbez.org/wbez128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1051,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_62063831/live/ww/bbc_radio_one_dance/bbc_radio_one_dance.isml/bbc_radio_one_dance-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1519,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1563,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1421,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_74208725/live/ww/bbc_radio_two/bbc_radio_two.isml/bbc_radio_two-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1440,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_6music.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 884,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_one_dance.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1649,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_26173715/live/ww/bbc_radio_four_extra/bbc_radio_four_extra.isml/bbc_radio_four_extra-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1358,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_55057080/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1394,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1855,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_89021708/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1246,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_26173715/live/ww/bbc_radio_four_extra/bbc_radio_four_extra.isml/bbc_radio_four_extra-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1416,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_two.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1903,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_89021708/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1410,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_world_service.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1078,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_asian_network.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1139,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://tunein.cdnstream1.com/2868_96.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1046,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_22108647/live/ww/bbc_asian_network/bbc_asian_network.isml/bbc_asian_network-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1350,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ssl.musicradio.com/CapitalMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 758,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_22108647/live/ww/bbc_asian_network/bbc_asian_network.isml/bbc_asian_network-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1353,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/nonuk/pc_hd_abr_v2/ak/bbc_radio_five_live.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1837,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ice.musicradio.com/CapitalMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 794,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-the.musicradio.com/CapitalMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 755,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ssl.musicradio.com/CapitalXTRANationalMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 754,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_87948813/live/ww/bbc_world_service/bbc_world_service.isml/bbc_world_service-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1383,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-the.musicradio.com/CapitalXTRANationalMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 754,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ssl.musicradio.com/CapitalDanceMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 754,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_87948813/live/ww/bbc_world_service/bbc_world_service.isml/bbc_world_service-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1450,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ice.musicradio.com/CapitalXTRANationalMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 803,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-the.musicradio.com/CapitalDanceMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 754,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ice.musicradio.com/CapitalDanceMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 824,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ssl.musicradio.com/HeartUKMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 797,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ice.musicradio.com/HeartUKMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 759,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-the.musicradio.com/HeartUKMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 793,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ice.musicradio.com/ClassicFMMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 754,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ssl.musicradio.com/ClassicFMMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 830,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-the.musicradio.com/ClassicFMMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 794,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ssl.musicradio.com/GoldMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 762,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ice.musicradio.com/GoldMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 819,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-the.musicradio.com/GoldMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 825,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ssl.musicradio.com/RadioXUKMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 747,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-the.musicradio.com/SmoothUKMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 755,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ssl.musicradio.com/SmoothUKMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 819,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ice.musicradio.com/SmoothUKMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 823,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-ice.musicradio.com/RadioXUKMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 755,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radio.linn.co.uk:8000/autodj": {
+   "fails": 0,
+   "ok": true,
+   "ms": 514,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media-the.musicradio.com/RadioXUKMP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 818,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://mscp3.live-streams.nl:8340/jazz-high.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 576,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radio.linn.co.uk:8004/autodj": {
+   "fails": 0,
+   "ok": true,
+   "ms": 619,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://admin.stream.rinse.fm/proxy/rinse_uk/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1057,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.walmradio.com:8443/jazz": {
+   "fails": 0,
+   "ok": true,
+   "ms": 5580,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream-ar.planetradio.co.uk/absoluteradiohigh.aac?aw_0_1st.skey=1602676850": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1221,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_92079267/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1348,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://as-hls-ww-live.akamaized.net/pool_92079267/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d128000.norewind.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1471,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live-kiss.sharp-stream.com/kiss100.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1699,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream-ar.hellorayo.co.uk/absoluteradiohigh.aac?direct=true&aw_0_1st.skey=1602676850": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1915,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream-kiss.hellorayo.co.uk/kissdance.aac?aw_0_1st.skey=1602676850": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1892,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream-kiss.hellorayo.co.uk/kissdance.aac?direct=true&aw_0_1st.skey=1602676850": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1917,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream-mz.hellorayo.co.uk/magicnational.mp3?aw_0_1st.skey=1602676850": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2115,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream-mz.hellorayo.co.uk/magicnational.mp3?direct=true&aw_0_1st.skey=1602676850": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2188,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://talksport.live.stream.broadcasting.news/stream2": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2127,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icepool.silvacast.com/RADIOPALOMA.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2177,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://mp3channels.webradio.antenne.de/antenne": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2072,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.antenne.de/antenne/stream/mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2094,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://mp3channels.webradio.rockantenne.de/rockantenne": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2024,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1213,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://liveradio.swr.de/sw282p3/swr3/": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1543,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1788,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://liveradio.swr.de/sw331ch/swr3/play.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1596,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://liveradio.swr.de/sw282p3/swr3/play.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1632,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.rockantenne.de/rockantenne/stream/mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2304,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.antenne.de/antenne": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2674,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://listen.technobase.fm/tunein-aac-hd": {
+   "fails": 0,
+   "ok": true,
+   "ms": 971,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://st01.sslstream.dlf.de/dlf/01/128/mp3/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 577,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://listen.housetime.fm/tunein-aac-hd": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1324,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://listen.housetime.fm/tunein-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1340,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://timesradio.wireless.radio/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3133,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.rfm.fr/rfm.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 918,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://st01.sslstream.dlf.de/dlf/01/128/mp3/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1026,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://st02.sslstream.dlf.de/dlf/02/128/mp3/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 535,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://st01.sslstream.dlf.de/dlf/01/high/aac/stream.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 820,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.rfm.fr/rfm.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1015,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listener3.mp3.tb-group.fm/tb.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4395,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.rfm.fr/rfm.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1317,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.silvacast.com/RPLive/mp3-128/RadioPaloma_Homepage": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3539,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.funradio.fr/fun-1-44-128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1460,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.skyrock.net/s/natio_mp3_128k": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1644,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.funradio.fr/fun-1-44-128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1565,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dispatcher.rndfnk.com/br/brklassik/live/mp3/mid": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1737,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://st02.sslstream.dlf.de/dlf/02/high/aac/stream.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1729,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.skyrock.net/s/natio_aac_128k": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1590,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dispatcher.rndfnk.com/br/brklassik/live/mp3/high": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1790,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://st02.sslstream.dlf.de/dlf/02/128/mp3/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1827,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.technobase.fm/tunein-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4593,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://addrad.io/4454rnz": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1884,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.technobase.fm/tunein-aac-hd": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4158,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.radiofrance.fr/franceinter-hifi.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1482,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.housetime.fm/tunein-aac-hd": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3909,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.rtl.fr/rtl-1-44-128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 915,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.radiofrance.fr/franceinter-midfi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2097,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.housetime.fm/tunein-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4217,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radiofrance.fr/franceinter-midfi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2029,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radiofrance.fr/franceinfo-midfi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2400,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radiofrance.fr/franceinfo-hifi.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2321,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radiofrance.fr/fipelectro-midfi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1172,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.radiofrance.fr/franceinfo-hifi.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2467,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.radiofrance.fr/franceinfo-midfi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2534,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://ouifm.ice.infomaniak.ch/ouifm-high.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3254,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radiofrance.fr/franceinter-hifi.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1967,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radiofrance.fr/fipjazz-midfi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1478,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://streamingv2.shoutcast.com/rtl-1025": {
+   "fails": 0,
+   "ok": true,
+   "ms": 511,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://streamingv2.shoutcast.com/rtl-1025": {
+   "fails": 0,
+   "ok": true,
+   "ms": 708,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radiofrance.fr/fipelectro-hifi.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1814,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.radiofrance.fr/fipelectro-midfi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2090,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.radiofrance.fr/fipelectro-hifi.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2130,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radiofrance.fr/francemusique-hifi.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1222,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radiofrance.fr/fipjazz-hifi.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1832,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.radiofrance.fr/fipjazz-midfi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2291,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.radiofrance.fr/fipjazz-hifi.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2106,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://tsfjazz.ice.infomaniak.ch/tsfjazz-high.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2381,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.unitedradio.it/Radio105.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 793,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.radiofrance.fr/francemusique-midfi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2091,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist_audio.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1817,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.radiofrance.fr/francemusique-midfi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1953,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.radiofrance.fr/francemusique-hifi.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2038,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ouifm.ice.infomaniak.ch/ouifm-high.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4906,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://4c4b867c89244861ac216426883d1ad0.msvdn.net/radiodeejay/radiodeejay/master_ma.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1822,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.unitedradio.it/Radio105.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1884,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.unitedradio.it/Virgin.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1392,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://4c4b867c89244861ac216426883d1ad0.msvdn.net/radiom2o/radiom2o/master_ma.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1800,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://str0.creacast.com/classique1": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1979,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.unitedradio.it/Virgin.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 978,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icy.unitedradio.it/VirginRockClassics.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 884,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S3160845/0tuSetc8UFkF/playlist_audio.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1712,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.unitedradio.it/VirginRockClassics.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1638,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icestreaming.rai.it/5.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 376,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icestreaming.rai.it/3.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 483,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icestreaming.rai.it/2.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 721,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icestreaming.rai.it/2.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 612,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icestreaming.rai.it/1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 549,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icestreaming.rai.it/1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 556,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icestreaming.rai.it/3.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 604,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icestreaming.rai.it/5.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 581,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://tsfjazz.ice.infomaniak.ch/tsfjazz-high.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4133,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiotreclassica-live.akamaized.net/hls/live/2032595/radiotreclassica/radiotreclassica/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1995,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://flucast-bl04.flumotion.com/cope/rockfm-low.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 726,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1259,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/Los40.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1536,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_DANCE.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1626,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_URBAN.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1522,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1637,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/CADENADIAL.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1697,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dispatcher.rndfnk.com/crtve/rne1/mad/mp3/high": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1240,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radioclassique.ice.infomaniak.ch/radioclassique-high.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4607,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/RADIO538.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1169,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dispatcher.rndfnk.com/crtve/rner3/main/mp3/high": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1091,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://rockfm-cope-rrcast.flumotion.com/cope/rockfm-low.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1978,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO538.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1396,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.gal.io/arrow": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1067,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.flaixfm.cat/icecast": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1300,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR01.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1386,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.slam.nl/slam": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1033,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.player.arrow.nl/arrowcr": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1855,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/VERONICA.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1523,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.qmusic.nl/qmusic/mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1575,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.omroep.nl/radio2-bb-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2868,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.omroep.nl/3fm-bb-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2879,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://n-11-21.dcs.redcdn.pl/sc/o2/Eurozet/live/audio.livx?audio=5": {
+   "fails": 0,
+   "ok": true,
+   "ms": 809,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://31.192.216.8/rmf_fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 923,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://195.150.20.242:8000/rmf_fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1009,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://195.150.20.7/rmf_fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 880,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast-qmusicnl-cdp.triple-it.nl/Qmusic_nl_live_96.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1826,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://rs201-krk-cyfronet.rmfstream.pl/rmf_fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1428,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.omroep.nl/radio1-bb-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2336,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ic2.smcdn.pl/2380-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1151,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.omroep.nl/radio1-bb-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2616,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://ic2.smcdn.pl/3990-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 871,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://n-4-2.dcs.redcdn.pl/sc/o2/Eurozet/live/antyradio.livx?audio=5": {
+   "fails": 0,
+   "ok": true,
+   "ms": 546,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ic2.smcdn.pl/3990-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1170,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.omroep.nl/radio4-bb-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2383,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://n-4-4.dcs.redcdn.pl/sc/o2/Eurozet/live/antyradio.livx": {
+   "fails": 0,
+   "ok": true,
+   "ms": 910,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://n-4-2.dcs.redcdn.pl/sc/o2/Eurozet/live/antyradio.livx?audio=5": {
+   "fails": 0,
+   "ok": true,
+   "ms": 844,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.omroep.nl/radio4-bb-mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2631,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://r.dcs.redcdn.pl/sc/o2/Eurozet/live/audio.livx?audio=5": {
+   "fails": 0,
+   "ok": true,
+   "ms": 807,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://atres-live.ondacero.es/live/ondacero/master.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 5224,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.bnr.nl/bnr_mp3_128_20": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1372,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://n-11-21.dcs.redcdn.pl/sc/o2/radio357/live/radio357_pr.livx?preroll=0": {
+   "fails": 0,
+   "ok": true,
+   "ms": 864,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://n-11-26.dcs.redcdn.pl/sc/o2/radio357/live/radio357_pr.livx?preroll=0": {
+   "fails": 0,
+   "ok": true,
+   "ms": 835,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ic2.smcdn.pl/5380-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1151,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ic1.smcdn.pl/5380-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1160,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://zt.cdn.eurozet.pl/zet-tun.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1182,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://edge1.sr.se/p3-aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 809,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream15.polskieradio.pl/pr24/pr24.sdp/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1822,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://edge1.sr.se/p4sth-aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 839,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://waw.ic.smcdn.pl/2380-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1663,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://waw.ic.smcdn.pl/3990-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1162,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/p3-mp3-96": {
+   "fails": 0,
+   "ok": true,
+   "ms": 828,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://cadena100-streamers-mp3.flumotion.com/cope/cadena100.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 6585,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/p3-aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 873,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiostream.pl/tuba10-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2145,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiostream.pl/tuba10-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2395,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/p4sth-mp3-96": {
+   "fails": 0,
+   "ok": true,
+   "ms": 812,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://waw.ic.smcdn.pl/5380-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1161,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/p4sth-aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 809,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiostream.pl/tuba8904-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2142,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radiostream.pl/tuba8904-1.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1958,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://tx-bauerse.sharp-stream.com/http_live.php?i=mixmegapol_instream_se_mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1031,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/dingata-mp3-96": {
+   "fails": 0,
+   "ok": true,
+   "ms": 811,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://tx-bauerse.sharp-stream.com/http_live.php?i=nrj_instreamtest_se_mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 906,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/dingata-aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 871,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://edge1.sr.se/p1-aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 844,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live-bauerse-fm.sharp-stream.com/nrj_instreamtest_se_mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1992,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live-bauerse-fm.sharp-stream.com/mixmegapol_instream_se_mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2083,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://tx-bauerse.sharp-stream.com/http_live.php?ua=WEB&i=rockklassiker_instream_se_mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1072,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live-bauerse-fm.sharp-stream.com/rockklassiker_instream_se_mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1825,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/p4plus-mp3-96": {
+   "fails": 0,
+   "ok": true,
+   "ms": 836,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/p4plus-aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 816,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://edge1.sr.se/p2-aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 858,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/p1-mp3-96": {
+   "fails": 0,
+   "ok": true,
+   "ms": 809,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/p1-aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 813,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/p2-mp3-96": {
+   "fails": 0,
+   "ok": true,
+   "ms": 858,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live1.sr.se/p2-aac-320": {
+   "fails": 0,
+   "ok": true,
+   "ms": 813,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://21633.live.streamtheworld.com/JOY_FM128AAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1048,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://canli.arabeskinmerkezi.com:9180/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 656,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.powerapp.com.tr/powerturk/256/chunks.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2066,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://turkmedya.radyotvonline.net/alemfmaac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1015,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.hitfm.ua/HitFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 666,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.hitfm.ua/HitFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1072,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://eksenwmp.radyotvonline.com/;stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 647,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://haberturkradyo.radyotvonline.net/haberturkradyo": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1012,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://195.95.206.17/HitFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 615,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.powerapp.com.tr/powerfm/256/chunks.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2038,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://rd-trtturku.medya.trt.com.tr/master.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1505,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://rd-trtturku.medya.trt.com.tr/master_128.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1560,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://ntvrdwmp.radyotvonline.com/": {
+   "fails": 0,
+   "ok": true,
+   "ms": 648,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.powerapp.com.tr/powerturk/abr/powerturk/256/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2610,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.powerapp.com.tr/powerturk/abr/powerturk/256/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2686,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.powerapp.com.tr/powerfm/abr/powerfm/128/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2575,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.powerapp.com.tr/powerfm/abr/powerfm/128/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2656,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.powerapp.com.tr/powerturk/128/chunks.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2942,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.hitfm.ua/HitFM_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1083,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.hitfm.ua/HitFM_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 859,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/JOY_FM128AAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1690,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.powerapp.com.tr/powerfm/abr/powerfm/256/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2623,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.powerapp.com.tr/powerfm/abr/powerfm/256/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2636,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.kissfm.ua/KissFM_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 824,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.powerapp.com.tr/powerturk/abr/powerturk/128/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3419,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://lux.radio.tvstitch.com/kyiv/lux_adv_sd": {
+   "fails": 0,
+   "ok": true,
+   "ms": 469,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.kissfm.ua/KissFM_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1168,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.radioroks.ua/RadioROKS": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1108,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.radioroks.ua/RadioROKS": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1018,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.kissfm.ua/KissFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1048,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.radioroks.ua/RadioROKS_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 922,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.nasheradio.ua/NasheRadio_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 983,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.nasheradio.ua/NasheRadio_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1114,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.nasheradio.ua/NasheRadio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1148,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.kissfm.ua/KissFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1321,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.radioroks.ua/RadioROKS_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1200,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.melodiafm.ua/MelodiaFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1016,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://lux.radio.tvstitch.com/kyiv/lux_adv_sd": {
+   "fails": 0,
+   "ok": true,
+   "ms": 984,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://cast.mediaonline.net.ua/avtoradio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 974,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.melodiafm.ua/MelodiaFM_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 989,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.nasheradio.ua/NasheRadio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1383,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.melodiafm.ua/MelodiaFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1327,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.radiorelax.ua/RadioRelax": {
+   "fails": 0,
+   "ok": true,
+   "ms": 877,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream2.datacenter.by/radiusfm_main": {
+   "fails": 0,
+   "ok": true,
+   "ms": 460,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://91.218.212.84:8000/radionv.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 519,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://online.radiorelax.ua/RadioRelax_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 843,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.melodiafm.ua/MelodiaFM_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1303,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://cast.fex.net/djfm_x": {
+   "fails": 0,
+   "ok": true,
+   "ms": 998,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.rusradio.by:8000/live128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 515,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.novoeradio.by:444/live/novoeradio_aac128/icecast.audio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 994,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.radiorelax.ua/RadioRelax": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1180,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.rusradio.by:8443/live128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 703,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.roks.com:8000/live256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 445,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online.radiorelax.ua/RadioRelax_HD": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1129,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://online-radio.nv.ua/radionv.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1000,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://cast.mediaonline.net.ua/avtoradio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 912,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.roks.com:8443/live256": {
+   "fails": 0,
+   "ok": true,
+   "ms": 644,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://media2.datacenter.by/stream/stalica/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 456,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://cast.fex.net/djfm_x": {
+   "fails": 0,
+   "ok": true,
+   "ms": 963,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream2.datacenter.by/radiusfm_main": {
+   "fails": 0,
+   "ok": true,
+   "ms": 427,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://live.humorfm.by:8000/veseloeradio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 741,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media2.datacenter.by/stream/stalica/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 647,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dygedge2.radyotvonline.net/kralfm/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 5137,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://live.humorfm.by:8000/radiorelax": {
+   "fails": 0,
+   "ok": true,
+   "ms": 766,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.humorfm.by:8443/radiorelax": {
+   "fails": 0,
+   "ok": true,
+   "ms": 912,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.zhanafm.kz:8443/zhanafm_onair": {
+   "fails": 0,
+   "ok": true,
+   "ms": 893,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://91.201.214.229:8000/zhulduz": {
+   "fails": 0,
+   "ok": true,
+   "ms": 539,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream2.datacenter.by/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1288,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://77.240.38.228:8000/aspanfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 541,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.humorfm.by:8443/veseloeradio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 994,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.zhanafm.kz:8443/vasheradio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 837,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://178.88.167.62:8080/AVTORADIO_192": {
+   "fails": 0,
+   "ok": true,
+   "ms": 584,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream2.datacenter.by/dushevnoe": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1300,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiohub.kz/s/zhanafm/zhanafm_onair": {
+   "fails": 0,
+   "ok": true,
+   "ms": 896,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://dygedge.radyotvonline.net/radyoeksen/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4909,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiohub.kz/s/vashe/vasheradio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 859,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiohub.kz/s/avtoradio/AVTORADIO_192": {
+   "fails": 0,
+   "ok": true,
+   "ms": 811,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://live.legendy.by:8000/legendyfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1583,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiohub.kz/s/aspan/aspanfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 861,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiohub.kz/s/zhuldyz/zhulduz": {
+   "fails": 0,
+   "ok": true,
+   "ms": 921,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://91.201.214.229:8000/tengrifm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 589,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://194.5.152.248:8000/fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 569,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiohub.kz/s/rusradio/asia.rusradio128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1597,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://live.oriatdono.uz:8000/fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 637,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiohub.kz/s/shalqar/icecast.audio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1066,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://ns10.jethost.uz:8000/hitfmuz": {
+   "fails": 0,
+   "ok": true,
+   "ms": 575,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://ns10.jethost.uz:8000/yoshlarovoziaac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 591,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://ns10.jethost.uz:8000/qalbimnavosi": {
+   "fails": 0,
+   "ok": true,
+   "ms": 452,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://eu.stream4cast.com/proxy/lavradio/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 625,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radio-streams.kaztrk.kz/shalqar/shalqar/icecast.audio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1431,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://am.radioaurora.am/kiss": {
+   "fails": 0,
+   "ok": true,
+   "ms": 778,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiohub.kz/s/tengri/tengrifm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1340,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://tabassum.uz:9000/alo_low": {
+   "fails": 0,
+   "ok": true,
+   "ms": 567,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://eu.stream4cast.com/proxy/lavradiomix/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 632,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://s1.muz.uz:9000/alo_low": {
+   "fails": 0,
+   "ok": true,
+   "ms": 668,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://bfmreg.hostingradio.ru/kz.bfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1413,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://s1.muz.uz:9000/qalbimnavosi": {
+   "fails": 0,
+   "ok": true,
+   "ms": 771,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://mediamarkaz.com:8000/radiomarkaz": {
+   "fails": 0,
+   "ok": true,
+   "ms": 790,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://eu.stream4cast.com/proxy/mfmradio/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 630,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://de.auroramedia.am/kissfm.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 909,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiohub.kz/s/businessfm/kz.bfm128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1611,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://eu.stream4cast.com/proxy/xfmradio/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 601,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radio.islom.uz/islomuz": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1237,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://eu.stream4cast.com/proxy/lavradio/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1219,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://eu.stream4cast.com/proxy/energyfm/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 599,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://eu.stream4cast.com/proxy/lavradiomix/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1201,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://eu.stream4cast.com/proxy/mfmradio/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1155,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radio.autoliferadio.com:8090/radio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 359,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://eu.stream4cast.com/proxy/marshallfm/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 599,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radio.autoliferadio.com:8005/radio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 569,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://eu.stream4cast.com:8036/stream/": {
+   "fails": 0,
+   "ok": true,
+   "ms": 597,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://eu.stream4cast.com/proxy/xfmradio/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1161,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://s40.myradiostream.com:22546/listen.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 597,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://eu.stream4cast.com/proxy/energyfm/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1165,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radio.autoliferadio.com:8090/radio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 594,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.livetv.az/mediafm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 958,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://de.auroramedia.am/jazz.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1160,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.livetv.az/mediafm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 984,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.livetv.az/yurdfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 549,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://trucker.autoliferadio.com:1045/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 359,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://eu.stream4cast.com/proxy/marshallfm/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1162,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://trucker.autoliferadio.com:1045/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 536,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://hls-01-radiovan.webcaramba.com/radiovan/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1427,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://94.20.137.130:8995/realfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 766,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://s40.myradiostream.com/:22546/listen.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1175,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://sk.cri.cn/905.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 260,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://sk.cri.cn/am846.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 255,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://sk.cri.cn/am846.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 187,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://sk.cri.cn/905.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 346,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.livetv.az/yurdfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1135,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://94.20.74.206:4448/stream1": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1131,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://icecast.livetv.az/mediajazz": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1294,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://hot.asiafm.net:8000/asiafm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 210,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://icecast.livetv.az/mediajazz": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1392,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.antiradio.net/radio/8000/mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1376,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.antiradio.net/listen/anti_radio/mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1359,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://play.asanradio.az/": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1646,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://tv.cdn.xsg.ge/cld9-0386/avtoradio/tracks-a1/mono.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1266,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://tv.cdn.xsg.ge/cld9-0386/ardaidardo/tracks-a1/mono.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1265,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://iis.ge:8000/radiotbilisi.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 699,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://edge.mixlr.com/channel/bzorq": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1163,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playtv-live.ifeng.com/live/06OLEEWQKN4_audio.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 607,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playtv-live.ifeng.com/live/06OLEEWQKN4_audio.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 616,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://goldfm.cn:8000/goldfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 218,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://iis.ge:8000/hereti.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 851,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://asiafm.hk:8000/asiafm": {
+   "fails": 1,
+   "ok": false,
+   "why": "закрыли рано",
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radio.cdn.xsg.ge/cld9-1050/chveneburi/index.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1489,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://quincy.torontocast.com:2070/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 674,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiostream.palitra.ge/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1209,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://quincy.torontocast.com:2020/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 620,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://kathy.torontocast.com:3060/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 610,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://kathy.torontocast.com:3340/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 612,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.moe/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 817,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://str.yodacdn.net/radio_respublica/video.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2242,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.moe/fallback": {
+   "fails": 0,
+   "ok": true,
+   "ms": 812,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://141.164.38.238/listen/ara_fm/radio.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 18,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://kathy.torontocast.com:3330/stream/1/": {
+   "fails": 0,
+   "ok": true,
+   "ms": 595,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://ebsonairiosaod.ebs.co.kr/fmradiobandiaod/bandiappaac/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 606,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://m-aac.cbs.co.kr/cbs939/_definst_/cbs939.stream/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 791,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://radiolive.ytn.co.kr/radio/_definst_/20211118_fmlive/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 398,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.ifm.kr/live/aod1/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 52,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://amdlive-ch03-ctnd-com.akamaized.net/arirang_3ch/arirang_3ch_audio/chunklist_b128000.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 417,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://vod3.obs.co.kr:444/live/obsstream1/radio.stream/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 103,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://quincy.torontocast.com:2020/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1132,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://mgugaklive.nowcdn.co.kr/gugakradio/gugakradio.stream/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 370,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://quincy.torontocast.com:2070/stream.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1289,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://masterpl.hls.nhkworld.jp/hls/r1/live/master.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1249,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://kathy.torontocast.com:3060/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1131,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://kathy.torontocast.com:3340/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1177,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://kathy.torontocast.com:2880/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1134,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://kathy.torontocast.com:3330/stream/1/": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1128,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.gensokyoradio.net/1": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1252,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://funasia.streamguys1.com/live9": {
+   "fails": 1,
+   "ok": false,
+   "why": "HTTP 404",
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://funasia.streamguys1.com/live7": {
+   "fails": 1,
+   "ok": false,
+   "why": "HTTP 404",
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://drive.uber.radio/uber/bollywoodlove/icecast.audio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 523,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://drive.uber.radio/uber/bollywoodnow/icecast.audio": {
+   "fails": 0,
+   "ok": true,
+   "ms": 501,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://shonanbeachfm.out.airtime.pro:8000/shonanbeachfm_a": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1400,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://antares.dribbcast.com/proxy/kpop?mp=/s": {
+   "fails": 1,
+   "ok": false,
+   "why": "закрыто без ответа",
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.gensokyoradio.net/3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1667,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://streamer.radio.co/s34b5469e0/listen": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2817,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.moe/kpop/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1065,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.radiojar.com/sr4vzamzfnruv": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1815,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://air.pc.cdn.bitgravity.com/air/live/pbaudio138/chunklist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1011,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.moe/kpop/fallback": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1361,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://eu8.fastcast4u.com/proxy/clyedupq?mp=/1": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1156,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://eu8.fastcast4u.com/proxy/clyedupq/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1165,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://air.pc.cdn.bitgravity.com/air/live/pbaudio230/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1406,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.zeno.fm/6n6ewddtad0uv": {
+   "fails": 0,
+   "ok": true,
+   "ms": 823,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://air.pc.cdn.bitgravity.com/air/live/pbaudio001/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1616,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://funasia.streamguys1.com/live4": {
+   "fails": 0,
+   "ok": true,
+   "ms": 855,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://funasia.streamguys1.com/live2": {
+   "fails": 0,
+   "ok": true,
+   "ms": 896,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://fm.alarabiya.net/fm/myStream/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1303,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.itv.az/rtmp:/radio/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4472,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ecmanager2.pro-fhi.net:1515/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 857,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://shonanbeachfm.out.airtime.pro:8000/shonanbeachfm_a": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2875,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://s17.ssl-stream.com/proxy/brightstar?mp=/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 983,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://10gb1.acangroup.org:8000/suellaba-fm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 925,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://admn-radio-cdn-lb.starzplayarabia.com/out/v1/admn_radio_enc/star_fm/star_fm_hls_nd/index_starfm_audio_enc_ara.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1979,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://admn-radio-cdn-lb.starzplayarabia.com/out/v1/admn_radio_enc/emarat_fm/emarat_fm_hls_nd/index_emaratfm_audio_enc_ara.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2110,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://admn-radio-cdn-lb.starzplayarabia.com/out/v1/admn_radio_enc/abudhabi_fm/abudhabi_fm_hls_nd/index_adfm_audio_enc_ara.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2142,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://admn-radio-cdn-lb.starzplayarabia.com/out/v1/admn_radio_enc/classic_fm/classic_fm_hls_nd/index_classicfm_audio_enc_ara.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2073,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a2.asurahosting.com:6790/cameroon.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1329,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://stream.skynewsarabia.com/hls/index__1.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2106,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.skynewsarabia.com/hls/index__1.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2123,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://10gb1.acangroup.org:8000/postenational": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1210,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://ecmanager2.pro-fhi.net:1580/;": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1500,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://a11.asurahosting.com:7360/cameroon.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1270,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_89FM.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1028,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.zeno.fm/8ggdk1wbtc9uv": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1324,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.radioking.com/radio/820431/stream/889416": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1879,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_89FM_ADP.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1394,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_89FM_ADP.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1277,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_KISSFM.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1169,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_89FM.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1556,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_KISSFM_ADP.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1154,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/MIXFM_SAOPAULO.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 994,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_KISSFM.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1558,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_KISSFM_ADP.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1361,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://sc4s.cdn.upx.com:8067/stream": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1187,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_GLOBO_RJAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1098,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/MIXFM_SAOPAULO.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1454,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.radioking.com/radio/623812/stream/685903": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3504,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_GLOBO_RJ.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1266,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/RT_SP.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1306,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_GLOBO_RJ.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1285,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/BHFM.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1127,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://listen.radioking.com/radio/651205/stream/714685": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3494,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/RT_SP.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1708,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://radioims.out.airtime.pro:8000/radioims_a": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1049,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_GLOBO_RJAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1729,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/BHFM.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1309,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/BHFMAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1118,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://replaynewshi.ice.infomaniak.ch/replaynewshi-128.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 4589,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/CBN_SP.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 945,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/BHFMAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1678,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://noasrv.caster.fm:10182/live": {
+   "fails": 0,
+   "ok": true,
+   "ms": 403,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/CBN_SPAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1284,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/CBN_SPAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1301,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/BANDNEWSFM_SP.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1237,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/BANDNEWSFM_SP.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1437,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/KEBUENA.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1191,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/KEBUENAAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1045,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://stream.zeno.fm/vlcraijc6yiuv": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1179,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/XHFAJ_FMAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 955,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/KEBUENA.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1280,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/XEQR_FMAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1062,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/CBN_SP.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1475,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_MEXICO_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 960,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/XEQR_FMAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1135,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/KEBUENAAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1213,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/XHEXA_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1089,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/XHFAJ_FMAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1383,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_MEXICO_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1360,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/XHFO_FMAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1067,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/XHEXA_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1371,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/W_RADIO.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 940,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/XHFO_FMAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1306,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/W_RADIOAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 898,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/W_RADIO.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1213,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/W_RADIOAAC.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1222,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/DISNEY_ARG_BA.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1034,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/XHMVSFM_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1081,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/FM999_56.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1245,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/XHMVSFM_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1254,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/DISNEY_ARG_BA_ADP.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1137,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/FM999_56.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1317,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/DISNEY_ARG_BA.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1256,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/MUCHA_RADIO.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 693,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/METRO.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1084,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/DISNEY_ARG_BA_ADP.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1333,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/ROCKANDPOP.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1341,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/ROCKANDPOP.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1528,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://media.radios.ar:9270/": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1462,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/MUCHA_RADIO.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1248,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/METRO.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1752,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://mdstrm.com/audio/6102ce7ef33d0b0830ec3adc/live.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3300,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/RIVADAVIA.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1207,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://popradio.stweb.tv/popradio/live/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2610,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://live.leanstream.co/CILQFM-MP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 390,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/AM790_56.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1277,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://live.leanstream.co/CFNYFM-MP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 417,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/RIVADAVIA.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1144,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://26733.live.streamtheworld.com/CBLAFM_CBC_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1151,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/CBLAFM_CBC_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 949,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://26373.live.streamtheworld.com/CBLFM_CBC_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1222,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://mega.stweb.tv/mega983/live/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2581,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://live.leanstream.co/CFOXFM-MP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 391,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/AM790_56.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1778,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/LA_RED_AM910.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1245,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/CBFFM_SRC.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 989,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/CBLFM_CBC_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 987,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/CBLAFM_CBC_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1222,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/LA_RED_AM910.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1562,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://mux.mtl.djfmradio.com/djfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 396,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/CBFXFM_SRC.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1128,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/CBFFM_SRC.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1161,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/CBFXFM_SRC.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1160,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/CBLFM_CBC_SC": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1369,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.leanstream.co/CILQFM-MP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1467,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.leanstream.co/CFNYFM-MP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1469,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.leanstream.co/CFOXFM-MP3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1391,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://streaming.abc-cdn.net.au/audio/hls/doublejnsw.m3u8?source=web": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1307,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://streaming.abc-cdn.net.au/audio/hls/newsradio.m3u8?source=web": {
+   "fails": 0,
+   "ok": true,
+   "ms": 470,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://mux.mtl.djfmradio.com/djfm": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1445,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 915,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://mediaserviceslive.akamaized.net/hls/live/2038308/triplejnsw/index.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1675,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://mediaserviceslive.akamaized.net/hls/live/2038311/newsradio/index.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 435,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://streaming.abc-cdn.net.au/audio/hls/triplejnsw.m3u8?source=web": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1796,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://newcap.leanstream.co/CHBMFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1421,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://newcap.leanstream.co/CIHTFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1390,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969_AAC320.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1190,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1386,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/ARN_KIIS1065.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1480,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://localradio.streamb.live/SB00348": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1970,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH953_AAC320.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1263,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://newcap.leanstream.co/CHBMFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1875,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://newcap.leanstream.co/CIHTFM": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1839,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/ARN_KIIS1065.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1692,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH953_AAC320.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1440,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_100_AAC320.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1811,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969_AAC320.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1857,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_100_AAC320.aac": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1726,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_SKYNEWS.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 957,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://live.fresh927.com.au/freshmp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 781,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "http://legacy.scahw.com.au/2mmm_128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1020,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_SKYNEWS.mp3": {
+   "fails": 0,
+   "ok": true,
+   "ms": 1056,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://legacy.scahw.com.au/2mmm_128": {
+   "fails": 0,
+   "ok": true,
+   "ms": 964,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://sa47.scastream.com.au/live/2classicrock_128.stream/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 2553,
+   "last": "2026-10-13T11:14:14.439Z"
+  },
+  "https://sa47.scastream.com.au/live/2mmm_128.stream/playlist.m3u8": {
+   "fails": 0,
+   "ok": true,
+   "ms": 3411,
+   "last": "2026-10-13T11:14:14.439Z"
+  }
+ },
+ "updated": "2026-10-13T11:14:14.439Z"
+}

@@ -6,7 +6,10 @@ import { viaLive, viaProxy } from "./net";
 import { rlog } from "./log";
 import { settings } from "./settings";
 
-export type RQ = { k: number; u: string[]; h?: 1; hls?: 1; n?: string };
+/* адрес бывает строкой или {url, hls}: у некоторых станций среди обычных потоков есть HLS-адреса */
+export type Addr = string | { url: string; hls?: boolean };
+export type RQ = { k: number; u: Addr[]; h?: 1; hls?: 1; n?: string };
+const urlOf = (a: Addr) => (typeof a === "string" ? a : a.url);
 export type Station = { id: string; name: string; alt?: string; cc: string; g: string; gn: string; mark: string; hue: number; logo?: 1; q: RQ[] };
 export type Country = { cc: string; aliases?: string[] };
 export type Status = "idle" | "connecting" | "playing" | "error";
@@ -210,10 +213,10 @@ const markGood = (s: Station, q: RQ, url: string) => { health.good[goodKey(s, q)
 const markBad = (url: string) => { health.bad[url] = Date.now(); saveHealth(); };
 
 /* сначала адрес, который играл хорошо, потом обычные, в конце недавно упавшие */
-function ordered(s: Station, q: RQ): string[] {
+function ordered(s: Station, q: RQ): Addr[] {
   const now = Date.now();
   const good = health.good[goodKey(s, q)];
-  const rank = (u: string) => (u === good ? 0 : health.bad[u] && now - health.bad[u] < BAD_MS ? 2 : 1);
+  const rank = (a: Addr) => { const u = urlOf(a); return u === good ? 0 : health.bad[u] && now - health.bad[u] < BAD_MS ? 2 : 1; };
   return [...q.u].sort((a, b) => rank(a) - rank(b));
 }
 
@@ -246,10 +249,11 @@ async function connect(s: Station, quiet = false) {
   const chain = [first, ...s.q.filter((x) => x.k < first.k).sort((a, b) => b.k - a.k)];
   for (let qi = 0; qi < chain.length; qi++) {
     for (let round = 0; round < (qi === 0 ? 2 : 1); round++) {
-      for (const url of ordered(s, chain[qi])) {
+      for (const addr of ordered(s, chain[qi])) {
+        const url = urlOf(addr);
         if (mine !== gen) return;
         const t0 = performance.now();
-        const why = await attempt(slots[target], url, !!chain[qi].hls);
+        const why = await attempt(slots[target], url, !!chain[qi].hls || (typeof addr !== "string" && !!addr.hls));
         if (mine !== gen) { if (!why) wipe(slots[target]); return; }
         if (why) {
           markBad(url);

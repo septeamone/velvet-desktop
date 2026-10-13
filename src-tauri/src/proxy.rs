@@ -416,6 +416,23 @@ mod tests {
         // поток закрылся сам, когда станция не вернулась (цикл выше закончился)
     }
 
+    /// Настоящий прокси и настоящая станция (нужен интернет): cargo test -- --ignored
+    #[tokio::test]
+    #[ignore]
+    async fn live_route_streams_real_station() {
+        let info = start().await.unwrap();
+        let target = B64.encode("http://ep128server.streamr.ru:8030/ep128");
+        let mut resp = reqwest::get(format!("http://127.0.0.1:{}/{}/live/{target}", info.port, info.token)).await.unwrap();
+        assert!(resp.status().is_success());
+        assert!(resp.headers().get("content-length").is_none(), "эфир идёт без длины");
+        let mut got = 0;
+        while got < 64 * 1024 {
+            got += resp.chunk().await.unwrap().expect("поток не должен заканчиваться").len();
+        }
+        let wrong = reqwest::get(format!("http://127.0.0.1:{}/bad/live/{target}", info.port)).await.unwrap();
+        assert_eq!(wrong.status(), 404, "без ключа прокси не отвечает");
+    }
+
     #[test]
     fn rewrites_playlist_urls_through_proxy() {
         let base = u("http://example.com/live/index.m3u8");
