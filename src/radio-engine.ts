@@ -136,7 +136,7 @@ function attempt(s: Slot, url: string, isHls: boolean): Promise<boolean> {
       const el = s.el;
       if (el.readyState < 3 || el.currentTime <= 0) return;
       const ahead = el.buffered.length ? el.buffered.end(el.buffered.length - 1) - el.currentTime : 0;
-      if (ahead >= 3 || performance.now() - t0 > 9000) finish(true);
+      if (ahead >= 2 || performance.now() - t0 > 3500) finish(true);
     }, 250);
     s.el.addEventListener("error", onErr);
     void (async () => {
@@ -251,16 +251,15 @@ export function toggle() {
   const s = state.station;
   if (!s) return;
   if (state.status === "error" || state.status === "idle") { play(s); return; }
-  const el = slots[active].el;
   if (state.paused) {
+    // это прямой эфир: старый накопленный кусок не доигрываем, а подключаемся к эфиру заново
     window.dispatchEvent(new Event("velvet:radio-start"));
-    void ctx?.resume();
-    void el.play();
-    state.paused = false;
-  } else {
-    el.pause();
-    state.paused = true;
+    void connect(s, true);
+    syncMedia();
+    return;
   }
+  slots[active].el.pause();
+  state.paused = true;
   emit();
   syncMedia();
 }
@@ -288,7 +287,7 @@ export function setQuality(k: number) {
   if (state.station) void connect(state.station, true);
 }
 
-/* ---------- сторож: если звук завис на 9 секунд, переподключаемся ---------- */
+/* ---------- сторож: если звук завис на 6 секунд, переподключаемся ---------- */
 let lastTime = -1;
 let stuckAt = 0;
 setInterval(() => {
@@ -296,7 +295,7 @@ setInterval(() => {
   if (!s || state.status !== "playing" || state.paused) { stuckAt = performance.now(); return; }
   const t = slots[active].el.currentTime;
   if (t !== lastTime) { lastTime = t; stuckAt = performance.now(); return; }
-  if (performance.now() - stuckAt > 9000) { stuckAt = performance.now(); void connect(s, true); }
+  if (performance.now() - stuckAt > 6000) { stuckAt = performance.now(); void connect(s, true); }
 }, 1000);
 for (const slot of slots) {
   slot.el.addEventListener("error", () => {
