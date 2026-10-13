@@ -160,7 +160,6 @@ function wipe(s: Slot) {
   s.el.pause();
   s.el.removeAttribute("src");
   s.el.load();
-  s.el.playbackRate = 1;
   if (s.gain && ctx) s.gain.gain.cancelScheduledValues(ctx.currentTime);
   if (s.gain) s.gain.gain.value = 0;
 }
@@ -277,8 +276,17 @@ function reconnect(why: string) {
 
 const hostOf = (u: string) => { try { return new URL(u).host; } catch { return u.slice(0, 40); } };
 
-/* выбранное качество → все его адреса (два круга) → качества ниже → ошибка */
+let busy = false; // идёт подключение
+
 async function connect(s: Station, quiet = false) {
+  const run = connectNow(s, quiet);
+  const mine = gen; // connectNow сразу увеличил счётчик, значит это его номер
+  busy = true;
+  try { await run; } finally { if (gen === mine) busy = false; }
+}
+
+/* выбранное качество → все его адреса (два круга) → качества ниже → ошибка */
+async function connectNow(s: Station, quiet = false) {
   const mine = ++gen;
   ensureGraph();
   void ctx?.resume();
@@ -374,6 +382,7 @@ export function toggle() {
 
 export function stop() {
   gen++;
+  busy = false;
   for (const s of slots) wipe(s);
   state.status = "idle";
   state.paused = false;
@@ -395,10 +404,7 @@ export function setQuality(k: number) {
   if (state.station) void connect(state.station, true);
 }
 
-/* ---------- сторож: звук завис на 3,5 секунды — переподключаемся; пока играет, копим запас ---------- */
-const CUSHION_LOW = 8; // ниже — играем чуть медленнее, чтобы запас рос
-const CUSHION_OK = 10; // набрали — возвращаем обычную скорость
-const SLOW = 0.96; // высота звука не меняется, на слух почти незаметно
+/* ---------- сторож: звук завис на 3,5 секунды — переподключаемся ---------- */
 let lastTime = -1;
 let stuckAt = 0;
 let lastEnd = -1;
@@ -406,7 +412,7 @@ let endAt = 0;
 setInterval(() => {
   const s = state.station;
   const now = performance.now();
-  if (!s || state.status !== "playing" || state.paused) { stuckAt = endAt = now; return; }
+  if (!s || state.status !== "playing" || state.paused || busy) { stuckAt = endAt = now; return; } // пока идёт подключение, не мешаем ему
   const slot = slots[active];
   const el = slot.el;
   const t = el.currentTime;
@@ -418,8 +424,6 @@ setInterval(() => {
   // новые данные перестали приходить, а запас ещё играет: меняем источник заранее, пока тишины нет
   if (end !== lastEnd) { lastEnd = end; endAt = now; }
   else if (ahead > 0.5 && now - endAt > 8000) { endAt = now; reconnect("данные не приходят 8 с, запас ещё играет"); return; } // прокси ждёт 5 с и сам переподключается; это уже запасной случай
-  if (ahead < CUSHION_LOW) el.playbackRate = SLOW;
-  else if (ahead >= CUSHION_OK) el.playbackRate = 1;
 }, 1000);
 for (const slot of slots) {
   // сервер закрыл поток (например, перезапуск эфира) — не ждём сторожа
