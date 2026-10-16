@@ -1,6 +1,7 @@
 import channelsData from "./data/channels.json";
 import { settings } from "./settings";
 import { loadCustom } from "./custom";
+import { tauri } from "./tauri";
 
 export type Source = string | { rutube: string };
 export type Channel = { id: string; name: string; logo: string; sources: Source[]; epg: string | null; tile?: "light"; adult?: boolean; custom?: boolean; hue?: number; res?: (number | null)[] };
@@ -23,12 +24,31 @@ export function resetOrder() {
   window.dispatchEvent(new Event("velvet:order-reset"));
 }
 
+/* дополнительные каналы из локального файла extra-channels.json (см. extra_channels в Rust); проверяем форму, лишнее отбрасываем */
+let localExtra: Channel[] = [];
+const isSource = (s: unknown) => typeof s === "string" || (typeof s === "object" && s !== null && typeof (s as { rutube?: unknown }).rutube === "string");
+export function parseExtra(text: string): Channel[] {
+  try {
+    const list = JSON.parse(text) as unknown;
+    if (!Array.isArray(list)) return [];
+    return list.filter((c): c is Channel => !!c && typeof c.id === "string" && typeof c.name === "string" && Array.isArray(c.sources) && c.sources.length > 0 && c.sources.every(isSource))
+      .map((c) => ({ id: c.id, name: c.name, logo: typeof c.logo === "string" ? c.logo : "", sources: c.sources, epg: typeof c.epg === "string" ? c.epg : null, ...(c.tile === "light" ? { tile: "light" as const } : {}) }));
+  } catch { return []; }
+}
+export async function loadExtraChannels() {
+  const text = await tauri()?.core.invoke<string | null>("extra_channels").catch(() => null);
+  if (!text) return;
+  localExtra = parseExtra(text);
+  if (localExtra.length) rebuildChannels();
+}
+
 export const channels: Channel[] = [];
 export function rebuildChannels() {
   const mine: Channel[] = loadCustom()
     .filter((c) => !c.adult || settings.adult === "on")
     .map((c) => ({ id: c.id, name: c.name, logo: "", sources: [c.url], epg: null, custom: true, adult: c.adult, hue: [...c.name].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) % 360, 7) }));
-  const all = [...baseChannels, ...mine];
+  const have = new Set(baseChannels.map((c) => c.id));
+  const all = [...baseChannels, ...localExtra.filter((c) => !have.has(c.id)), ...mine]; // у сборок с вшитыми каналами те же каналы уже есть — дублей не делаем
   const saved = loadOrder();
   const rank = new Map(saved.map((id, i) => [id, i]));
   const base = new Map(all.map((c, i) => [c.id, i]));

@@ -1,6 +1,6 @@
 import "./styles.css";
 import { initNet } from "./net";
-import { channels, rebuildChannels, saveOrder, resetOrder } from "./data";
+import { channels, rebuildChannels, saveOrder, resetOrder, loadExtraChannels } from "./data";
 import { enableSort, isSorting } from "./sortable";
 import { addCustom, loadCustom, removeCustom } from "./custom";
 import { loadSettings, setSetting, settings, onSetting, type Settings } from "./settings";
@@ -88,6 +88,7 @@ document.querySelectorAll(".seg[data-key]").forEach((seg) => {
 });
 
 void initNet().then(() => {
+  void loadExtraChannels();
   void initUpdater();
   startEpg();
   let last: string | null = null;

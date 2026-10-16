@@ -172,7 +172,7 @@ console.log("Журнал радио");
 const ctx2 = await browser.newContext({ viewport: { width: 1300, height: 900 }, permissions: ["clipboard-read", "clipboard-write"] });
 await ctx2.addInitScript(() => {
   window.__TAURI__ = {
-    core: { invoke: async (cmd) => (cmd === "proxy_info" ? { port: 1, token: "x" } : cmd === "radio_log" ? "2026-01-01T00:00:00Z радио тестовая строка журнала" : cmd === "is_portable" ? false : null) },
+    core: { invoke: async (cmd) => (cmd === "proxy_info" ? { port: 1, token: "x" } : cmd === "extra_channels" ? JSON.stringify([{ id: "x-test", name: "Мой тестовый канал", logo: "", sources: ["https://example.com/a.m3u8"], epg: null }, { id: "bad", name: "Сломанный", sources: [] }]) : cmd === "radio_log" ? "2026-01-01T00:00:00Z радио тестовая строка журнала" : cmd === "is_portable" ? false : null) },
     window: { getCurrentWindow: () => ({ setTheme: async () => {} }) },
     app: { getVersion: async () => "9.9.9" }, updater: { check: async () => null }, process: { relaunch: async () => {} },
   };
@@ -185,6 +185,11 @@ await page2.click("#btnCopyLog");
 await page2.waitForTimeout(400);
 const copied = await page2.evaluate(() => navigator.clipboard.readText());
 check("кнопка «Скопировать журнал» кладёт в буфер версию и журнал", copied.includes("Velvet TV 9.9.9") && copied.includes("тестовая строка журнала"), copied.slice(0, 120));
+await page2.evaluate(() => document.querySelector('#tabs button[data-tab="tv"]').click());
+await page2.waitForTimeout(300);
+const extra = await page2.evaluate(async () => { const d = await import("/src/data.ts"); return { has: d.channels.some((c) => c.id === "x-test"), bad: d.channels.some((c) => c.id === "bad"), shown: document.getElementById("grid").textContent.includes("Мой тестовый канал") }; });
+check("каналы из локального файла extra-channels.json появляются в списке (и переживают обновление)", extra.has && extra.shown, JSON.stringify(extra));
+check("битая запись в этом файле игнорируется", !extra.bad);
 check("после копирования показано подтверждение", (await page2.textContent("#logStatus")).includes("скопирован"));
 
 check("в консоли нет ошибок страницы", pageErrors.length === 0, pageErrors.join(" | "));
